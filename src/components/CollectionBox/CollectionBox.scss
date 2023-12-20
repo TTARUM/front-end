@@ -1,0 +1,21 @@
+$font-medium: 14px;
+
+.collection-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    cursor: pointer;
+
+    p {
+        width: 164px;
+        font-size: $font-medium;
+        white-space: pre-wrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break:break-all;
+        margin-bottom: 24px;
+        margin-top: 5px;
+        margin-left: 5px
+    }
+}

@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  position: relative;
+}
+
+body {
+  width: 393px;
+  margin: 0 auto;
+}
+
+.main {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+
+  .main-container {
+    width: 393px;
+    min-height: 100vh;
+    // overflow: auto;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-bottom: 59px;
+  }
+}

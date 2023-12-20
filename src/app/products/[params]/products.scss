@@ -1,0 +1,9 @@
+@import '../../globals.scss';
+
+$margin : 20px;
+
+.products-container{
+    margin-left: $margin;
+    display: flex;
+    flex-wrap: wrap;
+}

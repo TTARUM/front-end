@@ -1,0 +1,28 @@
+$font-medium : 20px;
+$margin : 20px;
+
+.header-container {
+    margin: 20px 0px 20px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    >img {
+        cursor: pointer;
+    }
+
+    >p {
+        font-size: $font-medium;
+        margin-left: $margin;
+    }
+
+    .header-menu {
+        display: flex;
+        align-items: center;
+
+        img {
+            margin: 0 5px;
+            cursor: pointer;
+        }
+    }
+}
