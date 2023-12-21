@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import redWine from "../../../public/red-wine.svg";
 import redWineMain from "../../../public/redWine-main.svg";
-import productWind from '../../../public/products-wine.svg'
+import productWine from '../../../public/products-wine.svg'
 import heart from "../../../public/heart.svg";
 import on_heart from "../../../public/on-heart.svg";
 import scoreStar from "../../../public/score-star.svg";
@@ -49,12 +49,14 @@ export default function ItemBox({ img, type, name, volume, price, score, page, n
           </>
         ) : (
           <div className="itemBox-item" >
-            <Image onClick={clickHeart} className="itemBox-heart" src={onHeart ? on_heart : heart} alt="heart" />
+            {page === "heart" ? null : <Image onClick={clickHeart} className="itemBox-heart" src={onHeart ? on_heart : heart} alt="heart" />}
             <div className="itemBox-area" onClick={() => { router.push(`/productsDetail/${params}`) }}>
               <div className="itemBox-img">
                 {
                   page === "products" ?
-                    <Image src={productWind} alt="red wine image" /> : <Image src={redWine} alt="red wine image" />
+                    <Image src={productWine} alt="red wine image" />
+                    : page === "heart" ? <Image src={img} alt="red wine image" />
+                      : <Image src={redWine} alt="red wine image" />
                 }
               </div>
 
