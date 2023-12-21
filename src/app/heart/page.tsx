@@ -13,7 +13,14 @@ import testWhite from '../../../public/test-white.svg';
 import { useState } from 'react';
 
 export default function Heart() {
-  const testItem = [
+  const testItem: {
+    img: string;
+    type: string;
+    name: string;
+    price: string;
+    score: string;
+    id: number;
+  }[] = [
     {
       img: testRed,
       type: '레드 와인',

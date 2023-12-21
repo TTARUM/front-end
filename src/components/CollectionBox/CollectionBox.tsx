@@ -1,8 +1,13 @@
 import Image from 'next/image';
 import './CollectionBox.scss';
 
-export default function CollectionBox({ img, text }) {
-  const letter = text;
+type Props = {
+  img: string;
+  text: string;
+};
+
+export default function CollectionBox({ img, text }: Props) {
+  const letter: string = text;
   return (
     <div className="collection-box">
       <Image src={img} alt="collection_1" />

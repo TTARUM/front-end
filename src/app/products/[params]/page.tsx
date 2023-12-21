@@ -4,7 +4,21 @@ import './products.scss';
 import Header from '@/components/Header/Header';
 import ItemBox from '@/components/Item/ItemBox';
 
-export default function Products({ params }) {
+type Props = {
+  params: {
+    img?: string;
+    type?: string;
+    name?: string;
+    volume?: string;
+    price?: string;
+    score?: string;
+    page?: string;
+    number?: number;
+    params?: string;
+  };
+};
+
+export default function Products({ params }: Props) {
   return (
     <div className="main">
       <div className="main-container">

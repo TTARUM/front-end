@@ -16,7 +16,7 @@ import Image from 'next/image';
 export default function Category() {
   const router = useRouter();
 
-  const testBox = [
+  const testBox: { img: string; name: string; id: number }[] = [
     { img: category_all, name: '전체보기', id: 1 },
     { img: category_redWine, name: '레드 와인', id: 2 },
     { img: category_whiteWine, name: '화이트 와인', id: 3 },

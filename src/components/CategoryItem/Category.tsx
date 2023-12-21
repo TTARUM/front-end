@@ -4,7 +4,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import './Category.scss';
 
-export default function Category({ img, title, id }) {
+type Props = {
+  img: string;
+  title: string;
+  id: number;
+};
+
+export default function Category({ img, title, id }: Props) {
   const router = useRouter();
   return (
     <div

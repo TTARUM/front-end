@@ -11,7 +11,11 @@ import heart from '../../../public/heart.svg';
 import cart from '../../../public/cart.svg';
 import back from '../../../public/backBtn.svg';
 
-export default function Header({ title }) {
+type Props = {
+  title: string;
+};
+
+export default function Header({ title }: Props) {
   const router = useRouter();
   var titleName; // titleName 변수를 선언합니다.
 

@@ -7,7 +7,7 @@ import search from '../../../public/search.svg';
 import close from '../../../public/close.svg';
 
 export default function Search() {
-  const searchItem = [
+  const searchItem: string[] = [
     '레드 와인',
     '화이트 와인',
     '안주',

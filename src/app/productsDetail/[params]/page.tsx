@@ -4,7 +4,19 @@ import Header from '@/components/Header/Header';
 import Image from 'next/image';
 import detail from '../../../../public/detail.svg';
 
-export default function ProductsDetail({ params }) {
+type Props = {
+  img?: string;
+  type?: string;
+  name?: string;
+  volume?: string;
+  price?: string;
+  score?: string;
+  page?: string;
+  number?: number;
+  params?: string;
+};
+
+export default function ProductsDetail({ params }: Props) {
   return (
     <div className="main">
       <div className="main-container">

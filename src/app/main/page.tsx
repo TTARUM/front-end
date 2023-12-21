@@ -25,7 +25,7 @@ import event_1 from '../../../public/event_1.svg';
 import event_2 from '../../../public/event_2.svg';
 import { useRouter } from 'next/navigation';
 
-const testCategory = [
+const testCategory: { img: string; name: string; id: number }[] = [
   { img: RED, name: '레드 와인', id: 2 },
   { img: WHITE, name: '화이트 와인', id: 3 },
   { img: ROSE, name: '로제 와인', id: 4 },
@@ -36,7 +36,7 @@ const testCategory = [
   { img: all, name: '전체보기', id: 1 },
 ];
 
-const testCollection = [
+const testCollection: { img: string; text: string }[] = [
   { img: collection_1, text: `이 가격에 와인을? \n가성비 좋은 와인 모음집` },
   {
     img: collection_2,
@@ -54,7 +54,7 @@ export default function Main() {
 
   return (
     <div className="main-container">
-      <Header />
+      <Header title={'1'} />
       <div className="main-banner">
         <div className="title">
           <p className="first-title">와인 어디서 사지? 고민될 땐</p>

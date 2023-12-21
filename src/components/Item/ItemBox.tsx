@@ -11,6 +11,18 @@ import on_heart from '../../../public/on-heart.svg';
 import scoreStar from '../../../public/score-star.svg';
 import './ItemBox.scss';
 
+type Props = {
+  img?: string;
+  type?: string;
+  name?: string;
+  volume?: string;
+  price?: string;
+  score?: string;
+  page?: string;
+  number?: number;
+  params?: string;
+};
+
 export default function ItemBox({
   img,
   type,
@@ -21,7 +33,7 @@ export default function ItemBox({
   page,
   number,
   params,
-}) {
+}: Props) {
   const [onHeart, setOnHeart] = useState(false);
   const router = useRouter();
 
