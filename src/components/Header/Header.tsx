@@ -17,12 +17,12 @@ type Props = {
 
 export default function Header({ title }: Props) {
   const router = useRouter();
-  var titleName; // titleName 변수를 선언합니다.
+  let titleName;
 
   switch (title) {
     case '1':
       titleName = '전체보기';
-      break; // 각 case 끝에 break를 추가합니다.
+      break; 
     case '2':
       titleName = '레드 와인';
       break;
@@ -48,7 +48,7 @@ export default function Header({ title }: Props) {
       titleName = '상세보기';
       break;
     default:
-      titleName = title; // 필요에 따라 기본값을 처리할 수 있습니다.
+      titleName = title; 
   }
 
   return (
