@@ -57,8 +57,9 @@ $line-height: 18px;
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
-
     position: relative;
+    margin-left: 5px;
+    
     .itemBox-heart{
       position: absolute;
       top: 15px;

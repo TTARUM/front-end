@@ -135,10 +135,12 @@ $margin: 24px;
     .main-event {
         margin-left: $margin;
         margin-top: 9px;
-        >p{
+
+        >p {
             font-size: $font-large;
             margin-bottom: 33px;
         }
+
         .event_1,
         .event_2 {
             position: relative;
