@@ -1,38 +1,38 @@
 @import '../globals.scss';
 
-$margin : 20px;
-$font-medium: 14px;
+$margin : 39px;
+$margin-top : 19px;
+$font-medium: 16px;
 $font-bold: 700;
 
 .category-container {
-    margin-left: $margin;
+    // margin-left: $margin;
+    padding-left: 34px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
 
     .category-itemBox {
-        width: 166px;
-        height: 117px;
+        width: 26%;
+        height: 121px;
         margin-top: $margin;
-        margin-right: 13px;
-        border-radius: 30px;
-        padding: 20px;
-
+        margin-right: 25px;
         position: relative;
         cursor: pointer;
-
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         p {
             font-weight: $font-bold;
             font-size: $font-medium;
-            color: white;
+            margin-top: $margin-top;
         }
 
         img {
             width: 100%;
-            position: absolute;
-            left: 0;
-            bottom: 0;
+            height: 80px;
         }
     }
 }

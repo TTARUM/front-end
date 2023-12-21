@@ -18,16 +18,20 @@ $orange : #FF6135;
     align-items: center;
     flex-direction: column;
     cursor: pointer;
-    >img{
+    width: 50px;
+
+    >img {
       width: 20px;
       height: 20px;
     }
+
     >p {
       font-size: $font-small;
       margin-top: 5px;
       color: $gray;
     }
-    >p.active{
+
+    >p.active {
       color: $orange;
     }
   }
