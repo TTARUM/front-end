@@ -1,0 +1,22 @@
+.productDetailAddInform {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  & > div:nth-child(1) {
+    width: 100%;
+    height: 393px;
+    background-size: cover;
+    position: relative;
+  }
+}
+
+.productDetailAddInform-addButton {
+  width: 345px;
+  height: 39px;
+  color: rgba(255, 97, 53, 1);
+  background-color: #ffffff;
+  border: 1px solid rgba(255, 97, 53, 1);
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 24px auto;
+}

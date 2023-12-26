@@ -1,0 +1,27 @@
+.ProductDetailToggle {
+  display: flex;
+  border-top: rgba(231, 231, 231, 1);
+  height: 48px;
+  cursor: pointer;
+  color: rgba(153, 153, 153, 1);
+  border-top: 1px solid rgba(231, 231, 231, 1);
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+
+.highlight {
+  font-weight: 700;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 1);
+  border-bottom: 3px solid rgba(255, 97, 53, 1);
+  transition: 0.2s all;
+}
+
+.unHighlight {
+}
