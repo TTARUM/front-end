@@ -2,11 +2,27 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  & > div:nth-child(1) {
-    width: 100%;
+}
+.productDetailAddInform-list {
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+
+  & > div {
+    min-width: 393px;
     height: 393px;
-    background-size: cover;
     position: relative;
+  }
+}
+.productDetailAddInform-list-hide {
+  &::before {
+    content: '';
+    background: linear-gradient(to top, white, transparent);
+    position: absolute;
+    bottom: 0;
+    height: 30%;
+    width: 100%;
+    z-index: 9;
   }
 }
 
@@ -19,4 +35,129 @@
   border-radius: 30px;
   cursor: pointer;
   margin: 24px auto;
+}
+
+.productDetailAddInform-unfold {
+  height: auto;
+}
+
+// 카테고리 인기 상품
+.ProductDetailHotProduct {
+  margin-left: 24px;
+  & > p {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+}
+
+.ProductDetailHotProduct-hotProducts {
+  display: flex;
+  overflow-x: scroll;
+  & > div > div > p {
+    font-weight: 500;
+    font-size: 10px;
+    width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 10px;
+  }
+  & > div > div > span {
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(153, 153, 153, 1);
+
+    & > strong {
+      font-size: 10px;
+      color: rgba(0, 0, 0, 1);
+      font-weight: 700;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+.ProductDetailHotProduct-hotProduct {
+  display: flex;
+  cursor: pointer;
+  & > div > h1 {
+    font-weight: 700;
+    font-size: 14px;
+    margin-right: 12px;
+  }
+}
+
+.ProductDetailHotProduct-hotProductImg {
+  width: 92px;
+  height: 106px;
+  position: relative;
+  margin-right: 12px;
+  & > div {
+    width: 16px;
+    height: 12px;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+  }
+}
+
+// 가격대가 비슷한 술
+.ProductDetailSimilarPrice {
+  margin-left: 24px;
+  & > p {
+    font-weight: 700;
+    font-size: 14px;
+    margin: 24px 0;
+  }
+  margin-bottom: 24px;
+}
+
+.ProductDetailSimilarPrice-SimilarProducts {
+  display: flex;
+  overflow-x: scroll;
+
+  & > div > div > p {
+    font-weight: 500;
+    font-size: 10px;
+    width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 10px;
+  }
+  & > div > div > span {
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(153, 153, 153, 1);
+
+    & > strong {
+      font-size: 10px;
+      color: rgba(0, 0, 0, 1);
+      font-weight: 700;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+.ProductDetailSimilarPrice-SimilarProduct {
+  display: flex;
+  cursor: pointer;
+}
+
+.ProductDetailSimilarPrice-SimilarProductImg {
+  width: 92px;
+  height: 106px;
+  position: relative;
+  margin-right: 12px;
+  & > div {
+    width: 16px;
+    height: 12px;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+  }
 }
