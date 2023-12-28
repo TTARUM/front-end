@@ -35,7 +35,7 @@ export default function Category() {
           {testBox?.map((item, idx) => {
             return (
               <div
-                key={idx}
+                key={item.id}
                 className="category-itemBox"
                 onClick={() => {
                   router.push(`/products/${item.id}`);

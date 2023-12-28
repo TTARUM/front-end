@@ -74,7 +74,7 @@ export default function Main() {
               return (
                 <Category
                   id={item.id}
-                  key={idx}
+                  key={item.id}
                   img={item.img}
                   title={item.name}
                 />

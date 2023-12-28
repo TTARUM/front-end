@@ -132,7 +132,7 @@ export default function ProductDetailAddInform() {
         >
           {item.map((drink, index) => {
             return (
-              <div key={index} className="ProductDetailHotProduct-hotProduct">
+              <div key={drink.id} className="ProductDetailHotProduct-hotProduct">
                 <div>
                   <h1>{drink.id}</h1>
                 </div>
