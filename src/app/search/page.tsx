@@ -1,3 +1,5 @@
+'use client'
+
 import './search.scss';
 
 import Header from '@/components/Header/Header';
@@ -5,6 +7,8 @@ import Image from 'next/image';
 
 import search from '../../../public/search.svg';
 import close from '../../../public/close.svg';
+import Navigation from '@/components/Navigation/Navigation';
+import { usePathname } from 'next/navigation';
 
 export default function Search() {
   const searchItem: string[] = [
@@ -15,6 +19,7 @@ export default function Search() {
     '안주',
     '안주',
   ];
+  const path = usePathname();
 
   return (
     <div className="main">
@@ -52,6 +57,7 @@ export default function Search() {
           </div>
         </div>
       </div>
+      <Navigation pathName={path} />
     </div>
   );
 }

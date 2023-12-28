@@ -11,6 +11,8 @@ import testRed from '../../../public/test-red.svg';
 import testRose from '../../../public/test-rose.svg';
 import testWhite from '../../../public/test-white.svg';
 import { useState } from 'react';
+import Navigation from '@/components/Navigation/Navigation';
+import { usePathname } from 'next/navigation';
 
 export default function Heart() {
   const testItem: {
@@ -48,7 +50,7 @@ export default function Heart() {
   ];
 
   const [showAlert, setShowAlert] = useState(false);
-
+  const path = usePathname();
   const clickHandle = () => {};
 
   return (
@@ -103,6 +105,7 @@ export default function Heart() {
           </div>
         </div>
       </div>
+      <Navigation pathName={path} />
     </div>
   );
 }

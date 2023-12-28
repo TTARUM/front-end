@@ -22,7 +22,7 @@ export default function Header({ title }: Props) {
   switch (title) {
     case '1':
       titleName = '전체보기';
-      break; 
+      break;
     case '2':
       titleName = '레드 와인';
       break;
@@ -44,60 +44,14 @@ export default function Header({ title }: Props) {
     case '8':
       titleName = '안주';
       break;
-    case '상세보기':
-      titleName = '상세보기';
-      break;
     default:
-      titleName = title; 
+      titleName = title;
   }
 
   return (
     <>
-      {title ? (
-        titleName === '상세보기' ? (
-          <div className="header-container">
-            <Image
-              onClick={() => {
-                window.history.back();
-              }}
-              src={back}
-              alt="back"
-            />
-            <p>{titleName}</p>
-            <div className="header-menu">
-              <Image
-                onClick={() => {
-                  router.push('/heart');
-                }}
-                src={heart}
-                alt="heart"
-              />
-              <Image src={cart} alt="cart" />
-            </div>
-          </div>
-        ) : (
-          <div className="header-container">
-            <p>{titleName}</p>
-            <div className="header-menu">
-              <Image
-                onClick={() => {
-                  router.push('/heart');
-                }}
-                src={heart}
-                alt="heart"
-              />
-              <Image src={cart} alt="cart" />
-              <Image
-                onClick={() => {
-                  window.history.back();
-                }}
-                src={back}
-                alt="back"
-              />
-            </div>
-          </div>
-        )
-      ) : (
+      {/* window.history.back(); */}
+      {titleName === '홈' ? (
         <div className="header-container">
           <Image
             onClick={() => {
@@ -114,6 +68,58 @@ export default function Header({ title }: Props) {
               src={search}
               alt="search"
             />
+            <Image
+              onClick={() => {
+                router.push('/heart');
+              }}
+              src={heart}
+              alt="heart"
+            />
+            <Image
+              onClick={() => {
+                router.push('/');
+              }}
+              src={cart}
+              alt="cart"
+            />
+          </div>
+        </div>
+      ) : titleName === '검색' || titleName === '카테고리' || titleName === '찜한상품' || titleName === '마이페이지'? (
+        <div className="header-container">
+          <p>{titleName}</p>
+          <div className="header-menu">
+            {titleName === '마이페이지' ? null : (
+              <>
+                <Image
+                  onClick={() => {
+                    router.push('/heart');
+                  }}
+                  src={heart}
+                  alt="heart"
+                />
+                <Image
+                  onClick={() => {
+                    router.push('/');
+                  }}
+                  src={cart}
+                  alt="cart"
+                />
+              </>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="header-container">
+          <Image
+            className="header-back"
+            src={back}
+            alt="back"
+            onClick={() => {
+              window.history.back();
+            }}
+          />
+          <p className='center'>{titleName}</p>
+          <div className="header-menu">
             <Image
               onClick={() => {
                 router.push('/heart');

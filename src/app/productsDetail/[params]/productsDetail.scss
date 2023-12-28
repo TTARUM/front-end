@@ -1,14 +1,15 @@
 @import '../../globals.scss';
 
-.detail {
-  margin-bottom: 60px;
-}
-
 $margin: 24px;
 $font-bold: 700;
 $font-large: 24px;
 $font-medium: 14px;
 $font-color: #999999;
+
+.detail{
+  width: 393px;
+  position: relative;
+}
 
 //상세 페이지 이미지
 .detail-inform-img {
@@ -86,7 +87,6 @@ $font-color: #999999;
 // 토글 버튼
 .ProductDetailToggle {
   display: flex;
-  border-top: rgba(231, 231, 231, 1);
   height: 48px;
   cursor: pointer;
   color: rgba(153, 153, 153, 1);
@@ -109,8 +109,6 @@ $font-color: #999999;
   transition: 0.2s all;
 }
 
-.unHighlight {
-}
 
 .ProductDetailBuy {
   display: flex;
@@ -118,6 +116,10 @@ $font-color: #999999;
   justify-content: center;
   border-top: 1px solid rgba(227, 227, 227, 1);
   height: 60px;
+  width: 393px;
+  background : #fff;
+  position: fixed;
+  bottom: 0px;
 
   & > div:nth-child(1) {
     display: flex;
@@ -144,5 +146,9 @@ $font-color: #999999;
     border-radius: 5px;
     margin-left: 24px;
     cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+   
   }
 }
+

@@ -1,7 +1,7 @@
 'use client';
 
 import './category.scss';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Header from '@/components/Header/Header';
 import category_all from '../../../public/category_all.svg';
 import category_redWine from '../../../public/category_redWine.svg';
@@ -12,9 +12,11 @@ import category_dessertWine from '../../../public/category_dessertWine.svg';
 import category_nonAlcohol from '../../../public/category_nonAlcohol.svg';
 import category_snack from '../../../public/category_snack.svg';
 import Image from 'next/image';
+import Navigation from '@/components/Navigation/Navigation';
 
 export default function Category() {
   const router = useRouter();
+  const path = usePathname();
 
   const testBox: { img: string; name: string; id: number }[] = [
     { img: category_all, name: '전체보기', id: 1 },
@@ -48,6 +50,7 @@ export default function Category() {
           })}
         </div>
       </div>
+      <Navigation pathName={path} />
     </div>
   );
 }

@@ -17,15 +17,18 @@ import onSearch from '../../../public/onSearch.svg';
 import onCategory from '../../../public/onCategory.svg';
 import user from '../../../public/user.svg';
 
-export default function Navigation() {
+type Props = {
+  pathName: string;
+};
+
+export default function Navigation({ pathName }: Props) {
   const router = useRouter();
-  const [onItem, setOnItem] = useState<string>('/');
+  const [onItem, setOnItem] = useState<string>(pathName);
 
   const routerNavigation = (e: string) => {
     router.push(e);
     setOnItem(e);
   };
-  console.log(onItem);
 
   return (
     <div className="navigation">

@@ -23,7 +23,8 @@ import collection_4 from '../../../public/collection_4.svg';
 import CollectionBox from '@/components/CollectionBox/CollectionBox';
 import event_1 from '../../../public/event_1.svg';
 import event_2 from '../../../public/event_2.svg';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import Navigation from '@/components/Navigation/Navigation';
 
 const testCategory: { img: string; name: string; id: number }[] = [
   { img: RED, name: '레드 와인', id: 2 },
@@ -51,10 +52,11 @@ const testCollection: { img: string; text: string }[] = [
 
 export default function Main() {
   const router = useRouter();
+  const path = usePathname();
 
   return (
     <div className="main-container">
-      <Header title={'1'} />
+      <Header title={'홈'} />
       <div className="main-banner">
         <div className="title">
           <p className="first-title">와인 어디서 사지? 고민될 땐</p>
@@ -136,6 +138,7 @@ export default function Main() {
           </p>
         </div>
       </div>
+      <Navigation pathName={path} />
     </div>
   );
 }

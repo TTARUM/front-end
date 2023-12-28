@@ -9,6 +9,7 @@ import heart from '../../../../public/heartFill.svg';
 import { useState } from 'react';
 import './productsDetail.scss';
 import Image from 'next/image';
+import ProductDetailBuyInform from '@/components/ProductDetailBuyInform/ProductDetailBuyInform';
 
 type Props = {
   img?: string;
@@ -24,6 +25,7 @@ type Props = {
 
 export default function ProductsDetail({ params }: Props) {
   const [currentInform, setCurrentInform] = useState<string>('상품정보');
+  const [show, setShow] = useState<boolean>(false);
 
   const changeToggle = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
@@ -113,8 +115,17 @@ export default function ProductsDetail({ params }: Props) {
           <p>99</p>
         </div>
 
-        <button>구매하기</button>
+        <button
+          onClick={() => {
+            setShow(true);
+          }}
+        >
+          구매하기
+        </button>
       </div>
+      {show === true ? (
+        <ProductDetailBuyInform title={'ss'} price={20000} setShow={setShow} showBuy={show} />
+      ) : null}
     </main>
   );
 }
