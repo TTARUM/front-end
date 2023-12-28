@@ -84,60 +84,63 @@ export default function Main() {
             })
           : null}
       </div>
-      <div className="main-bestSeller">
-        <div className="bestSeller-header">
-          <div className="bestSeller-title">
-            <Image src={bottom} alt="bottom" />
-            <p>
-              <span>이번주</span> 가장 많이 팔렸어요
+      <div className='main-wrap'>
+        <div className="main-bestSeller">
+          <div className="bestSeller-header">
+            <div className="bestSeller-title">
+              <Image src={bottom} alt="bottom" />
+              <p>
+                <span>이번주</span> 가장 많이 팔렸어요
+              </p>
+            </div>
+            <p
+              className="bestSeller-more"
+              onClick={() => {
+                router.push(`/products/1`);
+              }}
+            >
+              전체보기
             </p>
           </div>
-          <p
-            className="bestSeller-more"
-            onClick={() => {
-              router.push(`/products/1`);
-            }}
-          >
-            전체보기
-          </p>
+          <div className="bestSeller-item">
+            <ItemBox page="main" number={1} />
+            <ItemBox page="main" number={2} />
+            <ItemBox page="main" number={3} />
+          </div>
         </div>
-        <div className="bestSeller-item">
-          <ItemBox page="main" number={1} />
-          <ItemBox page="main" number={2} />
-          <ItemBox page="main" number={3} />
+        <div className="main-collection">
+          <div className="collection-header">
+            <p className="collection-title">베스트 추천 컬렉션</p>
+          </div>
+          <div className="collection-item">
+            {Array.isArray(testCollection)
+              ? testCollection.map((item, idx) => {
+                  return (
+                    <CollectionBox key={idx} img={item.img} text={item.text} />
+                  );
+                })
+              : null}
+          </div>
         </div>
-      </div>
-      <div className="main-collection">
-        <div className="collection-header">
-          <p className="collection-title">베스트 추천 컬렉션</p>
-        </div>
-        <div className="collection-item">
-          {Array.isArray(testCollection)
-            ? testCollection.map((item, idx) => {
-                return (
-                  <CollectionBox key={idx} img={item.img} text={item.text} />
-                );
-              })
-            : null}
-        </div>
-      </div>
-      <div className="main-event">
-        <p>따름 PICK! 특별기획전</p>
-        <div className="event_1">
-          <Image src={event_1} alt="" />
-          <p>
-            와인 입문자를 위한 <br />
-            <span>추천 와인 컬렉션</span>
-          </p>
-        </div>
-        <div className="event_2">
-          <Image src={event_2} alt="" />
-          <p>
-            이거 뭐랑 먹으면 맛있어요? <br />
-            <span>환상의 짝궁 특별전</span>
-          </p>
+        <div className="main-event">
+          <p>따름 PICK! 특별기획전</p>
+          <div className="event_1">
+            <Image src={event_1} alt="" />
+            <p>
+              와인 입문자를 위한 <br />
+              <span>추천 와인 컬렉션</span>
+            </p>
+          </div>
+          <div className="event_2">
+            <Image src={event_2} alt="" />
+            <p>
+              이거 뭐랑 먹으면 맛있어요? <br />
+              <span>환상의 짝궁 특별전</span>
+            </p>
+          </div>
         </div>
       </div>
+
       <Navigation pathName={path} />
     </div>
   );

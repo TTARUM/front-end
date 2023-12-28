@@ -61,25 +61,90 @@ $margin: 24px;
         }
     }
 
-    .main-bestSeller {
-        margin-left: $margin;
-        margin-top: 25px;
+    .main-wrap {
+        padding: 0px 24px;
 
-        .bestSeller-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 33px;
+        .main-bestSeller {
+            margin-top: 25px;
 
-            .bestSeller-title {
-                align-items: center;
+            .bestSeller-header {
                 display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 33px;
 
-                img {
-                    margin-right: 5px;
+                .bestSeller-title {
+                    align-items: center;
+                    display: flex;
+
+                    img {
+                        margin-right: 5px;
+                    }
+
+                    p {
+                        font-size: $font-large;
+
+                        span {
+                            font-weight: $font-bold;
+                        }
+                    }
                 }
 
+                .bestSeller-more {
+                    font-size: $font-small;
+                    cursor: pointer;
+                }
+            }
+
+            .bestSeller-item {
+                margin-top: 20px;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+            }
+        }
+
+        .main-collection {
+            margin-top: 25px;
+
+            .collection-header {
+
+                .collection-title {
+                    font-size: $font-large;
+                }
+            }
+
+            .collection-item {
+                margin-top: 25px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+
+            }
+        }
+
+        .main-event {
+            margin-top: 9px;
+
+            >p {
+                font-size: $font-large;
+                margin-bottom: 33px;
+            }
+
+            .event_1,
+            .event_2 {
+                position: relative;
+
                 p {
+                    position: absolute;
+                    top: 20px;
+                    left: 20px;
                     font-size: $font-large;
 
                     span {
@@ -88,79 +153,12 @@ $margin: 24px;
                 }
             }
 
-            .bestSeller-more {
-                font-size: $font-small;
-                margin-right: 25px;
-                cursor: pointer;
-            }
-        }
-
-        .bestSeller-item {
-            margin-top: 20px;
-
-            &::-webkit-scrollbar {
-                display: none;
+            .event_2 {
+                color: white;
+                margin-top: 24px;
+                margin-bottom: 24px;
             }
         }
     }
 
-    .main-collection {
-        margin-left: $margin;
-        margin-top: 25px;
-
-        .collection-header {
-
-            .collection-title {
-                font-size: $font-large;
-            }
-        }
-
-        .collection-item {
-            margin-top: 25px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-
-            &::-webkit-scrollbar {
-                display: none;
-            }
-
-            img {
-                margin-right: 10px;
-            }
-        }
-    }
-
-    .main-event {
-        margin-left: $margin;
-        margin-top: 9px;
-
-        >p {
-            font-size: $font-large;
-            margin-bottom: 33px;
-        }
-
-        .event_1,
-        .event_2 {
-            position: relative;
-
-            p {
-                position: absolute;
-                top: 20px;
-                left: 20px;
-                font-size: $font-large;
-
-                span {
-                    font-weight: $font-bold;
-                }
-            }
-        }
-
-        .event_2 {
-            color: white;
-            margin-top: 24px;
-            margin-bottom: 24px;
-        }
-    }
 }
