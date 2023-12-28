@@ -55,13 +55,12 @@ $line-height: 18px;
     }
   }
   .itemBox-item{
+    width: 168px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
     position: relative;
-    margin-left: 5px;
-    
     .itemBox-heart{
       position: absolute;
       top: 15px;

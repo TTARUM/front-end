@@ -1,9 +1,60 @@
 @import '../../globals.scss';
 
-$margin : 20px;
 
-.products-container{
-    margin-left: $margin;
-    display: flex;
-    flex-wrap: wrap;
+.products-container {
+    .products-wrap {
+        padding: 0px 20px;
+
+        .products-sort {
+            font-size: 14px;
+            margin: 13px 0px 22px 0px;
+            text-align: end;
+            position: relative;
+
+            >p {
+                color: #151515;
+                cursor: pointer;
+
+                >img {
+                    margin-left: 10px;
+                }
+            }
+
+            .products-alert {
+                width: 95px;
+                height: 110px;
+                background: #ffff;
+                border-radius: 10px;
+                border: 1px solid #151515;
+                display: none;
+                position: absolute;
+                top: 24px;
+                right: 0px;
+                z-index: 1;
+                
+                >.products-alert-text {
+                    font-size: 12px;
+                    margin: 4px 0px;
+                    color: #999999;
+                    cursor: pointer;
+                }
+                >.products-alert-text.active{
+                    color: #151515;
+                }
+            }
+            .products-alert.active{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+        }
+
+
+        .products-item-area {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+    }
 }

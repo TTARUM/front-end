@@ -50,7 +50,6 @@ export default function Header({ title }: Props) {
 
   return (
     <>
-      {/* window.history.back(); */}
       {titleName === '홈' ? (
         <div className="header-container">
           <Image
