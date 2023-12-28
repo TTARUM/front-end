@@ -97,18 +97,7 @@ export default function ProductDetailAddInform() {
             : 'productDetailAddInform-list-hide'
         }`}
       >
-        <div>
-          <Image src={detailPicture} fill alt="detailPicture" />
-        </div>
-        <div>
-          <Image src={detailPicture} fill alt="detailPicture" />
-        </div>
-        <div>
-          <Image src={detailPicture} fill alt="detailPicture" />
-        </div>
-        <div>
-          <Image src={detailPicture} fill alt="detailPicture" />
-        </div>
+        <Image src={detailPicture} alt="detailPicture" />
       </div>
 
       <button
@@ -132,7 +121,10 @@ export default function ProductDetailAddInform() {
         >
           {item.map((drink, index) => {
             return (
-              <div key={drink.id} className="ProductDetailHotProduct-hotProduct">
+              <div
+                key={drink.id}
+                className="ProductDetailHotProduct-hotProduct"
+              >
                 <div>
                   <h1>{drink.id}</h1>
                 </div>
