@@ -60,7 +60,7 @@ export default function Main() {
       <div className="main-banner">
         <div className="title">
           <p className="first-title">와인 어디서 사지? 고민될 땐</p>
-          <p className="second-title">와인 커머스 '띠름'</p>
+          <p className="second-title">와인 커머스 '따름'</p>
         </div>
         <div className="sub-title">
           <p>
@@ -84,7 +84,7 @@ export default function Main() {
             })
           : null}
       </div>
-      <div className='main-wrap'>
+      <div className="main-wrap">
         <div className="main-bestSeller">
           <div className="bestSeller-header">
             <div className="bestSeller-title">
