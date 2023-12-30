@@ -10,6 +10,7 @@ import { useState } from 'react';
 import './productsDetail.scss';
 import Image from 'next/image';
 import ProductDetailBuyInform from '@/components/ProductDetailBuyInform/ProductDetailBuyInform';
+import ProductDetailReview from '@/components/ProductDetailReview/ProductDetailReview';
 
 type Props = {
   img?: string;
@@ -103,7 +104,7 @@ export default function ProductsDetail({ params }: Props) {
       </div>
 
       {currentInform === '상품정보' && <ProductDetailAddInform />}
-      {currentInform === '리뷰24' && <ProductDetailAddInform />}
+      {currentInform === '리뷰24' && <ProductDetailReview />}
       {currentInform === '문의' && <ProductDetailAddInform />}
       {currentInform === '교환/반품' && <ProductDetailAddInform />}
 
@@ -124,7 +125,12 @@ export default function ProductsDetail({ params }: Props) {
         </button>
       </div>
       {show === true ? (
-        <ProductDetailBuyInform title={'ss'} price={20000} setShow={setShow} showBuy={show} />
+        <ProductDetailBuyInform
+          title={'ss'}
+          price={20000}
+          setShow={setShow}
+          showBuy={show}
+        />
       ) : null}
     </main>
   );

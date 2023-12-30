@@ -6,7 +6,7 @@ $font-large: 24px;
 $font-medium: 14px;
 $font-color: #999999;
 
-.detail{
+.detail {
   width: 393px;
   position: relative;
 }
@@ -99,16 +99,14 @@ $font-color: #999999;
     font-size: 14px;
     line-height: 22px;
   }
+  & > .highlight {
+    font-weight: 700;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 1);
+    border-bottom: 3px solid rgba(255, 97, 53, 1);
+    transition: 0.2s all;
+  }
 }
-
-.highlight {
-  font-weight: 700;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 1);
-  border-bottom: 3px solid rgba(255, 97, 53, 1);
-  transition: 0.2s all;
-}
-
 
 .ProductDetailBuy {
   display: flex;
@@ -117,7 +115,7 @@ $font-color: #999999;
   border-top: 1px solid rgba(227, 227, 227, 1);
   height: 60px;
   width: 393px;
-  background : #fff;
+  background: #fff;
   position: fixed;
   bottom: 0px;
 
@@ -148,7 +146,5 @@ $font-color: #999999;
     cursor: pointer;
     font-size: 20px;
     font-weight: 700;
-   
   }
 }
-
