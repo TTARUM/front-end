@@ -1,0 +1,87 @@
+.ProductDetailAsk {
+  margin-bottom: 60px;
+  .ask-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid rgba(231, 231, 231, 1);
+    height: 88px;
+
+    & > button {
+      width: 344px;
+      height: 41px;
+      color: rgba(255, 97, 53, 1);
+      border: 1px solid rgba(255, 97, 53, 1);
+      font-size: 14px;
+      font-weight: 700;
+      background-color: transparent;
+      border-radius: 5px;
+    }
+  }
+
+  & > .ask-lists {
+    & > .no-ask {
+      height: 153px;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: rgba(153, 153, 153, 1);
+
+      & > img {
+        margin-bottom: 12px;
+      }
+    }
+
+    & > .ask-lists-box {
+      height: 376px;
+
+      & > .ask-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 24px;
+        min-height: 70px;
+        border-bottom: 1px solid rgba(231, 231, 231, 1);
+
+        & > .secretBox {
+          display: flex;
+          color: rgba(153, 153, 153, 1);
+        }
+
+        & > div > h1 {
+          font-size: 14px;
+          font-weight: 400;
+          margin-bottom: 5px;
+          margin-right: 3px;
+        }
+
+        & > div > .nickname {
+          padding: 0 4px;
+        }
+
+        & > div > span {
+          font-size: 10px;
+          color: rgba(153, 153, 153, 1);
+        }
+
+        & > div > .highlight {
+          color: rgba(0, 0, 0, 1);
+        }
+      }
+
+      & > .detailContent {
+        display: flex;
+        align-items: center;
+        background-color: rgba(227, 227, 227, 1);
+        min-height: 50px;
+        padding-left: 24px;
+        font-size: 10px;
+        & > img {
+          margin-right: 23px;
+        }
+      }
+    }
+  }
+}

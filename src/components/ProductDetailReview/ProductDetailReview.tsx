@@ -114,7 +114,6 @@ export default function ProductDetailReview() {
         <div>
           <h1>사진 후기</h1>
           <div>
-            {/** 더보기 버튼을 누르면 모달창 모든 사진이 보이는 모달창 띄워주기 / 디자인없어서 보류 */}
             {더미데이터.length > 4
               ? 더미데이터.map((item, index) => {
                   if (index >= 4) return;
@@ -158,9 +157,10 @@ export default function ProductDetailReview() {
               onClick={() => setIsReviewToggle((pre) => !pre)}
               ref={dropdownRef}
             >
-              {toggleList.map((list) => {
+              {toggleList.map((list, index) => {
                 return (
                   <p
+                    key={index}
                     onClick={() => changeReviewSequence(list)}
                     className={
                       currentToggle === list ? 'highlight' : 'unHighlight'
@@ -175,7 +175,7 @@ export default function ProductDetailReview() {
         </div>
         {더미데이터.map((item) => {
           return (
-            <div className="ProductDetailReview-comment">
+            <div key={item.id} className="ProductDetailReview-comment">
               <div>
                 <Image src={reviewPicture} alt="profile" />
                 <p>
