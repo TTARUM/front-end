@@ -74,6 +74,8 @@ export default function Products({ params }: Props) {
           <ItemBox page="products" params={params.params} />
           <ItemBox page="products" params={params.params} />
           <ItemBox page="products" params={params.params} />
+          <ItemBox page="products" params={params.params} />
+
         </div>
       </div>
     </main>

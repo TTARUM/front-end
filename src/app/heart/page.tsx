@@ -48,8 +48,11 @@ export default function Heart() {
       id: 3,
     },
   ];
+  const sortText = ['최근찜한순', '높은평점순', '낮은평점순'];
 
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [sort, setSort] = useState<string>('최근찜한순');
+
   const path = usePathname();
   const clickHandle = () => {};
 
@@ -67,7 +70,7 @@ export default function Heart() {
                   setShowAlert(!showAlert);
                 }}
               >
-                <p>{`${'최근찜한순'} `}</p>
+                <p>{sort}</p>
                 <Image
                   src={
                     showAlert === true ? downright_triangle : upright_triangle
@@ -80,9 +83,17 @@ export default function Heart() {
                   showAlert === true ? 'item-alert active' : 'item-alert'
                 }
               >
-                <p>최근찜한순</p>
-                <p>높은평점순</p>
-                <p>낮은평점순</p>
+                {sortText.map((item, idx) => (
+                  <p
+                    className={sort == item? 'item-alert-text active' :'item-alert-text'}
+                    onClick={() => {
+                      setSort(item), setShowAlert(false);
+                    }}
+                    key={idx}
+                  >
+                    {item}
+                  </p>
+                ))}
               </div>
             </div>
           </div>

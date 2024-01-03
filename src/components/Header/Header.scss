@@ -1,12 +1,12 @@
 @import '../../app/globals.scss';
 
 .header-container {
-    margin: 20px 0px;
     padding: 0px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
+    height: 62px;
 
     >img {
         cursor: pointer;
