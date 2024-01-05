@@ -1,4 +1,4 @@
-export const changePeriod = [
+export const changePeriod: { content: string }[] = [
   {
     content: '교환, 취소, 반품, 환불은 상품 수령 후 7일 이내에 가능합니다.',
   },
@@ -8,7 +8,7 @@ export const changePeriod = [
   },
 ];
 
-export const noChangeGuide = [
+export const noChangeGuide: { content: string }[] = [
   {
     content:
       '고객님이 상품 포장을 개봉하여 상품의 가치가 훼손된 경우 (단, 내용 확인을 위한 포장 개봉의 경우는 예외)',
