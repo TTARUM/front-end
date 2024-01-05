@@ -12,6 +12,7 @@ import Image from 'next/image';
 import ProductDetailBuyInform from '@/components/ProductDetailBuyInform/ProductDetailBuyInform';
 import ProductDetailReview from '@/components/ProductDetailReview/ProductDetailReview';
 import ProductDetailAsk from '@/components/ProductDetailAsk/ProductDetailAsk';
+import ProductDetailChange from '@/components/ProductDetailChange/ProductDetailChange';
 
 type Props = {
   img?: string;
@@ -107,7 +108,7 @@ export default function ProductsDetail({ params }: Props) {
       {currentInform === '상품정보' && <ProductDetailAddInform />}
       {currentInform === '리뷰24' && <ProductDetailReview />}
       {currentInform === '문의' && <ProductDetailAsk />}
-      {currentInform === '교환/반품' && <ProductDetailAddInform />}
+      {currentInform === '교환/반품' && <ProductDetailChange />}
 
       <div className="ProductDetailBuy">
         <div>

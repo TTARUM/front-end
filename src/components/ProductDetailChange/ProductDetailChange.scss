@@ -1,0 +1,40 @@
+.ProductDetailChange {
+  margin-bottom: 60px;
+  padding: 0 24px;
+
+  & > div > h1 {
+    color: rgba(255, 116, 78, 1);
+    font-size: 14px;
+    font-weight: 700;
+    padding: 24px 0;
+  }
+
+  & > .changePerid {
+    & > ul {
+      padding: 0 24px;
+      font-size: 11px;
+      color: rgba(153, 153, 153, 1);
+
+      & > li {
+        margin-bottom: 15px;
+      }
+    }
+    border-bottom: 1px solid rgba(231, 231, 231, 1);
+  }
+
+  & > .noChangeGuide {
+    & > ul {
+      padding: 0 24px;
+      font-size: 11px;
+      color: rgba(153, 153, 153, 1);
+
+      & > li {
+        margin-bottom: 15px;
+      }
+      & > li:last-child {
+        margin-bottom: 45px;
+      }
+    }
+    border-bottom: 1px solid rgba(231, 231, 231, 1);
+  }
+}
