@@ -17,7 +17,7 @@ type Props = {
 
 export default function Header({ title }: Props) {
   const router = useRouter();
-  let titleName;
+  let titleName: string;
 
   switch (title) {
     case '1':
@@ -36,12 +36,6 @@ export default function Header({ title }: Props) {
       titleName = '스파클링 와인';
       break;
     case '6':
-      titleName = '디저트 와인';
-      break;
-    case '7':
-      titleName = '논알코올';
-      break;
-    case '8':
       titleName = '안주';
       break;
     default:
@@ -83,7 +77,10 @@ export default function Header({ title }: Props) {
             />
           </div>
         </div>
-      ) : titleName === '검색' || titleName === '카테고리' || titleName === '찜한상품' || titleName === '마이페이지'? (
+      ) : titleName === '검색' ||
+        titleName === '카테고리' ||
+        titleName === '찜한상품' ||
+        titleName === '마이페이지' ? (
         <div className="header-container">
           <p>{titleName}</p>
           <div className="header-menu">
@@ -117,7 +114,7 @@ export default function Header({ title }: Props) {
               window.history.back();
             }}
           />
-          <p className='center'>{titleName}</p>
+          <p className="center">{titleName}</p>
           <div className="header-menu">
             <Image
               onClick={() => {

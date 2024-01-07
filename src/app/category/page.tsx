@@ -8,8 +8,6 @@ import category_redWine from '../../../public/category_redWine.svg';
 import category_whiteWine from '../../../public/category_whiteWine.svg';
 import category_roseWine from '../../../public/category_roseWine.svg';
 import category_sparklingWine from '../../../public/category_sparklingWine.svg';
-import category_dessertWine from '../../../public/category_dessertWine.svg';
-import category_nonAlcohol from '../../../public/category_nonAlcohol.svg';
 import category_snack from '../../../public/category_snack.svg';
 import Image from 'next/image';
 import Navigation from '@/components/Navigation/Navigation';
@@ -24,9 +22,7 @@ export default function Category() {
     { img: category_whiteWine, name: '화이트 와인', id: 3 },
     { img: category_roseWine, name: '로제 와인', id: 4 },
     { img: category_sparklingWine, name: '스파클링 와인', id: 5 },
-    { img: category_dessertWine, name: '디저트 와인', id: 6 },
-    { img: category_nonAlcohol, name: '논알코올', id: 7 },
-    { img: category_snack, name: '안주', id: 8 },
+    { img: category_snack, name: '안주', id: 6 },
   ];
 
   return (
