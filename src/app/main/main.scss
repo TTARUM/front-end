@@ -52,10 +52,10 @@ $margin: 24px;
 
     .main-category {
         display: flex;
+        justify-content: space-between;
         flex-wrap: wrap;
         height: 200px;
-        margin-left: $margin;
-
+        padding: 0px 64px;
         &::-webkit-scrollbar {
             display: none;
         }

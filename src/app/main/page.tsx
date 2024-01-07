@@ -1,7 +1,6 @@
 'use client';
 
 import './main.scss';
-import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Category from '@/components/CategoryItem/Category';
@@ -10,8 +9,6 @@ import RED from '../../../public/RED.svg';
 import WHITE from '../../../public/WHITE.svg';
 import ROSE from '../../../public/ROSE.svg';
 import SPARKLING from '../../../public/SPARKLING.svg';
-import DESSERT from '../../../public/DESSERT.svg';
-import NON_ALCOHOLIC from '../../../public/NON_ALCOHOLIC.svg';
 import SNACK from '../../../public/SNACK.svg';
 import all from '../../../public/all.svg';
 import bottom from '../../../public/bottom.svg';
@@ -31,9 +28,7 @@ const testCategory: { img: string; name: string; id: number }[] = [
   { img: WHITE, name: '화이트 와인', id: 3 },
   { img: ROSE, name: '로제 와인', id: 4 },
   { img: SPARKLING, name: '스파클링 와인', id: 5 },
-  { img: DESSERT, name: '디저트 와인', id: 6 },
-  { img: NON_ALCOHOLIC, name: '논알코올', id: 7 },
-  { img: SNACK, name: '안주', id: 8 },
+  { img: SNACK, name: '안주', id: 6 },
   { img: all, name: '전체보기', id: 1 },
 ];
 
