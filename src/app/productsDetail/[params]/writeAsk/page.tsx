@@ -34,6 +34,7 @@ export default function WriteAsk({ params }) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [title, setTitle, titleChange] = useInput();
   const [content, setContent] = useState<string>('');
+  const [sendAsk, setSendAsk] = useState<boolean>(false);
 
   const contentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length > 1000) return;
@@ -47,6 +48,10 @@ export default function WriteAsk({ params }) {
       return;
     }
     fileRef.current.click();
+  };
+
+  const sendWriteAsk = () => {
+    setSendAsk((pre) => !pre);
   };
 
   return (
@@ -98,9 +103,17 @@ export default function WriteAsk({ params }) {
           <label htmlFor="secret">비밀글로 작성</label>
         </div>
         <footer className="footer">
-          <button>작성하기</button>
+          <button onClick={sendWriteAsk}>작성하기</button>
         </footer>
       </div>
+      {sendAsk && (
+        <div className="sendCheckBox">
+          <div>
+            <h1>문의작성이 완료되었어요!</h1>
+            <button onClick={sendWriteAsk}>확인</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
