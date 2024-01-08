@@ -4,6 +4,7 @@ import noAsk from '../../../public/productDetail-noAsk.svg';
 import Image from 'next/image';
 import secret from '../../../public/productDetail-secret.svg';
 import search from '../../../public/productDetail-search.svg';
+import { useRouter } from 'next/navigation';
 
 const ProductDetailAsk = () => {
   const 더미데이터: {
@@ -57,6 +58,7 @@ const ProductDetailAsk = () => {
       open: false,
     },
   ];
+  const router = useRouter();
 
   const [askLists, setAskLists] = useState(더미데이터);
 
@@ -75,7 +77,9 @@ const ProductDetailAsk = () => {
   return (
     <div className="ProductDetailAsk">
       <div className="ask-button">
-        <button>상품 문의하기</button>
+        <button onClick={() => router.push('./3/writeAsk')}>
+          상품 문의하기
+        </button>
       </div>
       <div className="ask-lists">
         {askLists.length === 0 ? (
