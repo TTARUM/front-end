@@ -51,7 +51,7 @@ export default function Main() {
 
   return (
     <div className="main-container">
-      <Header title={'홈'} />
+      <Header title={'홈'} type="main" />
       <div className="main-banner">
         <div className="title">
           <p className="first-title">와인 어디서 사지? 고민될 땐</p>

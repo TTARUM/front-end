@@ -32,7 +32,7 @@ export default function Products({ params }: Props) {
   };
   return (
     <main className="products-container">
-      <Header title={params.params} />
+      <Header type='subMenu' title={params.params} />
       <div className="products-wrap">
         <div className="products-sort">
           <p

@@ -50,7 +50,7 @@ export default function Search() {
   return (
     <div className="main">
       <div className="main-container">
-        <Header title="검색" />
+        <Header title="검색" type='menu' heart={true} cart={true}/>
         <div className="search-container">
           <div className="search-searchBar">
             <input

@@ -140,7 +140,7 @@ export default function ProductDetailReview() {
 
       <div className="ProductDetailReview-comments">
         <div className="length-sort">
-          <span>총{더미데이터.length}개</span>
+          <span>총 {더미데이터.length}개</span>
           <div
             className="sort"
             onClick={() => setIsReviewToggle((pre) => !pre)}

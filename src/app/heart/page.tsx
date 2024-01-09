@@ -59,7 +59,7 @@ export default function Heart() {
   return (
     <div className="main">
       <div className="main-container">
-        <Header title="찜한 상품" />
+        <Header title="찜한 상품" type='menu' search={true} cart={true}/>
         <div className="item-wrap">
           <div className="item-assistant">
             <p className="item-number">{`상품 ${123}`}</p>

@@ -39,7 +39,7 @@ export default function ProductsDetail({ params }: Props) {
 
   return (
     <main className="detail">
-      <Header title="상세보기" />
+      <Header type='subMenu' title="상세보기" heart={true} cart={true} />
 
       {/**상품 정보 */}
       <div className="detail-inform">

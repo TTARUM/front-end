@@ -56,7 +56,7 @@ export default function WriteAsk({ params }) {
 
   return (
     <div className="WriteAsk">
-      <Header title="문의하기" />
+      <Header type='subMenu' title="문의하기" />
       <div className="WriteAsk-content">
         <input
           onChange={titleChange}

@@ -10,7 +10,7 @@ export default function User() {
   return (
     <div className="main">
       <div className="main-container">
-        <Header title="마이페이지" />
+        <Header title="마이페이지" type='menu' />
       </div>
       <Navigation pathName={path} />
     </div>

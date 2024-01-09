@@ -6,16 +6,28 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import Logo from '../../../public/Logo.svg';
-import search from '../../../public/search.svg';
-import heart from '../../../public/heart.svg';
-import cart from '../../../public/cart.svg';
-import back from '../../../public/backBtn.svg';
+import searchIcon from '../../../public/search.svg';
+import heartIcon from '../../../public/heart.svg';
+import cartIcon from '../../../public/cart.svg';
+import backIcon from '../../../public/backBtn.svg';
 
 type Props = {
   title: string;
+  type: string;
+  search?: boolean;
+  heart?: boolean;
+  cart?: boolean;
+  back?: boolean;
 };
 
-export default function Header({ title }: Props) {
+export default function Header({
+  title,
+  type,
+  search,
+  heart,
+  cart,
+  back,
+}: Props) {
   const router = useRouter();
   let titleName: string;
 
@@ -44,7 +56,7 @@ export default function Header({ title }: Props) {
 
   return (
     <>
-      {titleName === '홈' ? (
+      {type === 'main' ? (
         <div className="header-container">
           <Image
             onClick={() => {
@@ -58,78 +70,98 @@ export default function Header({ title }: Props) {
               onClick={() => {
                 router.push('/search');
               }}
-              src={search}
+              src={searchIcon}
               alt="search"
             />
             <Image
               onClick={() => {
                 router.push('/heart');
               }}
-              src={heart}
+              src={heartIcon}
               alt="heart"
             />
             <Image
               onClick={() => {
                 router.push('/');
               }}
-              src={cart}
+              src={cartIcon}
               alt="cart"
             />
           </div>
         </div>
-      ) : titleName === '검색' ||
-        titleName === '카테고리' ||
-        titleName === '찜한상품' ||
-        titleName === '마이페이지' ? (
+      ) : type === 'menu' ? (
         <div className="header-container">
           <p>{titleName}</p>
           <div className="header-menu">
-            {titleName === '마이페이지' ? null : (
-              <>
-                <Image
-                  onClick={() => {
-                    router.push('/heart');
-                  }}
-                  src={heart}
-                  alt="heart"
-                />
-                <Image
-                  onClick={() => {
-                    router.push('/');
-                  }}
-                  src={cart}
-                  alt="cart"
-                />
-              </>
-            )}
+            {search === true ? (
+              <Image
+                onClick={() => {
+                  router.push('/search');
+                }}
+                src={searchIcon}
+                alt="search"
+              />
+            ) : null}
+            {heart === true ? (
+              <Image
+                onClick={() => {
+                  router.push('/heart');
+                }}
+                src={heartIcon}
+                alt="heart"
+              />
+            ) : null}
+
+            {cart === true ? (
+              <Image
+                onClick={() => {
+                  router.push('/');
+                }}
+                src={cartIcon}
+                alt="cart"
+              />
+            ) : null}
           </div>
         </div>
       ) : (
         <div className="header-container">
           <Image
-            className="header-back"
-            src={back}
-            alt="back"
             onClick={() => {
               window.history.back();
             }}
+            src={backIcon}
+            alt="Back"
           />
-          <p className="center">{titleName}</p>
+          <p className='center'>{titleName}</p>
           <div className="header-menu">
-            <Image
-              onClick={() => {
-                router.push('/heart');
-              }}
-              src={heart}
-              alt="heart"
-            />
-            <Image
-              onClick={() => {
-                router.push('/');
-              }}
-              src={cart}
-              alt="cart"
-            />
+            {search === true ? (
+              <Image
+                onClick={() => {
+                  router.push('/search');
+                }}
+                src={searchIcon}
+                alt="search"
+              />
+            ) : null}
+            {heart === true ? (
+              <Image
+                onClick={() => {
+                  router.push('/heart');
+                }}
+                src={heartIcon}
+                alt="heart"
+              />
+            ) : null}
+
+            {cart === true ? (
+              <Image
+                onClick={() => {
+                  router.push('/');
+                }}
+                src={cartIcon}
+                alt="cart"
+              />
+            ) : null}
           </div>
         </div>
       )}

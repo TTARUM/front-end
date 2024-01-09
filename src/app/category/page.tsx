@@ -28,7 +28,7 @@ export default function Category() {
   return (
     <div className="main">
       <div className="main-container">
-        <Header title="카테고리" />
+        <Header title="카테고리" type="menu" heart={true} cart={true} />
         <div className="category-container">
           {testBox?.map((item, idx) => {
             return (
