@@ -85,9 +85,11 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
+      padding: 0px 0px 0px 18px;
       & > p {
-        margin-bottom: 5px;
+        line-height: 22px;
+        font-size: 12px;
         &:hover {
           color: rgba(255, 97, 53, 0.5);
         }
