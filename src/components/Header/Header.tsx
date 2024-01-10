@@ -1,10 +1,8 @@
 'use client';
 
 import './Header.scss';
-
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-
 import Logo from '../../../public/Logo.svg';
 import searchIcon from '../../../public/search.svg';
 import heartIcon from '../../../public/heart.svg';
