@@ -1,3 +1,5 @@
+'use client';
+
 import './search.scss';
 
 import Header from '@/components/Header/Header';
@@ -5,24 +7,58 @@ import Image from 'next/image';
 
 import search from '../../../public/search.svg';
 import close from '../../../public/close.svg';
+import Navigation from '@/components/Navigation/Navigation';
+import { usePathname } from 'next/navigation';
+import { useCallback, useState } from 'react';
 
 export default function Search() {
-  const searchItem: string[] = [
+  const path = usePathname();
+  const [searchItem, setSearchItem] = useState<string[]>([
     '레드 와인',
     '화이트 와인',
     '안주',
     '안주',
     '안주',
     '안주',
-  ];
+  ]);
+  const [getSearch, setGetSearch] = useState<string>('');
+
+  // const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.key === 'Enter') {
+  //     if (getSearch != '') {
+  //       setSearchItem((prevSearchItem) => [...prevSearchItem, getSearch]);
+  //     }
+  //   }
+  // };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setGetSearch(e.target.value);
+  };
+
+  // const handleClose = (item: string) => {
+  //   setSearchItem((prevSearchItem) => {
+  //     const index = prevSearchItem.indexOf(item);
+  //     if (index !== -1) {
+  //       const updatedSearchItem = [...prevSearchItem];
+  //       updatedSearchItem.splice(index, 1);
+  //       return updatedSearchItem;
+  //     }
+  //     return prevSearchItem;
+  //   });
+  // };
 
   return (
     <div className="main">
       <div className="main-container">
-        <Header title="검색" />
+        <Header title="검색" type='menu' heart={true} cart={true}/>
         <div className="search-container">
           <div className="search-searchBar">
-            <input placeholder="검색어를 입력해주세요." />
+            <input
+              // onKeyDown={handleEnter}
+              value={getSearch}
+              onChange={handleChange}
+              placeholder="검색어를 입력해주세요."
+            />
             <Image src={search} alt="search" />
           </div>
           <div className="search-recent">
@@ -34,7 +70,14 @@ export default function Search() {
             ) : (
               searchItem?.map((item, idx) => (
                 <div className="item" key={idx}>
-                  <span>{item}</span> <Image src={close} alt="close" />
+                  <span>{item}</span>{' '}
+                  <Image
+                    // onClick={() => {
+                    //   handleClose(item);
+                    // }}
+                    src={close}
+                    alt="close"
+                  />
                 </div>
               ))
             )}
@@ -52,6 +95,7 @@ export default function Search() {
           </div>
         </div>
       </div>
+      <Navigation pathName={path} />
     </div>
   );
 }

@@ -6,23 +6,35 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import Logo from '../../../public/Logo.svg';
-import search from '../../../public/search.svg';
-import heart from '../../../public/heart.svg';
-import cart from '../../../public/cart.svg';
-import back from '../../../public/backBtn.svg';
+import searchIcon from '../../../public/search.svg';
+import heartIcon from '../../../public/heart.svg';
+import cartIcon from '../../../public/cart.svg';
+import backIcon from '../../../public/backBtn.svg';
 
 type Props = {
   title: string;
+  type: string;
+  search?: boolean;
+  heart?: boolean;
+  cart?: boolean;
+  back?: boolean;
 };
 
-export default function Header({ title }: Props) {
+export default function Header({
+  title,
+  type,
+  search,
+  heart,
+  cart,
+  back,
+}: Props) {
   const router = useRouter();
-  var titleName; // titleName 변수를 선언합니다.
+  let titleName: string;
 
   switch (title) {
     case '1':
       titleName = '전체보기';
-      break; // 각 case 끝에 break를 추가합니다.
+      break;
     case '2':
       titleName = '레드 와인';
       break;
@@ -36,68 +48,15 @@ export default function Header({ title }: Props) {
       titleName = '스파클링 와인';
       break;
     case '6':
-      titleName = '디저트 와인';
-      break;
-    case '7':
-      titleName = '논알코올';
-      break;
-    case '8':
       titleName = '안주';
       break;
-    case '상세보기':
-      titleName = '상세보기';
-      break;
     default:
-      titleName = title; // 필요에 따라 기본값을 처리할 수 있습니다.
+      titleName = title;
   }
 
   return (
     <>
-      {title ? (
-        titleName === '상세보기' ? (
-          <div className="header-container">
-            <Image
-              onClick={() => {
-                window.history.back();
-              }}
-              src={back}
-              alt="back"
-            />
-            <p>{titleName}</p>
-            <div className="header-menu">
-              <Image
-                onClick={() => {
-                  router.push('/heart');
-                }}
-                src={heart}
-                alt="heart"
-              />
-              <Image src={cart} alt="cart" />
-            </div>
-          </div>
-        ) : (
-          <div className="header-container">
-            <p>{titleName}</p>
-            <div className="header-menu">
-              <Image
-                onClick={() => {
-                  router.push('/heart');
-                }}
-                src={heart}
-                alt="heart"
-              />
-              <Image src={cart} alt="cart" />
-              <Image
-                onClick={() => {
-                  window.history.back();
-                }}
-                src={back}
-                alt="back"
-              />
-            </div>
-          </div>
-        )
-      ) : (
+      {type === 'main' ? (
         <div className="header-container">
           <Image
             onClick={() => {
@@ -111,23 +70,98 @@ export default function Header({ title }: Props) {
               onClick={() => {
                 router.push('/search');
               }}
-              src={search}
+              src={searchIcon}
               alt="search"
             />
             <Image
               onClick={() => {
                 router.push('/heart');
               }}
-              src={heart}
+              src={heartIcon}
               alt="heart"
             />
             <Image
               onClick={() => {
                 router.push('/');
               }}
-              src={cart}
+              src={cartIcon}
               alt="cart"
             />
+          </div>
+        </div>
+      ) : type === 'menu' ? (
+        <div className="header-container">
+          <p>{titleName}</p>
+          <div className="header-menu">
+            {search === true ? (
+              <Image
+                onClick={() => {
+                  router.push('/search');
+                }}
+                src={searchIcon}
+                alt="search"
+              />
+            ) : null}
+            {heart === true ? (
+              <Image
+                onClick={() => {
+                  router.push('/heart');
+                }}
+                src={heartIcon}
+                alt="heart"
+              />
+            ) : null}
+
+            {cart === true ? (
+              <Image
+                onClick={() => {
+                  router.push('/');
+                }}
+                src={cartIcon}
+                alt="cart" 
+              />
+            ) : null}
+          </div>
+        </div>
+      ) : (
+        <div className="header-container">
+          <Image
+            onClick={() => {
+              window.history.back();
+            }}
+            src={backIcon}
+            alt="Back"
+          />
+          <p className='center'>{titleName}</p>
+          <div className="header-menu">
+            {search === true ? (
+              <Image
+                onClick={() => {
+                  router.push('/search');
+                }}
+                src={searchIcon}
+                alt="search"
+              />
+            ) : null}
+            {heart === true ? (
+              <Image
+                onClick={() => {
+                  router.push('/heart');
+                }}
+                src={heartIcon}
+                alt="heart"
+              />
+            ) : null}
+
+            {cart === true ? (
+              <Image
+                onClick={() => {
+                  router.push('/');
+                }}
+                src={cartIcon}
+                alt="cart"
+              />
+            ) : null}
           </div>
         </div>
       )}

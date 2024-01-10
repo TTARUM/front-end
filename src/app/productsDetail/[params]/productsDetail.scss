@@ -1,28 +1,151 @@
 @import '../../globals.scss';
 
-$margin : 20px;
-$font-bold : 700;
-$font-large : 24px;
-$font-medium : 14px;
-$font-color : #999999;
+$margin: 24px;
+$font-bold: 700;
+$font-large: 24px;
+$font-medium: 14px;
+$font-color: #999999;
 
 .detail {
-    margin-bottom: $margin;
+  width: 393px;
+  position: relative;
 }
 
-.detail-container {
-    margin-left: $margin;
+//상세 페이지 이미지
+.detail-inform-img {
+  width: 100%;
+  height: 393px;
+  margin-bottom: $margin;
+  cursor: pointer;
+}
 
-    .detail-title {
-        font-size: $font-large;
-        margin-bottom: $margin;
+.detail-inform-introduce {
+  padding: 0 24px;
+  & > article:nth-child(1) {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    line-height: 34px;
+    font-size: $font-large;
+    & > p > span {
+      font-weight: $font-bold;
+    }
+    & > p {
+      font-weight: 400;
+    }
 
-        >span {
-            font-weight: $font-bold;
-        }
+    & > div {
+      width: 15px;
+      height: 18px;
+      cursor: pointer;
     }
-    .detail-text{
-        font-size: $font-medium;
-        color: $font-color;
+  }
+
+  & > p {
+    font-size: 14px;
+    line-height: 22px;
+    color: rgba(153, 153, 153, 1);
+  }
+}
+
+.detail-inform-score {
+  display: flex;
+  align-items: center;
+  color: rgba(153, 153, 153, 1);
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 6px;
+  margin-bottom: 24px;
+  & > div {
+    display: flex;
+    margin-right: 4px;
+    & > div {
+      position: relative;
+      width: 14px;
+      height: 13px;
     }
+    & > span {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+}
+.detail-inform-price {
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 24px;
+
+  & > span:nth-child(2) {
+    font-size: 20px;
+    font-weight: 400;
+    margin-left: 2px;
+  }
+}
+
+// 토글 버튼
+.ProductDetailToggle {
+  display: flex;
+  height: 48px;
+  cursor: pointer;
+  color: rgba(153, 153, 153, 1);
+  border-top: 1px solid rgba(231, 231, 231, 1);
+  border-bottom: 1px solid rgba(231, 231, 231, 1);
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    font-size: 14px;
+    line-height: 22px;
+  }
+  & > .highlight {
+    font-weight: 700;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 1);
+    border-bottom: 3px solid rgba(255, 97, 53, 1);
+    transition: 0.2s all;
+  }
+}
+
+.ProductDetailBuy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid rgba(227, 227, 227, 1);
+  height: 60px;
+  width: 393px;
+  background: #fff;
+  position: fixed;
+  bottom: 0px;
+
+  & > div:nth-child(1) {
+    display: flex;
+    flex-direction: column;
+    & > p {
+      font-size: 10px;
+      color: rgba(166, 166, 166, 1);
+      text-align: center;
+    }
+  }
+  & > div > div:nth-child(1) {
+    width: 22px;
+    height: 17px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  & > button {
+    width: 300px;
+    height: 40px;
+    border: none;
+    background-color: rgba(255, 97, 53, 1);
+    color: rgb(255, 255, 255, 1);
+    border-radius: 5px;
+    margin-left: 24px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+  }
 }

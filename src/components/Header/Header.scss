@@ -1,27 +1,38 @@
-$font-medium : 20px;
-$margin : 20px;
+@import '../../app/globals.scss';
 
 .header-container {
-    margin: 20px 0px 20px 10px;
+    padding: 0px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    height: 62px;
 
     >img {
         cursor: pointer;
     }
 
-    >p {
-        font-size: $font-medium;
-        margin-left: $margin;
+    >p{
+       font-size: 20px;
+       line-height: 20px;
+       font-weight: 400;
+    }
+    .center{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .header-menu {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-
         img {
-            margin: 0 5px;
+            margin: 0px 8.5px;
+            &:last-of-type{
+                margin-right: 0px;
+            }
             cursor: pointer;
         }
     }

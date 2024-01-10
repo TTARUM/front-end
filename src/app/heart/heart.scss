@@ -10,7 +10,7 @@ $font-medium: 14px;
     .item-assistant {
       margin-left: $margin;
       margin-right: $margin;
-      margin-top: 30px;
+      margin-top: 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -34,6 +34,8 @@ $font-medium: 14px;
           >p {
             font-size: $font-medium;
             color: #ff6135;
+            cursor: pointer;
+            margin-right: 15px;
           }
         }
 
@@ -51,10 +53,14 @@ $font-medium: 14px;
           top: 25px;
           z-index: 1;
 
-          >p {
+          >.item-alert-text {
             font-size: 12px;
             margin: 7px 0px;
             cursor: pointer;
+          }
+
+          >.item-alert-text.active {
+            color: $mainColor;
           }
         }
 
@@ -74,6 +80,8 @@ $font-medium: 14px;
 
     .item-box-margin {
       margin-bottom: $margin;
+      display: flex;
+      justify-content: space-between;
     }
   }
 

@@ -11,6 +11,8 @@ import testRed from '../../../public/test-red.svg';
 import testRose from '../../../public/test-rose.svg';
 import testWhite from '../../../public/test-white.svg';
 import { useState } from 'react';
+import Navigation from '@/components/Navigation/Navigation';
+import { usePathname } from 'next/navigation';
 
 export default function Heart() {
   const testItem: {
@@ -46,15 +48,18 @@ export default function Heart() {
       id: 3,
     },
   ];
+  const sortText = ['최근찜한순', '높은평점순', '낮은평점순'];
 
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [sort, setSort] = useState<string>('최근찜한순');
 
+  const path = usePathname();
   const clickHandle = () => {};
 
   return (
     <div className="main">
       <div className="main-container">
-        <Header title="찜한 상품" />
+        <Header title="찜한 상품" type='menu' search={true} cart={true}/>
         <div className="item-wrap">
           <div className="item-assistant">
             <p className="item-number">{`상품 ${123}`}</p>
@@ -65,7 +70,7 @@ export default function Heart() {
                   setShowAlert(!showAlert);
                 }}
               >
-                <p>{`${'최근찜한순'} `}</p>
+                <p>{sort}</p>
                 <Image
                   src={
                     showAlert === true ? downright_triangle : upright_triangle
@@ -78,9 +83,17 @@ export default function Heart() {
                   showAlert === true ? 'item-alert active' : 'item-alert'
                 }
               >
-                <p>최근찜한순</p>
-                <p>높은평점순</p>
-                <p>낮은평점순</p>
+                {sortText.map((item, idx) => (
+                  <p
+                    className={sort == item? 'item-alert-text active' :'item-alert-text'}
+                    onClick={() => {
+                      setSort(item), setShowAlert(false);
+                    }}
+                    key={idx}
+                  >
+                    {item}
+                  </p>
+                ))}
               </div>
             </div>
           </div>
@@ -103,6 +116,7 @@ export default function Heart() {
           </div>
         </div>
       </div>
+      <Navigation pathName={path} />
     </div>
   );
 }

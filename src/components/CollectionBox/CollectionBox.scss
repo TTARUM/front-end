@@ -4,9 +4,14 @@ $font-medium: 14px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     cursor: pointer;
-
+    width: 164px;
+    margin: 0px 3px;
+    img{
+        width: 164px;
+        height: 164px;
+    }
     p {
         width: 164px;
         font-size: $font-medium;
@@ -16,6 +21,6 @@ $font-medium: 14px;
         word-break: break-all;
         margin-bottom: 24px;
         margin-top: 5px;
-        margin-left: 5px
+        margin-left: 5px;
     }
 }
