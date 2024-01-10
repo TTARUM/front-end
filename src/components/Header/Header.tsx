@@ -118,7 +118,7 @@ export default function Header({
                   router.push('/');
                 }}
                 src={cartIcon}
-                alt="cart"
+                alt="cart" 
               />
             ) : null}
           </div>
