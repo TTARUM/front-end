@@ -1,6 +1,6 @@
 .ProductDetailChange {
   margin-bottom: 60px;
-  padding: 0 24px;
+  padding: 0 20px;
 
   & > div > h1 {
     color: rgba(255, 116, 78, 1);
@@ -11,7 +11,7 @@
 
   & > .changePerid {
     & > ul {
-      padding: 0 24px;
+      padding: 20px;
       font-size: 11px;
       color: rgba(153, 153, 153, 1);
 
@@ -24,7 +24,7 @@
 
   & > .noChangeGuide {
     & > ul {
-      padding: 0 24px;
+      padding: 0 20px;
       font-size: 11px;
       color: rgba(153, 153, 153, 1);
 
