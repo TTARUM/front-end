@@ -6,6 +6,7 @@ import minusOffBtn from '../../../public/minus-off.svg';
 import closeBtn from '../../../public/closeBtn.svg';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   title: string;
@@ -20,7 +21,12 @@ export default function ProductDetailBuyInform({
   showBuy,
   setShow,
 }: Props) {
+  const router = useRouter();
   const [quantity, setQuantity] = useState<number>(1);
+
+  const handleBy = () =>{
+    router.push('/login');
+  }
 
   return (
     <main className="ProductDetailBuyBg">
@@ -66,7 +72,7 @@ export default function ProductDetailBuyInform({
         </div>
         <div className='btnArea'>
             <button>장비구니</button>
-            <button>바로 구매</button>
+            <button onClick={handleBy}>바로 구매</button>
         </div>
       </div>
     </main>
