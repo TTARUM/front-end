@@ -1,0 +1,41 @@
+.social-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    >img {
+        margin-top: 28px;
+    }
+
+    .title {
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 22px;
+        margin-top: 28px;
+    }
+
+    .sub-title {
+        margin-top: 20px;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 400;
+
+        span {
+            font-weight: 700;
+        }
+    }
+    .join-form{
+        margin-top: 38px;
+        >p{
+            font-size: 10px;
+            line-height: 10px;
+            font-weight: 400;
+        }
+        >input{
+            &:last-of-type{
+                margin-bottom: 30px;
+            }
+        }
+    }
+}
