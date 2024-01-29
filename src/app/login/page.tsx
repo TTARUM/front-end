@@ -18,12 +18,6 @@ export default function Login() {
   const { data: session } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    if (session != null) {
-      router.push('/join/social');
-    }
-  }, [session]);
-
   return (
     <div className="login-container">
       <Header type="subMenu" title="" />
@@ -49,7 +43,6 @@ export default function Login() {
               src={kakaoBtn}
               onClick={() => {
                 signIn('kakao');
-                // signOut();
               }}
               alt="kakao"
             />
