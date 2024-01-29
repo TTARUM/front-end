@@ -1,3 +1,6 @@
+.social-container{
+    position: relative;
+}
 .social-wrap {
     display: flex;
     justify-content: center;
@@ -37,5 +40,34 @@
                 margin-bottom: 30px;
             }
         }
+    }
+}
+.join_success{
+    width: 306px;
+    height: 243px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    border: 1px solid #D9D9D9;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    >img{
+        margin-bottom: 25px;
+    }
+    >.close{
+        position: absolute;
+        top: 11px;
+        right: 11px;
+        cursor: pointer;
+    }
+    >p{
+        margin-bottom: 8px;
     }
 }
