@@ -1,0 +1,24 @@
+.user_wrap {
+    padding: 0px 20px;
+
+    .user_profile {
+        margin-top: 15px;
+        display: flex;
+        align-items: center;
+
+        >div {
+            position: relative;
+            width: 66px;
+
+            .setting {
+                position: absolute;
+                bottom: 0px;
+                right: 0px;
+            }
+        }
+
+        >p {
+            margin-left: 10px;
+        }
+    }
+}
