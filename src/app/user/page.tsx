@@ -15,7 +15,7 @@ import user_order from '../../../public/user_order.svg';
 import right_arrow from '../../../public/rightArrow.svg';
 
 export default function User() {
-  const router = useRouter()
+  const router = useRouter();
   const path = usePathname();
 
   return (
@@ -25,7 +25,11 @@ export default function User() {
 
         <div className="user_wrap">
           <div className="user_profile">
-            <div onClick={()=>{router.push('/login')}}>
+            <div
+              onClick={() => {
+                router.push('/login');
+              }}
+            >
               <Image src={not_user} alt="not_user" />
               <Image
                 className="setting"
@@ -33,23 +37,45 @@ export default function User() {
                 alt="setting_profile"
               />
             </div>
-            <p onClick={()=>{router.push('/login')}}>로그인을 해주세요.</p>
+            <p
+              onClick={() => {
+                router.push('/login');
+              }}
+            >
+              로그인을 해주세요.
+            </p>
           </div>
 
           <div className="user_navigation">
-            <div>
+            <div
+              onClick={() => {
+                router.push('/heart');
+              }}
+            >
               <Image src={user_heart} alt="user_heart" />
               <p>찜한 상품</p>
             </div>
-            <div>
+            <div
+              onClick={() => {
+                router.push('/cart');
+              }}
+            >
               <Image src={user_cart} alt="user_heart" />
               <p>장바구니</p>
             </div>
-            <div>
+            <div
+              onClick={() => {
+                router.push('/order');
+              }}
+            >
               <Image src={user_order} alt="user_heart" />
               <p>주문 / 배송</p>
             </div>
-            <div>
+            <div
+              onClick={() => {
+                router.push('/coupon');
+              }}
+            >
               <Image src={user_coupon} alt="user_heart" />
               <p>쿠폰</p>
             </div>
@@ -66,17 +92,17 @@ export default function User() {
                   취소/교환/반품 조회
                   <Image src={right_arrow} alt="right_arrow" />
                 </li>
-                <li className='line'></li>
+                <li className="line"></li>
                 <li>
                   나의 리뷰
                   <Image src={right_arrow} alt="right_arrow" />
                 </li>
-                <li className='line'></li>
+                <li className="line"></li>
                 <li>
                   주문 내역
                   <Image src={right_arrow} alt="right_arrow" />
                 </li>
-                <li className='line'></li>
+                <li className="line"></li>
               </ul>
               <li className="title">회원정보 관리</li>
               <div className="line"></div>
@@ -85,17 +111,17 @@ export default function User() {
                   배송지 관리
                   <Image src={right_arrow} alt="right_arrow" />
                 </li>
-                <li className='line'></li>
+                <li className="line"></li>
                 <li>
                   환불계좌 관리
                   <Image src={right_arrow} alt="right_arrow" />
                 </li>
-                <li className='line'></li>
+                <li className="line"></li>
                 <li>
                   회원탈퇴
                   <Image src={right_arrow} alt="right_arrow" />
                 </li>
-                <li className='line'></li>
+                <li className="line"></li>
               </ul>
             </ul>
           </div>
