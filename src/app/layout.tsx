@@ -2,6 +2,7 @@ import MainSide from '@/components/MainSide/MainSide';
 import Navigation from '../components/Navigation/Navigation';
 import './globals.scss';
 import { Inter } from 'next/font/google';
+import AuthContext from '@/components/Auth/AuthContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -12,6 +13,7 @@ export const metadata = {
 
 import localFont from 'next/font/local';
 
+
 const myFont = localFont({
   src: './fonts/PretendardVariable.ttf',
   display: 'swap',
@@ -21,9 +23,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="kr" className={myFont.className}>
       <body>
-        {children}
-        <MainSide />
-        
+        <AuthContext>
+          {children}
+          <MainSide />
+        </AuthContext>
       </body>
     </html>
   );
