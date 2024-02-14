@@ -55,13 +55,9 @@ const test: {
 ];
 
 export default function Cart() {
-  const [selectAll, setSelectAll] = useState<boolean>(false);
   const [itemValues, setItemValues] = useState<{ [key: number]: number }>({});
-  const [itemSelected, setItemSelected] = useState<boolean[]>(
-    new Array(test.length).fill(false),
-  );
-
-  const areAllTrue = itemSelected.every(Boolean);
+  const [selectAll, setSelectAll] = useState<boolean>(false);
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
   const handleItemValueChange = (itemId: number, newValue: number) => {
     setItemValues((prevItemValues) => ({
@@ -70,27 +66,34 @@ export default function Cart() {
     }));
   };
 
-  const toggleSelectItem = (index: number) => {
-    setItemSelected((prevSelected) => {
-      const newSelected = [...prevSelected];
-      newSelected[index] = !newSelected[index];
-      return newSelected;
-    });
-  };
-
-  const toggleSelectAll = () => {
-    setSelectAll(!selectAll);
-    setItemSelected(new Array(test.length).fill(!selectAll));
-  };
-
   const calculateTotalPrice = (item) => {
     const quantity = itemValues[item.id] || 0;
     return (item.price * quantity).toLocaleString();
   };
 
-  console.log("전체선택",selectAll);
-  console.log("부분선택",itemSelected);
-  console.log("true?", areAllTrue)
+  const handleToggleSelectAll = () => {
+    if (selectAll) {
+      setSelectedItems([]);
+    } else {
+      const allItemIds = test.map((item) => item.id);
+      setSelectedItems(allItemIds);
+    }
+    setSelectAll((prevSelectAll) => !prevSelectAll);
+  };
+
+  const handleToggleItemSelect = (itemId: number) => {
+    const isSelected = selectedItems.includes(itemId);
+    let updatedSelectedItems;
+
+    if (isSelected) {
+      updatedSelectedItems = selectedItems.filter((id) => id !== itemId);
+    } else {
+      updatedSelectedItems = [...selectedItems, itemId];
+    }
+
+    setSelectedItems(updatedSelectedItems);
+    setSelectAll(test.length === updatedSelectedItems.length);
+  };
 
   return (
     <div className="cart_container">
@@ -99,8 +102,8 @@ export default function Cart() {
         <div className="sub_header">
           <div>
             <div
-              onClick={toggleSelectAll}
-              className={selectAll ? areAllTrue ? 'all_select active': 'all_select' : 'all_select'}
+              className={selectAll ? 'all_select active' : 'all_select'}
+              onClick={handleToggleSelectAll}
             >
               <Image src={checked} alt="checked" />
             </div>
@@ -112,19 +115,16 @@ export default function Cart() {
         {test?.map((value, idx) => {
           const itemId = value.id;
           const quantity = itemValues[itemId] || 0;
+          const isSelected = selectedItems.includes(itemId);
 
           return (
             <div className="user_itemBox">
               <div>
                 <div
-                  onClick={() => {
-                    toggleSelectItem(idx);
-                  }}
                   className={
-                    itemSelected[idx]
-                      ? 'select_itemBox active'
-                      : 'select_itemBox'
+                    isSelected ? 'select_itemBox active' : 'select_itemBox'
                   }
+                  onClick={() => handleToggleItemSelect(itemId)}
                 >
                   <Image src={checked} alt="checked" />
                 </div>

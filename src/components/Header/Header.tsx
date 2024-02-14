@@ -80,7 +80,7 @@ export default function Header({
             />
             <Image
               onClick={() => {
-                router.push('/');
+                router.push('/cart');
               }}
               src={cartIcon}
               alt="cart"
@@ -113,7 +113,7 @@ export default function Header({
             {cart === true ? (
               <Image
                 onClick={() => {
-                  router.push('/');
+                  router.push('/cart');
                 }}
                 src={cartIcon}
                 alt="cart" 
@@ -154,7 +154,7 @@ export default function Header({
             {cart === true ? (
               <Image
                 onClick={() => {
-                  router.push('/');
+                  router.push('/cart');
                 }}
                 src={cartIcon}
                 alt="cart"
