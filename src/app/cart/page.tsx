@@ -195,13 +195,18 @@ export default function Cart() {
           </div>
           <div>
             <p>배송비</p>
-            <p>3,000 원</p>
+            <p>{calculateTotalProductAmount() >= 100000 ? `무료` : `3,000 원`} </p>
           </div>
         </div>
         <div className="line"></div>
         <div className="total_amount">
           <p>결제 예정 금액</p>
-          <p>{(calculateTotalProductAmount() + 3000).toLocaleString()} 원</p>
+          <p>
+            {calculateTotalProductAmount() >= 100000
+              ? calculateTotalProductAmount().toLocaleString()
+              : (calculateTotalProductAmount() + 3000).toLocaleString()}{' '}
+            원
+          </p>
         </div>
         <div className="line"></div>
 
@@ -213,9 +218,11 @@ export default function Cart() {
             disabled={calculateTotalProductAmount() ? false : true}
           >
             {calculateTotalProductAmount()
-              ? `${(
-                  calculateTotalProductAmount() + 3000
-                ).toLocaleString()}원 주문하기`
+              ? calculateTotalProductAmount() >= 100000
+                ? `${calculateTotalProductAmount().toLocaleString()}원 주문하기`
+                : `${(
+                    calculateTotalProductAmount() + 3000
+                  ).toLocaleString()}원 주문하기`
               : '상품을 선택해주세요'}
           </MainEventButton>
         </div>
