@@ -9,6 +9,7 @@ import checked from '../../../public/checked.svg';
 import Test from '../../../public/userTest.svg';
 import minus from '../../../public/user_minus.svg';
 import plus from '../../../public/user_plus.svg';
+import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 
 const test: {
   id: number;
@@ -54,6 +55,14 @@ const test: {
   },
 ];
 
+type Props = {
+  id: number;
+  img: string;
+  type: string;
+  title: string;
+  price: number;
+};
+
 export default function Cart() {
   const [itemValues, setItemValues] = useState<{ [key: number]: number }>({});
   const [selectAll, setSelectAll] = useState<boolean>(false);
@@ -67,7 +76,7 @@ export default function Cart() {
   };
 
   const calculateTotalPrice = (item) => {
-    const quantity = itemValues[item.id] || 0;
+    const quantity = itemValues[item.id] || 1;
     return (item.price * quantity).toLocaleString();
   };
 
@@ -81,18 +90,31 @@ export default function Cart() {
     setSelectAll((prevSelectAll) => !prevSelectAll);
   };
 
-  const handleToggleItemSelect = (itemId: number) => {
-    const isSelected = selectedItems.includes(itemId);
+  const handleToggleItemSelect = (value: Props) => {
+    const isSelected = selectedItems.includes(value.id);
     let updatedSelectedItems;
 
     if (isSelected) {
-      updatedSelectedItems = selectedItems.filter((id) => id !== itemId);
+      updatedSelectedItems = selectedItems.filter((id) => id !== value.id);
     } else {
-      updatedSelectedItems = [...selectedItems, itemId];
+      updatedSelectedItems = [...selectedItems, value.id];
     }
 
     setSelectedItems(updatedSelectedItems);
     setSelectAll(test.length === updatedSelectedItems.length);
+  };
+
+  const calculateTotalProductAmount = () => {
+    let totalAmount = 0;
+
+    selectedItems.forEach((itemId) => {
+      const selectedItem = test.find((item) => item.id === itemId);
+      if (selectedItem) {
+        totalAmount += selectedItem.price * (itemValues[itemId] || 1);
+      }
+    });
+
+    return totalAmount;
   };
 
   return (
@@ -114,9 +136,8 @@ export default function Cart() {
         <div className="line"></div>
         {test?.map((value, idx) => {
           const itemId = value.id;
-          const quantity = itemValues[itemId] || 0;
+          const quantity = itemValues[itemId] || 1;
           const isSelected = selectedItems.includes(itemId);
-
           return (
             <div className="user_itemBox">
               <div>
@@ -124,7 +145,7 @@ export default function Cart() {
                   className={
                     isSelected ? 'select_itemBox active' : 'select_itemBox'
                   }
-                  onClick={() => handleToggleItemSelect(itemId)}
+                  onClick={() => handleToggleItemSelect(value)}
                 >
                   <Image src={checked} alt="checked" />
                 </div>
@@ -137,7 +158,7 @@ export default function Cart() {
                       onClick={() =>
                         handleItemValueChange(itemId, Math.max(quantity - 1, 0))
                       }
-                      disabled={quantity === 0}
+                      disabled={quantity === 1}
                     >
                       <Image src={minus} alt="minus" />
                     </button>
@@ -145,7 +166,7 @@ export default function Cart() {
                       value={quantity}
                       type="text"
                       onChange={(e) => {
-                        const newValue = parseInt(e.target.value, 10) || 0;
+                        const newValue = parseInt(e.target.value, 10) || 1;
                         handleItemValueChange(itemId, newValue);
                       }}
                     />
@@ -157,12 +178,47 @@ export default function Cart() {
                       <Image src={plus} alt="plus" />
                     </button>
                   </div>
-                  <p className="price">{calculateTotalPrice(value)}</p>
+                  <p className="price">{calculateTotalPrice(value)}원</p>
                 </div>
               </div>
             </div>
           );
         })}
+        <div className="user_orderArea">
+          <div>
+            <p>상품금액</p>
+            <p>{calculateTotalProductAmount().toLocaleString()} 원</p>
+          </div>
+          <div>
+            <p>상품 할인 금액</p>
+            <p>0 원</p>
+          </div>
+          <div>
+            <p>배송비</p>
+            <p>3,000 원</p>
+          </div>
+        </div>
+        <div className="line"></div>
+        <div className="total_amount">
+          <p>결제 예정 금액</p>
+          <p>{(calculateTotalProductAmount() + 3000).toLocaleString()} 원</p>
+        </div>
+        <div className="line"></div>
+
+        <div className="show_order">
+          <MainEventButton
+            width={345}
+            height={41}
+            color={calculateTotalProductAmount() ? '#FF6135' : '#D9D9D9'}
+            disabled={calculateTotalProductAmount() ? false : true}
+          >
+            {calculateTotalProductAmount()
+              ? `${(
+                  calculateTotalProductAmount() + 3000
+                ).toLocaleString()}원 주문하기`
+              : '상품을 선택해주세요'}
+          </MainEventButton>
+        </div>
       </div>
     </div>
   );
