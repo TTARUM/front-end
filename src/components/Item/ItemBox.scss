@@ -13,9 +13,10 @@ $line-height: 18px;
   cursor: pointer;
   margin-bottom: 20px;
   margin-left: 6px;
+
   .itemBox-main-number {
     margin-right: 20px;
-    
+
   }
 
   .itemBox-main-item {
@@ -33,6 +34,7 @@ $line-height: 18px;
         height: 104px;
         background: #ccc;
         border-radius: 20px;
+
         >img {
           width: 100%;
           height: 100%;
@@ -54,18 +56,35 @@ $line-height: 18px;
       right: 13px;
     }
   }
-  .itemBox-item{
+
+  .itemBox-item {
     width: 168px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
     position: relative;
-    .itemBox-heart{
+
+    .itemBox-heart {
       position: absolute;
       top: 15px;
       right: 15px;
     }
+
+    .itemBox-img {
+      position: relative;
+      .cart_btn {
+        position: absolute;
+        bottom: 15px;
+        right: 10px;
+        z-index: 1;
+        cursor: pointer;
+        &:hover{
+          scale: 1.1;
+        }
+      }
+    }
+
   }
 }
 
@@ -89,7 +108,7 @@ $line-height: 18px;
 
 .price_font {
   font-weight: $font-bold;
-  font-size: $font-medium;
+  font-size: $font-small;
   line-height: $line-height;
 }
 
