@@ -10,6 +10,8 @@ import Test from '../../../public/userTest.svg';
 import minus from '../../../public/user_minus.svg';
 import plus from '../../../public/user_plus.svg';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
+import cart_logo from '../../../public/cart_logo.svg';
+import { useRouter } from 'next/navigation';
 
 const test: {
   id: number;
@@ -64,6 +66,7 @@ type Props = {
 };
 
 export default function Cart() {
+  const router = useRouter();
   const [itemValues, setItemValues] = useState<{ [key: number]: number }>({});
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
@@ -84,7 +87,7 @@ export default function Cart() {
     if (selectAll) {
       setSelectedItems([]);
     } else {
-      const allItemIds = test.map((item) => item.id);
+      const allItemIds = test?.map((item) => item.id);
       setSelectedItems(allItemIds);
     }
     setSelectAll((prevSelectAll) => !prevSelectAll);
@@ -134,6 +137,16 @@ export default function Cart() {
           <p>상품삭제</p>
         </div>
         <div className="line"></div>
+        {test?.length == 0 ? (
+          <div className="cart_noItem">
+            <Image src={cart_logo} alt="cart_logo" />
+            <p>장바구니에 담긴 상품이 없어요</p>
+            <p>원하는 상품을 담아보세요!</p>
+            <button onClick={()=>{router.push('/products/1')}}>
+              상품 보러 가기
+            </button>
+          </div>
+        ) : null}
         {test?.map((value, idx) => {
           const itemId = value.id;
           const quantity = itemValues[itemId] || 1;
@@ -195,7 +208,9 @@ export default function Cart() {
           </div>
           <div>
             <p>배송비</p>
-            <p>{calculateTotalProductAmount() >= 100000 ? `무료` : `3,000 원`} </p>
+            <p>
+              {calculateTotalProductAmount() >= 100000 ? `무료` : `3,000 원`}{' '}
+            </p>
           </div>
         </div>
         <div className="line"></div>
