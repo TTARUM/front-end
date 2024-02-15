@@ -9,6 +9,7 @@ import productWine from '../../../public/products-wine.svg';
 import heart from '../../../public/heart.svg';
 import on_heart from '../../../public/on-heart.svg';
 import scoreStar from '../../../public/score-star.svg';
+import heart_cart from '../../../public/heart_cart.svg';
 import './ItemBox.scss';
 
 type Props = {
@@ -21,6 +22,7 @@ type Props = {
   page?: string;
   number?: number;
   params?: string;
+  cart?: boolean;
 };
 
 export default function ItemBox({
@@ -33,11 +35,13 @@ export default function ItemBox({
   page,
   number,
   params,
+  cart,
 }: Props) {
   const [onHeart, setOnHeart] = useState(false);
   const router = useRouter();
 
-  const clickHeart = () => {
+  const clickHeart = (event: React.MouseEvent) => {
+    event.stopPropagation();
     setOnHeart(!onHeart);
   };
 
@@ -66,7 +70,6 @@ export default function ItemBox({
               <div className="itemBox-main-contact">
                 <p className="type_font">레드 와인</p>
                 <p className="name_font">토토 피에몬테 로쏘</p>
-                <p className="volume_font">750ml</p>
                 <p style={{ marginTop: '25px' }} className="price_font">
                   99,999원
                 </p>
@@ -102,7 +105,15 @@ export default function ItemBox({
               {page === 'products' ? (
                 <Image src={productWine} alt="red wine image" />
               ) : page === 'heart' ? (
-                <Image src={img} alt="red wine image" />
+                <>
+                  <Image src={img} alt="red wine image" />
+                  <Image
+                    onClick={clickHeart}
+                    className="itemBox-heart"
+                    src={onHeart ? on_heart : heart}
+                    alt="heart"
+                  />
+                </>
               ) : (
                 <Image src={redWine} alt="red wine image" />
               )}
@@ -111,7 +122,6 @@ export default function ItemBox({
             <div className="itemBox-contact">
               <p className="type_font">레드 와인</p>
               <p className="name_font">토토 피에몬테 로쏘</p>
-              <p className="volume_font">750ml</p>
               <p className="price_font">
                 99,999<span className="unit_font">원</span>
               </p>
