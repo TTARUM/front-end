@@ -25,7 +25,8 @@ export default function ProductDetailBuyInform({
   const [quantity, setQuantity] = useState<number>(1);
 
   const handleBy = () =>{
-    router.push('/login');
+    // router.push('/login');
+    router.push('/order');
   }
 
   return (
@@ -55,7 +56,7 @@ export default function ProductDetailBuyInform({
                 <Image src={plusBtn} alt="plusBtn" />
               </button>
             </div>
-            <p className="price">{price}원</p>
+            <p className="price">{price.toLocaleString()}원</p>
           </div>
           <Image
             onClick={() => {
@@ -68,7 +69,7 @@ export default function ProductDetailBuyInform({
         <div className="line"></div>
         <div className="totalPriceArea">
           <p>총 1개의 상품</p>
-          <p className="totalPrice">20000원</p>
+          <p className="totalPrice">{(price * quantity).toLocaleString()}원</p>
         </div>
         <div className='btnArea'>
             <button>장비구니</button>
