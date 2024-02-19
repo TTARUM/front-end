@@ -120,6 +120,10 @@ export default function Cart() {
     return totalAmount;
   };
 
+  const showOrder = () =>{
+    router.push('/order');
+  }
+
   return (
     <div className="cart_container">
       <Header title="장바구니" type="subMenu" />
@@ -231,6 +235,7 @@ export default function Cart() {
             height={41}
             color={calculateTotalProductAmount() ? '#FF6135' : '#D9D9D9'}
             disabled={calculateTotalProductAmount() ? false : true}
+            onClick={showOrder}
           >
             {calculateTotalProductAmount()
               ? calculateTotalProductAmount() >= 100000
