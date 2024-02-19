@@ -109,6 +109,7 @@ export default function Heart() {
                     name={item.name}
                     price={item.price}
                     score={item.score}
+                    cart={true}
                   />
                 </div>
               );
