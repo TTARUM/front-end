@@ -12,6 +12,7 @@ import plus from '../../../public/user_plus.svg';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 import cart_logo from '../../../public/cart_logo.svg';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const test: {
   id: number;
@@ -70,6 +71,7 @@ export default function Cart() {
   const [itemValues, setItemValues] = useState<{ [key: number]: number }>({});
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const [getData, setGetData] = useState<Props[]>([]);
 
   const handleItemValueChange = (itemId: number, newValue: number) => {
     setItemValues((prevItemValues) => ({
@@ -86,9 +88,12 @@ export default function Cart() {
   const handleToggleSelectAll = () => {
     if (selectAll) {
       setSelectedItems([]);
+      setGetData([]);
     } else {
       const allItemIds = test?.map((item) => item.id);
+      const allItem = test?.map((item) => item);
       setSelectedItems(allItemIds);
+      setGetData(allItem)
     }
     setSelectAll((prevSelectAll) => !prevSelectAll);
   };
@@ -101,11 +106,14 @@ export default function Cart() {
       updatedSelectedItems = selectedItems.filter((id) => id !== value.id);
     } else {
       updatedSelectedItems = [...selectedItems, value.id];
+      setGetData((prevGetData) => [...prevGetData, value]);
     }
 
     setSelectedItems(updatedSelectedItems);
     setSelectAll(test.length === updatedSelectedItems.length);
   };
+
+  console.log(getData);
 
   const calculateTotalProductAmount = () => {
     let totalAmount = 0;
@@ -119,10 +127,6 @@ export default function Cart() {
 
     return totalAmount;
   };
-
-  const showOrder = () =>{
-    router.push('/order');
-  }
 
   return (
     <div className="cart_container">
@@ -146,7 +150,11 @@ export default function Cart() {
             <Image src={cart_logo} alt="cart_logo" />
             <p>장바구니에 담긴 상품이 없어요</p>
             <p>원하는 상품을 담아보세요!</p>
-            <button onClick={()=>{router.push('/products/1')}}>
+            <button
+              onClick={() => {
+                router.push('/products/1');
+              }}
+            >
               상품 보러 가기
             </button>
           </div>
@@ -156,7 +164,7 @@ export default function Cart() {
           const quantity = itemValues[itemId] || 1;
           const isSelected = selectedItems.includes(itemId);
           return (
-            <div className="user_itemBox">
+            <div key={value.id} className="user_itemBox">
               <div>
                 <div
                   className={
@@ -230,12 +238,18 @@ export default function Cart() {
         <div className="line"></div>
 
         <div className="show_order">
+          <Link
+            href={{
+              pathname: '/order',
+              query: { item : JSON.stringify(getData)},
+            }}
+            aria-disabled={calculateTotalProductAmount() ? false : true}
+          >
           <MainEventButton
             width={345}
             height={41}
             color={calculateTotalProductAmount() ? '#FF6135' : '#D9D9D9'}
             disabled={calculateTotalProductAmount() ? false : true}
-            onClick={showOrder}
           >
             {calculateTotalProductAmount()
               ? calculateTotalProductAmount() >= 100000
@@ -245,6 +259,7 @@ export default function Cart() {
                   ).toLocaleString()}원 주문하기`
               : '상품을 선택해주세요'}
           </MainEventButton>
+          </Link>
         </div>
       </div>
     </div>
