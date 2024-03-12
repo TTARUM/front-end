@@ -35,7 +35,7 @@ export default function ProductDetailBuyInform({
   useEffect(() => {
     const productData: Props = {
       title,
-      price,
+      price: quantity * price,
       img,
       type,
       id,
@@ -44,9 +44,9 @@ export default function ProductDetailBuyInform({
     };
 
     setGetData([productData]);
-  }, []);
+  }, [quantity]);
 
-  console.log(getData)
+  console.log(getData);
   return (
     <main className="ProductDetailBuyBg">
       <div className="ProductDetailBuyBg-section">

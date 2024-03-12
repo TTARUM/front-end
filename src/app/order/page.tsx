@@ -1,5 +1,7 @@
 'use client';
 
+import './order.scss';
+
 import { useEffect, useState } from 'react';
 import Header from '@/components/Header/Header';
 
@@ -30,13 +32,25 @@ const Order = () => {
     const parsedItemData = JSON.parse(itemDataString);
 
     setGetUrl(parsedItemData);
-  }, []); 
+  }, []);
 
-  console.log(getUrl)
-  
+  console.log(getUrl);
+
   return (
-    <div>
+    <div className="order_class">
       <Header title="주문/결제" type="subMenu" />
+      <div className="delivery_select_area">
+        <div>
+          <button>기본</button>
+          <button>최근</button>
+        </div>
+        <button>배송지 목록</button>
+      </div>
+      <div className="order_wrap">
+        <div className='delivery_address'>
+
+        </div>
+      </div>
     </div>
   );
 };

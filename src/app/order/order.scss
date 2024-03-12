@@ -1,0 +1,46 @@
+@import '../../app/globals.scss';
+
+.delivery_select_area {
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #E7E7E7;
+    button {
+        background: #9999;
+        border-radius: 30px;
+        width: 77px;
+        height: 26px;
+        font-size: 12px;
+        line-height: 22px;
+        font-weight: 300;
+        color: #ffff;
+        border: none;
+        cursor: pointer;
+    }
+
+    >div {
+        >button {
+            border: 1px solid #999999;
+            border-radius: 30px;
+            width: 47px;
+            height: 26px;
+            color: #999999;
+            background: none;
+
+            &:first-of-type {
+                color: #ffff;
+                background: $mainColor;
+                border: none;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+.order_wrap{
+    background: #E7E7E7;
+    .delivery_address{
+        min-height: 185px;
+    }
+}
