@@ -1,0 +1,208 @@
+@import '../../app/globals.scss';
+
+.delivery_select_area {
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #E7E7E7;
+    line-height: 22px;
+
+    button {
+        background: #9999;
+        border-radius: 30px;
+        width: 77px;
+        height: 26px;
+        font-size: 12px;
+        font-weight: 300;
+        color: #ffff;
+        border: none;
+        cursor: pointer;
+    }
+
+    >div {
+        >button {
+            border: 1px solid #999999;
+            border-radius: 30px;
+            width: 47px;
+            height: 26px;
+            color: #999999;
+            background: none;
+
+            &:first-of-type {
+                color: #ffff;
+                background: $mainColor;
+                border: none;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+.order_wrap {
+    background: #E7E7E7;
+
+    .delivery_address,
+    .ordered_product,
+    .total_amount,
+    .payment {
+        background: #ffffff;
+        padding: 24px;
+        margin-bottom: 10px;
+    }
+
+    .delivery_address {
+        >div {
+            &:first-of-type {
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+
+                >h1 {
+                    font-size: 16px;
+                    font-weight: 700;
+                    margin-right: 11px;
+                }
+
+                >p {
+                    width: 62px;
+                    height: 22px;
+                    border-radius: 30px;
+                    border: 1px solid $mainColor;
+                    font-size: 10px;
+                    font-weight: 400;
+                    color: $mainColor;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+
+        >p {
+            font-size: 12px;
+            font-weight: 400;
+            margin-bottom: 12px;
+
+            &:last-of-type {
+                color: #999999;
+            }
+        }
+
+        .requestOption {
+            width: 345px;
+            height: 35px;
+            border-radius: 10px;
+            border: 1px solid #999999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 13px;
+            cursor: pointer;
+
+            >p {
+                font-size: 12px;
+                font-weight: 400;
+                color: #999999;
+            }
+        }
+    }
+
+    .ordered_product {
+        min-height: 70px;
+
+        >.title {
+            border-bottom: 1px solid #E7E7E7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+
+            >div {
+                display: flex;
+                align-items: center;
+
+                >span {
+                    font-size: 14px;
+                    margin-right: 7px;
+                }
+            }
+        }
+
+        >.title.active {
+            margin-bottom: 24px;
+        }
+
+        >.ordered_item {
+            border-bottom: 1px solid #E7E7E7;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            transition: all .5s;
+
+            &:last-of-type {
+                border-bottom: none;
+                padding-bottom: 0px;
+                margin-bottom: 0px;
+            }
+
+            >p {
+                &:last-of-type {
+                    font-size: 10px;
+                    font-weight: 500;
+                    line-height: 15px;
+                    color: #999999;
+                    margin-bottom: 5px;
+                }
+            }
+
+            >div {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                >p {
+                    font-size: 14px;
+                    line-height: 15px;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+
+    .total_amount {
+        >p {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        >div {
+            margin: 12px 0px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &:nth-of-type(3) {
+                padding-bottom: 12px;
+                border-bottom: 1px solid #E7E7E7;
+            }
+
+            &:last-of-type {
+                >p {
+                    font-size: 16px;
+                    font-weight: 700;
+
+                    &:last-of-type {
+                        color: $mainColor;
+                    }
+                }
+            }
+
+            >p {
+                font-size: 16px;
+                font-weight: 400;
+            }
+        }
+    }
+}
