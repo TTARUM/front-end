@@ -19,6 +19,7 @@ const test: {
   img: string;
   type: string;
   title: string;
+  quantity: number;
   price: number;
 }[] = [
   {
@@ -26,6 +27,7 @@ const test: {
     img: Test,
     type: '레드 와인',
     title: '토트 피에몬테 로쏘',
+    quantity: 1,
     price: 99999,
   },
   {
@@ -33,6 +35,7 @@ const test: {
     img: Test,
     type: '레드 와인',
     title: '토트 피에몬테 로쏘',
+    quantity: 1,
     price: 45000,
   },
   {
@@ -40,6 +43,7 @@ const test: {
     img: Test,
     type: '레드 와인',
     title: '토트 피에몬테 로쏘',
+    quantity: 1,
     price: 50000,
   },
   {
@@ -47,6 +51,7 @@ const test: {
     img: Test,
     type: '레드 와인',
     title: '토트 피에몬테 로쏘',
+    quantity: 1,
     price: 30000,
   },
   {
@@ -54,6 +59,7 @@ const test: {
     img: Test,
     type: '레드 와인',
     title: '토트 피에몬테 로쏘',
+    quantity: 1,
     price: 15000,
   },
 ];
@@ -74,10 +80,18 @@ export default function Cart() {
   const [getData, setGetData] = useState<Props[]>([]);
 
   const handleItemValueChange = (itemId: number, newValue: number) => {
+    console.log(itemId, '111');
+    console.log(newValue, '222');
     setItemValues((prevItemValues) => ({
       ...prevItemValues,
       [itemId]: newValue,
     }));
+
+    setGetData((prevGetData) =>
+      prevGetData.map((item) =>
+        item.id === itemId ? { ...item, quantity: newValue } : item,
+      ),
+    );
   };
 
   const calculateTotalPrice = (item) => {
@@ -93,7 +107,7 @@ export default function Cart() {
       const allItemIds = test?.map((item) => item.id);
       const allItem = test?.map((item) => item);
       setSelectedItems(allItemIds);
-      setGetData(allItem)
+      setGetData(allItem);
     }
     setSelectAll((prevSelectAll) => !prevSelectAll);
   };
@@ -104,9 +118,15 @@ export default function Cart() {
 
     if (isSelected) {
       updatedSelectedItems = selectedItems.filter((id) => id !== value.id);
+      setGetData((prevGetData) =>
+        prevGetData.filter((item) => item.id !== value.id),
+      );
     } else {
       updatedSelectedItems = [...selectedItems, value.id];
-      setGetData((prevGetData) => [...prevGetData, value]);
+      setGetData((prevGetData) => [
+        ...prevGetData,
+        { ...value, quantity: itemValues[value.id] || 1 },
+      ]);
     }
 
     setSelectedItems(updatedSelectedItems);
@@ -241,24 +261,24 @@ export default function Cart() {
           <Link
             href={{
               pathname: '/order',
-              query: { item : JSON.stringify(getData)},
+              query: { item: JSON.stringify(getData) },
             }}
             aria-disabled={calculateTotalProductAmount() ? false : true}
           >
-          <MainEventButton
-            width={345}
-            height={41}
-            color={calculateTotalProductAmount() ? '#FF6135' : '#D9D9D9'}
-            disabled={calculateTotalProductAmount() ? false : true}
-          >
-            {calculateTotalProductAmount()
-              ? calculateTotalProductAmount() >= 100000
-                ? `${calculateTotalProductAmount().toLocaleString()}원 주문하기`
-                : `${(
-                    calculateTotalProductAmount() + 3000
-                  ).toLocaleString()}원 주문하기`
-              : '상품을 선택해주세요'}
-          </MainEventButton>
+            <MainEventButton
+              width={345}
+              height={41}
+              color={calculateTotalProductAmount() ? '#FF6135' : '#D9D9D9'}
+              disabled={calculateTotalProductAmount() ? false : true}
+            >
+              {calculateTotalProductAmount()
+                ? calculateTotalProductAmount() >= 100000
+                  ? `${calculateTotalProductAmount().toLocaleString()}원 주문하기`
+                  : `${(
+                      calculateTotalProductAmount() + 3000
+                    ).toLocaleString()}원 주문하기`
+                : '상품을 선택해주세요'}
+            </MainEventButton>
           </Link>
         </div>
       </div>
