@@ -135,6 +135,7 @@ export default function ProductsDetail({ params }: Props) {
           showBuy={show}
           type={"레드 와인"}
           id={1}
+          quantity={1}
         />
       ) : null}
     </main>

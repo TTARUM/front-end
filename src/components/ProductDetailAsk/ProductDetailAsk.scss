@@ -1,5 +1,6 @@
 .ProductDetailAsk {
   margin-bottom: 60px;
+
   .ask-button {
     display: flex;
     justify-content: center;
@@ -7,7 +8,7 @@
     border-bottom: 1px solid rgba(231, 231, 231, 1);
     height: 88px;
 
-    & > button {
+    &>button {
       width: 344px;
       height: 41px;
       color: rgba(255, 97, 53, 1);
@@ -16,11 +17,13 @@
       font-weight: 700;
       background-color: transparent;
       border-radius: 5px;
+      cursor: pointer;
+
     }
   }
 
-  & > .ask-lists {
-    & > .no-ask {
+  &>.ask-lists {
+    &>.no-ask {
       height: 153px;
       font-size: 14px;
       display: flex;
@@ -29,15 +32,15 @@
       align-items: center;
       color: rgba(153, 153, 153, 1);
 
-      & > img {
+      &>img {
         margin-bottom: 12px;
       }
     }
 
-    & > .ask-lists-box {
+    &>.ask-lists-box {
       height: 376px;
 
-      & > .ask-list {
+      &>.ask-list {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -45,40 +48,41 @@
         min-height: 70px;
         border-bottom: 1px solid rgba(231, 231, 231, 1);
 
-        & > .secretBox {
+        &>.secretBox {
           display: flex;
           color: rgba(153, 153, 153, 1);
         }
 
-        & > div > h1 {
+        &>div>h1 {
           font-size: 14px;
           font-weight: 400;
           margin-bottom: 5px;
           margin-right: 3px;
         }
 
-        & > div > .nickname {
+        &>div>.nickname {
           padding: 0 4px;
         }
 
-        & > div > span {
+        &>div>span {
           font-size: 10px;
           color: rgba(153, 153, 153, 1);
         }
 
-        & > div > .highlight {
+        &>div>.highlight {
           color: rgba(0, 0, 0, 1);
         }
       }
 
-      & > .detailContent {
+      &>.detailContent {
         display: flex;
         align-items: center;
         background-color: rgba(227, 227, 227, 1);
         min-height: 50px;
         padding-left: 24px;
         font-size: 10px;
-        & > img {
+
+        &>img {
           margin-right: 23px;
         }
       }

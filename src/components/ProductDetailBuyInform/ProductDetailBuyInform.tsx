@@ -17,6 +17,7 @@ type Props = {
   img: string;
   type: string;
   id: number;
+  quantity: number;
 };
 
 export default function ProductDetailBuyInform({
@@ -39,6 +40,7 @@ export default function ProductDetailBuyInform({
       img,
       type,
       id,
+      quantity: quantity,
       showBuy, // If needed
       setShow, // If needed
     };

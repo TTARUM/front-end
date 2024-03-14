@@ -28,6 +28,11 @@ type queryData = {
   type: string;
 }[];
 
+type coupon = {
+  discount: number;
+  text: string;
+}[];
+
 const Order = () => {
   const [getUrl, setGetUrl] = useState<queryData>();
   const [showOrderedItem, setShowOrderedItem] = useState<boolean>(false);
@@ -35,9 +40,22 @@ const Order = () => {
   const [rememberPayment, setRememberPayment] = useState<boolean>(false);
   const [agreeTreatment, setAgreeTreatment] = useState<boolean>(false);
   const [agreeCollection, setAgreeCollection] = useState<boolean>(false);
-  const [deliveryRequest, setDeliveryRequest] =
-    useState<string>('배송 요청사항');
+  const [selectRequest, setSelectRequest] = useState<string>('배송 요청사항');
+  const [deliveryRequest, setDeliveryRequest] = useState<string>('');
   const [showDeliveryPopup, setShowDeliveryPopup] = useState<boolean>(false);
+  const [showCouponPopup, setShowCouponPopup] = useState<boolean>(false);
+  const [getCoupon, setGetCoupon] = useState<coupon>([]);
+
+  const payment = getUrl?.map((value, indx) => value.price);
+  const totalAmount = payment?.reduce(function add(sum, currValue) {
+    return sum + currValue;
+  }, 0);
+
+  const handleContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.value.length > 50) return;
+
+    setDeliveryRequest(e.target.value);
+  };
 
   useEffect(() => {
     // URL에서 쿼리 문자열 가져온 후 item을 JSON 파싱하여 JavaScript 객체로 변환
@@ -50,11 +68,6 @@ const Order = () => {
 
     setGetUrl(parsedItemData);
   }, []);
-
-  const payment = getUrl?.map((value, indx) => value.price);
-  const totalAmount = payment?.reduce(function add(sum, currValue) {
-    return sum + currValue;
-  }, 0);
 
   return (
     <div className="order_class">
@@ -82,17 +95,29 @@ const Order = () => {
               setShowDeliveryPopup(true);
             }}
           >
-            <p>
-              {deliveryRequest === '기타' ? '배송 요청사항' : deliveryRequest}
-            </p>
+            <p>{selectRequest === '기타' ? '배송 요청사항' : selectRequest}</p>
             <Image src={downArrow} alt="downArrow" />
           </div>
-          <input type='text' placeholder='배송메모를 입력해주세요.' />
+          {selectRequest === '기타' ? (
+            <div>
+              <textarea
+                value={deliveryRequest}
+                maxLength={50}
+                onChange={handleContent}
+                placeholder="배송메모를 입력해주세요."
+              />
+              <span>{deliveryRequest.length}/50</span>
+            </div>
+          ) : null}
         </div>
-
         <div className="coupon">
           <p>쿠폰</p>
-          <div className="requestOption">
+          <div
+            onClick={() => {
+              setShowCouponPopup(true);
+            }}
+            className="requestOption"
+          >
             <p>사용가능 쿠폰 0장 / 전체 n장</p>
             <Image src={downArrow} alt="downArrow" />
           </div>
@@ -141,13 +166,20 @@ const Order = () => {
           </div>
           <div>
             <p>쿠폰할인</p>
-            <p>00,000 원</p>
+            <p>
+              {getCoupon.length == 0 ? 0 : totalAmount * getCoupon[0].discount}{' '}
+              원
+            </p>
           </div>
           <div>
             <p>총 결제 금액</p>
             <p>
               {(
-                totalAmount + (totalAmount >= 100000 ? 0 : 3000)
+                totalAmount +
+                (totalAmount >= 100000 ? 0 : 3000) -
+                (getCoupon.length == 0
+                  ? 0
+                  : totalAmount * getCoupon[0].discount)
               ).toLocaleString()}{' '}
               원
             </p>
@@ -249,7 +281,7 @@ const Order = () => {
           <div>
             <p
               onClick={() => {
-                setDeliveryRequest('문 앞에 놔주세요.');
+                setSelectRequest('문 앞에 놔주세요.');
                 setShowDeliveryPopup(false);
               }}
             >
@@ -257,7 +289,7 @@ const Order = () => {
             </p>
             <p
               onClick={() => {
-                setDeliveryRequest('택배함에 놔주세요.');
+                setSelectRequest('택배함에 놔주세요.');
                 setShowDeliveryPopup(false);
               }}
             >
@@ -265,7 +297,7 @@ const Order = () => {
             </p>
             <p
               onClick={() => {
-                setDeliveryRequest('경비실에 맡겨주세요.');
+                setSelectRequest('경비실에 맡겨주세요.');
                 setShowDeliveryPopup(false);
               }}
             >
@@ -273,12 +305,41 @@ const Order = () => {
             </p>
             <p
               onClick={() => {
-                setDeliveryRequest('기타');
+                setSelectRequest('기타');
                 setShowDeliveryPopup(false);
               }}
             >
               기타
             </p>
+          </div>
+        </div>
+      ) : null}
+
+      {showCouponPopup === true ? (
+        <div className="coupon_popup">
+          <div>
+            <div
+              onClick={() => {
+                setGetCoupon([]);
+                setShowCouponPopup(false);
+              }}
+            >
+              <p>쿠폰 적용 안함</p>
+            </div>
+            <div
+              onClick={() => {
+                setGetCoupon([
+                  {
+                    discount: 0.01,
+                    text: '따름 신규가입회원 10% 할인쿠폰',
+                  },
+                ]);
+                setShowCouponPopup(false);
+              }}
+            >
+              <p>따름 신규가입회원 10% 할인쿠폰</p>
+              <p>* 발급 후 3개월 이내에 사용하지 않으면 사라지는 쿠폰이에요.</p>
+            </div>
           </div>
         </div>
       ) : null}
