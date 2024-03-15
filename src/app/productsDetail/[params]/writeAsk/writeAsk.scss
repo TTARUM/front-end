@@ -3,7 +3,7 @@
   width: 393px;
   position: relative;
 
-  & > .sendCheckBox {
+  &>.sendCheckBox {
     position: fixed;
     width: 393px;
     height: 100%;
@@ -12,7 +12,7 @@
     z-index: 9;
     animation: opacityBg 0.5s;
 
-    & > div {
+    &>div {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -25,14 +25,14 @@
       border-top-right-radius: 20px;
       border-top-left-radius: 20px;
 
-      & > h1 {
+      &>h1 {
         font-weight: 500;
         font-size: 20px;
         color: rgba(153, 153, 153, 1);
         margin-bottom: 46px;
       }
 
-      & > button {
+      &>button {
         cursor: pointer;
         width: 160px;
         height: 45px;
@@ -43,6 +43,7 @@
         border-radius: 30px;
       }
     }
+
     @keyframes opacityBg {
       from {
         opacity: 0%;
@@ -57,7 +58,8 @@
 
 .WriteAsk-content {
   padding: 0 20px;
-  & > input {
+
+  &>input {
     width: 100%;
     height: 42px;
     border-radius: 20px;
@@ -65,16 +67,18 @@
     font-size: 12px;
     padding: 0 20px;
     margin-bottom: 24px;
+
     &::placeholder {
       color: rgba(153, 153, 153, 1);
     }
   }
 
-  & > .textAreaBox {
+  &>.textAreaBox {
     position: relative;
     font-size: 12px;
     margin-bottom: 24px;
-    & > textarea {
+
+    &>textarea {
       width: 100%;
       min-height: 375px;
       border-radius: 20px;
@@ -84,11 +88,18 @@
       padding-bottom: 40px;
       scroll-padding: 40px 0;
       resize: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
       &::placeholder {
         color: rgba(153, 153, 153, 1);
       }
     }
-    & > p {
+
+    &>p {
       position: absolute;
       bottom: 19px;
       right: 19px;
@@ -99,7 +110,8 @@
   & .ask-images {
     display: flex;
     margin-bottom: 24px;
-    & > img:not(:last-child) {
+
+    &>img:not(:last-child) {
       margin-right: 8px;
     }
   }
@@ -119,23 +131,24 @@
     font-size: 12px;
     border-radius: 20px;
 
-    & > p {
+    &>p {
       margin-top: 5px;
     }
 
-    & > .hidden {
+    &>.hidden {
       display: none;
     }
   }
 
-  & > .secret-writeBox {
+  &>.secret-writeBox {
     color: rgba(153, 153, 153, 1);
     font-size: 20px;
 
-    & > input[type='checkbox'] {
+    &>input[type='checkbox'] {
       display: none;
     }
-    & > input[type='checkbox'] + label {
+
+    &>input[type='checkbox']+label {
       display: inline-block;
       width: 16px;
       height: 16px;
@@ -144,7 +157,8 @@
       margin-right: 13px;
       position: relative;
     }
-    input[id='secret']:checked + label::after {
+
+    input[id='secret']:checked+label::after {
       content: '✓';
       width: 14px;
       height: 10px;
@@ -154,12 +168,13 @@
       left: -1px;
       top: calc(50% - 12px);
     }
-    & > label {
+
+    &>label {
       cursor: pointer;
     }
   }
 
-  & > .footer {
+  &>.footer {
     width: 100%;
     height: 59px;
     border-top: 1px solid #e3e3e3;
@@ -170,7 +185,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    & > button {
+
+    &>button {
       width: 345px;
       height: 41px;
       background-color: #ff6135;
