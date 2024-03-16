@@ -12,6 +12,7 @@ import checked from '../../../public/checked.svg';
 import check from '../../../public/check.svg';
 import check_on from '../../../public/check_on.svg';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
+import { useRouter } from 'next/navigation';
 
 type queryData = {
   id: number;
@@ -34,6 +35,7 @@ type coupon = {
 }[];
 
 const Order = () => {
+  const router = useRouter();
   const [getUrl, setGetUrl] = useState<queryData>();
   const [showOrderedItem, setShowOrderedItem] = useState<boolean>(false);
   const [getPayment, setGetPayment] = useState<string>('card');
@@ -78,7 +80,7 @@ const Order = () => {
           <button>기본</button>
           <button>최근</button>
         </div>
-        <button>배송지 목록</button>
+        <button onClick={()=>{router.push('/order/delivery')}}>배송지 목록</button>
       </div>
       <div className="order_wrap">
         {/* 배송 */}
@@ -118,7 +120,11 @@ const Order = () => {
             }}
             className="requestOption"
           >
-            <p>사용가능 쿠폰 0장 / 전체 n장</p>
+            <p>
+              {getCoupon.length === 0
+                ? '사용가능 쿠폰 0장 / 전체 n장'
+                : getCoupon[0]?.text}
+            </p>
             <Image src={downArrow} alt="downArrow" />
           </div>
         </div>
@@ -167,7 +173,11 @@ const Order = () => {
           <div>
             <p>쿠폰할인</p>
             <p>
-              {getCoupon.length == 0 ? 0 : totalAmount * getCoupon[0].discount}{' '}
+              {getCoupon.length == 0
+                ? 0
+                : Math.floor(
+                    totalAmount * getCoupon[0].discount,
+                  ).toLocaleString()}
               원
             </p>
           </div>
@@ -179,8 +189,8 @@ const Order = () => {
                 (totalAmount >= 100000 ? 0 : 3000) -
                 (getCoupon.length == 0
                   ? 0
-                  : totalAmount * getCoupon[0].discount)
-              ).toLocaleString()}{' '}
+                  : Math.floor(totalAmount * getCoupon[0].discount))
+              ).toLocaleString()}
               원
             </p>
           </div>
