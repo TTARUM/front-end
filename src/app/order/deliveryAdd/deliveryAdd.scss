@@ -1,13 +1,5 @@
 @import '../globals.scss';
 
-$default_padding: 0px 24px;
-
-@mixin flex_container($justify: center, $align: center) {
-  display: flex;
-  justify-content: $justify;
-  align-items: $align;
-}
-
 .deliveryAdd_wrap {
   .sub_header {
     padding: $default_padding;
