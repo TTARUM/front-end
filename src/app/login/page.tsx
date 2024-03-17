@@ -12,6 +12,7 @@ import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 import { useEffect, useState } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import LogoTitle from '@/components/LogoTitle/LogoTitle';
 
 export default function Login() {
   const [userId, setUserId] = useState<string | number>();
@@ -22,10 +23,15 @@ export default function Login() {
     <div className="login-container">
       <Header type="subMenu" title="" />
       <div className="login-wrap">
-        <Image src={LoginImg} alt="" />
-        <Image src={LoginLogo} alt="" />
-        <p>와인 어시서 사지? 고민될 떈</p>
-        <p>와인 커머스 '따름'</p>
+        <LogoTitle
+          title="img"
+          subTitle={
+            <p>
+              와인 어디서 사지? 고민될 땐<br />
+              <span>와인 커머스 '따름'</span>
+            </p>
+          }
+        />
         <input type="text" placeholder="아이디를 입력해주세요." />
         <input type="password" placeholder="비밀번호를 입력해주세요." />
         <MainEventButton width={345} height={41} color={'#FF6135'}>
