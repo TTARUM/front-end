@@ -80,7 +80,7 @@ const Order = () => {
           <button>기본</button>
           <button>최근</button>
         </div>
-        <button onClick={()=>{router.push('/order/delivery')}}>배송지 목록</button>
+        <button onClick={()=>{router.push('/order/deliveryList')}}>배송지 목록</button>
       </div>
       <div className="order_wrap">
         {/* 배송 */}
