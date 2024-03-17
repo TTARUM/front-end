@@ -1,0 +1,9 @@
+@import '../globals.scss';
+
+.join-wrapper {
+    padding: $default_padding;
+
+    >img {
+        margin-top: 27px;
+    }
+}
