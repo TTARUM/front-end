@@ -1,0 +1,83 @@
+@import '../../globals.scss';
+
+.delivery_container {
+    padding: $default_padding;
+    line-height: 22px;
+
+    >.delivery_item {
+        border-bottom: 1px solid #E7E7E7;
+        >.delivery_text {
+            @include flex_container(flex-start);
+            margin-top: 20px;
+            position: relative;
+
+            >p {
+                &:first-of-type {
+                    margin-right: 11px;
+                    font-size: 16px;
+                    font-weight: 700;
+                }
+
+                &:last-of-type {
+                    font-size: 10px;
+                    font-weight: 400;
+                    color: $mainColor;
+                    padding: 0px 9px;
+                    border: 1px solid $mainColor;
+                    border-radius: 30px;
+                }
+            }
+
+            >button {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                width: 38px;
+                height: 22px;
+                border-radius: 30px;
+                border: 1px solid $mainColor;
+                background: $mainColor;
+                color: #ffffff;
+                font-weight: 300;
+                font-size: 10px;
+            }
+        }
+
+        >p {
+            margin-top: 12px;
+            font-size: 12px;
+            font-weight: 400;
+
+            &:last-of-type {
+                color: #999999;
+            }
+        }
+
+        .delivery_btnArea {
+            margin-top: 12px;
+            @include flex_container(flex-end);
+
+            button {
+                background: transparent;
+                border: none;
+                color: #999999;
+                font-size: 12px;
+                font-weight: 400;
+                width: 50px;
+                margin-bottom: 12px;
+
+                &:first-of-type {
+                    &::after {
+                        content: "";
+                        height: 12px;
+                        border: 1px solid #999999;
+                        right: 0px;
+                        float: right;
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+
+}
