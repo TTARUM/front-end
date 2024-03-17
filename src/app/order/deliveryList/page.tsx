@@ -1,11 +1,22 @@
+'use client';
 import Header from '@/components/Header/Header';
 import './deliveryList.scss';
+import { useState } from 'react';
+import Image from 'next/image';
+import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
+
+import modal_character from '../../../../public/modal_character.svg';
+import close_btn from '../../../../public/closeBtn.svg';
+import { useRouter } from 'next/navigation';
 
 export default function Delivery() {
+  const router = useRouter();
+  const [showDelete, setShowDelete] = useState<boolean>(false);
+
   return (
-    <div>
+    <div className="delivery_container">
       <Header title="배송지 목록" type="subMenu" />
-      <div className="delivery_container">
+      <div className="delivery_wrapper">
         <div className="delivery_item">
           <div className="delivery_text">
             <p>우리집</p>
@@ -15,10 +26,41 @@ export default function Delivery() {
           <p className="delivery_userInformation">유지민 ∙ 010-0000-000</p>
           <p>서울 성동구 뚝섬로 273, 1001호 [04770]</p>
           <div className="delivery_btnArea">
-            <button>삭제</button>
-            <button>수정</button>
+            <button
+              onClick={() => {
+                setShowDelete(true);
+              }}
+            >
+              삭제
+            </button>
+            <button
+              onClick={() => {
+                router.push('/order/deliveryAdd');
+              }}
+            >
+              수정
+            </button>
           </div>
         </div>
+        {showDelete === true ? (
+          <div className="delete-modal">
+            <Image src={modal_character} alt="modal_character" />
+            <p>
+              정말로 <span>삭제</span> 하시겠습니까?
+            </p>
+            <MainEventButton width={205} height={36} color={'#FF6135'}>
+              삭제하기
+            </MainEventButton>
+            <Image
+              onClick={() => {
+                setShowDelete(false);
+              }}
+              className="close"
+              src={close_btn}
+              alt="close_btn"
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   );
