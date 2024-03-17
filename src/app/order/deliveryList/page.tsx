@@ -5,7 +5,9 @@ export default function Delivery() {
   return (
     <div>
       <Header title="배송지 목록" type="subMenu" />
-      <div className="delivery_container"></div>
+      <div className="delivery_container">
+        
+      </div>
     </div>
   );
 }
