@@ -1,0 +1,26 @@
+@import '../globals.scss';
+
+.orderDetails_container {
+    background: #e7e7e7;
+}
+
+.orderDetails_no_data_container {
+    background: #ffff;
+    min-height: 100vh;
+}
+
+.no_data {
+    background: #ffff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    >img{
+        scale: 2;
+    }
+    >p{
+        margin-top: 50px;
+        margin-bottom: 10px;
+    }
+}

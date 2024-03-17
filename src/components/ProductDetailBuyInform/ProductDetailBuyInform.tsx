@@ -5,30 +5,50 @@ import minusBtn from '../../../public/minus.svg';
 import minusOffBtn from '../../../public/minus-off.svg';
 import closeBtn from '../../../public/closeBtn.svg';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 type Props = {
   title: string;
   price: number;
   showBuy: boolean;
   setShow: Function;
+  img: string;
+  type: string;
+  id: number;
+  quantity: number;
 };
 
 export default function ProductDetailBuyInform({
   title,
   price,
+  img,
+  type,
   showBuy,
   setShow,
+  id,
 }: Props) {
   const router = useRouter();
   const [quantity, setQuantity] = useState<number>(1);
+  const [getData, setGetData] = useState<Props[]>();
 
-  const handleBy = () =>{
-    // router.push('/login');
-    router.push('/order');
-  }
+  useEffect(() => {
+    const productData: Props = {
+      title,
+      price: quantity * price,
+      img,
+      type,
+      id,
+      quantity: quantity,
+      showBuy, // If needed
+      setShow, // If needed
+    };
 
+    setGetData([productData]);
+  }, [quantity]);
+
+  console.log(getData);
   return (
     <main className="ProductDetailBuyBg">
       <div className="ProductDetailBuyBg-section">
@@ -71,9 +91,16 @@ export default function ProductDetailBuyInform({
           <p>총 1개의 상품</p>
           <p className="totalPrice">{(price * quantity).toLocaleString()}원</p>
         </div>
-        <div className='btnArea'>
-            <button>장비구니</button>
-            <button onClick={handleBy}>바로 구매</button>
+        <div className="btnArea">
+          <button>장비구니</button>
+          <Link
+            href={{
+              pathname: '/order',
+              query: { item: JSON.stringify(getData) },
+            }}
+          >
+            <button>바로 구매</button>
+          </Link>
         </div>
       </div>
     </main>

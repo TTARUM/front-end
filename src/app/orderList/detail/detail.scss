@@ -1,0 +1,72 @@
+.detail_container {
+    background: #e7e7e7;
+}
+
+.line {
+    border: .5px solid #e7e7e7;
+    margin: 15px 0px;
+}
+
+.order_information,
+.shipping_information {
+    margin-top: 10px;
+    padding: 22px 24px;
+    background: #ffff;
+
+    >.title {
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 700;
+        color: #151515;
+        display: block;
+    }
+
+    >p {
+        color: #999999;
+        margin-bottom: 15px;
+        font-size: 14px;
+        font-weight: 300;
+        display: grid;
+        grid-template-columns: minmax(50px, 38px) auto;
+        align-items: center;
+
+        >span {
+            margin-left: 38px;
+            color: #151515;
+        }
+    }
+
+    &:last-of-type {
+        margin-bottom: 0px;
+    }
+}
+
+.payment_information {
+    margin-top: 10px;
+    padding: 22px 24px;
+    background: #ffff;
+
+    >.title {
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 700;
+        color: #151515;
+        display: block;
+    }
+
+    >p {
+        margin-bottom: 15px;
+        font-size: 14px;
+        font-weight: 300;
+        color: #151515;
+        &:last-of-type{
+            margin-bottom: 0px;
+        }
+        >span {
+            float: right;
+        }
+    }
+    .total_payment{
+        font-weight: 700;
+    }
+}

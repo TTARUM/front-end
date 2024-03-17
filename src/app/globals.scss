@@ -1,5 +1,5 @@
-$mainColor : #FF6135;
-
+$mainColor: #ff6135;
+$default_padding: 0px 24px;
 
 * {
   box-sizing: border-box;
@@ -32,4 +32,14 @@ body {
     // box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     // margin-bottom: 59px;
   }
+}
+
+@mixin flex_container($justify: null, $align: center) {
+  display: flex;
+  @if $justify == null {
+    justify-content: center;
+  } @else {
+    justify-content: $justify;
+  }
+  align-items: $align;
 }
