@@ -11,6 +11,7 @@ import LoginLogo from '../../../../public/login.svg';
 import JoinLogo from '../../../../public/joinLogo.svg';
 import closeBtn from '../../../../public/closeBtn.svg';
 import { useRouter } from 'next/navigation';
+import LogoTitle from '@/components/LogoTitle/LogoTitle';
 
 export default function Social() {
   const router = useRouter();
@@ -29,16 +30,18 @@ export default function Social() {
     }
   };
 
-
   return (
     <div className="social-container">
       <Header title="" type="subMenu" />
       <div className="social-wrap">
-        <Image src={LoginLogo} alt="LoginLogo" />
-        <p className="title">회원가입</p>
-        <p className="sub-title">
-          <span>'따름' </span>회원이 되어 주실래요?
-        </p>
+        <LogoTitle
+          title="회원가입"
+          subTitle={
+            <p>
+              <span>'따름'</span> 회원이 되어 주실래요?
+            </p>
+          }
+        />
         <div className="join-form">
           <p>아이디</p>
           <JoinInput disabled value={session?.user.email} width={345} />
@@ -95,7 +98,14 @@ export default function Social() {
           <p>
             <span>'TTARUM'</span> 회원가입을 축하드립니다!!
           </p>
-          <MainEventButton onClick={()=>{router.push('/login')}} width={205} height={36} color={'#FF6135'}>
+          <MainEventButton
+            onClick={() => {
+              router.push('/login');
+            }}
+            width={205}
+            height={36}
+            color={'#FF6135'}
+          >
             로그인하기
           </MainEventButton>
         </div>
