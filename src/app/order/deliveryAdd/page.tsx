@@ -13,6 +13,7 @@ const DeliveryAdd = () => {
   const [alias, setAlias] = useState('');
   const [receiver, setReceiver] = useState('');
   const [address, setAddress] = useState('');
+  const [addressDetail, setAddressDetail] = useState('');
   const [phone, setPhone] = useState('');
 
   const inputDataArr = [
@@ -34,6 +35,12 @@ const DeliveryAdd = () => {
       title: '주소',
       placeholder: '우편 번호를 입력해주세요.',
       type: 'search',
+    },
+    {
+      data: addressDetail,
+      setData: setAddressDetail,
+      title: '상세 주소',
+      placeholder: '상세 주소를 입력해주세요.',
     },
     {
       data: phone,
