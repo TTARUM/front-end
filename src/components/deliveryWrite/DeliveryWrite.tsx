@@ -1,12 +1,13 @@
 'use client';
 import Header from '@/components/Header/Header';
-import './deliveryAdd.scss';
+import './DeliveryWrite.scss';
 
 import { useRouter } from 'next/navigation';
 import InputText from '@/components/InputText/InputText';
 import { useEffect, useState } from 'react';
+import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 
-const DeliveryAdd = () => {
+const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
   const router = useRouter();
 
   const [alias, setAlias] = useState('');
@@ -59,7 +60,7 @@ const DeliveryAdd = () => {
 
   return (
     <div className="deliveryAdd_container">
-      <Header title="배송지 추가" type="subMenu" />
+      <Header title={isEdit ? '배송지 수정' : '배송지 추가'} type="subMenu" />
       <div className="deliveryAdd_wrapper">
         {inputDataArr.map((inputData) => (
           <InputText
@@ -77,10 +78,12 @@ const DeliveryAdd = () => {
           <label htmlFor="setDefault"></label>
           <label htmlFor="setDefault">기본 배송지로 선택</label>
         </div>
-        <button className="save_button">저장</button>
+        <MainEventButton width={345} height={41} color={'#ff6135'}>
+          저장
+        </MainEventButton>
       </div>
     </div>
   );
 };
 
-export default DeliveryAdd;
+export default DeliveryWrite;
