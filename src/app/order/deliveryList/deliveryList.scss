@@ -2,15 +2,16 @@
 
 .delivery_container {
     position: relative;
+    min-height: 100vh;
 }
 
 .delivery_wrapper {
     padding: $default_padding;
     line-height: 22px;
-    min-height: 100vh;
 
     >.delivery_item {
         border-bottom: 1px solid #E7E7E7;
+        position: relative;
 
         >.delivery_text {
             @include flex_container(flex-start);
@@ -86,6 +87,11 @@
             }
         }
     }
+
+    >button {
+        position: absolute;
+        bottom: 12px;
+    }
 }
 
 .delete-modal {
@@ -105,7 +111,8 @@
     >p {
         margin-top: 25px;
         margin-bottom: 9px;
-        >span{
+
+        >span {
             font-weight: 700;
             color: $mainColor;
         }
