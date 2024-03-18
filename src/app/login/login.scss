@@ -10,26 +10,6 @@
     align-items: center;
     flex-direction: column;
 
-    >img {
-        &:nth-of-type(2) {
-            margin-top: 31px;
-        }
-    }
-
-    >p {
-        font-size: 16px;
-        line-height: 22px;
-
-        &:first-of-type {
-            margin-top: 20px;
-            font-weight: 400;
-        }
-
-        &:last-of-type {
-            font-weight: 700;
-        }
-    }
-
     >input {
         width: 95%;
         height: 30px;
