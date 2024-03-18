@@ -35,13 +35,25 @@ export default function Delivery() {
             </button>
             <button
               onClick={() => {
-                router.push('/order/deliveryAdd');
+                router.push('/order/deliveryEdit');
               }}
             >
               수정
             </button>
           </div>
         </div>
+        <MainEventButton
+          width={345}
+          height={41}
+          color="white"
+          textColor={'#FF6135'}
+          border={true}
+          onClick={() => {
+            router.push('/order/deliveryAdd');
+          }}
+        >
+          배송지 추가
+        </MainEventButton>
         {showDelete === true ? (
           <div className="delete-modal">
             <Image src={modal_character} alt="modal_character" />
