@@ -3,9 +3,8 @@ import Header from '@/components/Header/Header';
 import './deliveryAdd.scss';
 
 import { useRouter } from 'next/navigation';
-import useInput from '@/hooks/useInput';
 import InputText from '@/components/InputText/InputText';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const DeliveryAdd = () => {
   const router = useRouter();
@@ -15,6 +14,13 @@ const DeliveryAdd = () => {
   const [address, setAddress] = useState('');
   const [addressDetail, setAddressDetail] = useState('');
   const [phone, setPhone] = useState('');
+
+  const handlePhoneChange = (e) => {
+    const formattedPhoneNumber = e.target.value
+      .replace(/[^0-9]/g, '')
+      .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    setPhone(formattedPhoneNumber);
+  };
 
   const inputDataArr = [
     {
@@ -47,6 +53,7 @@ const DeliveryAdd = () => {
       setData: setPhone,
       title: '휴대폰 번호',
       placeholder: '휴대폰 번호를 입력해주세요.',
+      onChange: handlePhoneChange,
     },
   ];
 
@@ -62,6 +69,7 @@ const DeliveryAdd = () => {
             title={inputData.title}
             placeholder={inputData.placeholder}
             type={inputData.type}
+            onChange={inputData.onChange}
           />
         ))}
         <div className="checkbox_wrapper">

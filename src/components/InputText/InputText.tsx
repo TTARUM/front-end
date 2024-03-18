@@ -1,12 +1,6 @@
 'use client';
 import './InputText.scss';
 
-import Image from 'next/image';
-import search from '../../../public/search-mainColor.svg';
-
-import DaumPostcodeEmbed, { useDaumPostcodePopup } from 'react-daum-postcode';
-import { useState } from 'react';
-import { postcodeScriptUrl } from 'react-daum-postcode/lib/loadPostcode';
 import SearchAddress from '../SearchAddress/SearchAddress';
 
 type Props = {
@@ -15,6 +9,7 @@ type Props = {
   title: string;
   placeholder: string;
   type?: string;
+  onChange?: (InputEvent) => void;
 };
 
 const InputText = ({
@@ -23,6 +18,7 @@ const InputText = ({
   title,
   placeholder,
   type,
+  onChange,
 }: Props): JSX.Element => {
   return (
     <>
@@ -38,7 +34,7 @@ const InputText = ({
           value={data}
           className="data_input"
           placeholder={placeholder}
-          onChange={(e) => setData(e.target.value)}
+          onChange={(e) => (onChange ? onChange(e) : setData(e.target.value))}
         />
       )}
     </>
