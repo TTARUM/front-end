@@ -1,0 +1,35 @@
+@import '../../app/globals.scss';
+
+.Logo_container {
+    @include flex_container(center);
+    flex-direction: column;
+    line-height: 22px;
+
+    >img {
+        &:first-of-type {
+            margin-bottom: 28px;
+        }
+
+        &:last-of-type {
+            margin-bottom: 20px;
+        }
+    }
+
+    >p {
+        font-size: 25px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+
+        &:last-of-type {
+            font-size: 16px;
+            font-weight: 400;
+
+            >span {
+                font-weight: 700;
+            }
+        }
+
+    }
+
+}
