@@ -1,7 +1,13 @@
 'use client';
-import Image from 'next/image';
 import './InputText.scss';
+
+import Image from 'next/image';
 import search from '../../../public/search-mainColor.svg';
+
+import DaumPostcodeEmbed, { useDaumPostcodePopup } from 'react-daum-postcode';
+import { useState } from 'react';
+import { postcodeScriptUrl } from 'react-daum-postcode/lib/loadPostcode';
+import SearchAddress from '../SearchAddress/SearchAddress';
 
 type Props = {
   data: string;
@@ -22,15 +28,11 @@ const InputText = ({
     <>
       <span className="label">{title}</span>
       {type === 'search' ? (
-        <div className="search_wrapper">
-          <input
-            value={data}
-            placeholder={placeholder}
-            onChange={(e) => setData(e.target.value)}
-            readOnly
-          />
-          <Image src={search} alt="search" />
-        </div>
+        <SearchAddress
+          data={data}
+          setData={setData}
+          placeholder={placeholder}
+        />
       ) : (
         <input
           value={data}
