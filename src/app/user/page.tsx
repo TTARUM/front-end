@@ -93,7 +93,7 @@ export default function User() {
                   <Image src={right_arrow} alt="right_arrow" />
                 </li>
                 <li className="line"></li>
-                <li>
+                <li onClick={() => router.push('review')}>
                   나의 리뷰
                   <Image src={right_arrow} alt="right_arrow" />
                 </li>
