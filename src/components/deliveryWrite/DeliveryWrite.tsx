@@ -4,7 +4,7 @@ import './DeliveryWrite.scss';
 
 import { useRouter } from 'next/navigation';
 import InputText from '@/components/InputText/InputText';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 
 const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
