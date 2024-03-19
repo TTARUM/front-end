@@ -35,7 +35,7 @@ export default function Delivery() {
             </button>
             <button
               onClick={() => {
-                router.push('/order/deliveryEdit');
+                router.push(`/order/${1}/editDelivery`);
               }}
             >
               수정
