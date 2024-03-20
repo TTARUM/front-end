@@ -2,6 +2,9 @@
 import './InputText.scss';
 
 import SearchAddress from '../SearchAddress/SearchAddress';
+import EmailAddress from '../EmailAddress/EmailAddress';
+import { MainEventButton } from '../Style/MainEventBtn/MainEventBtn';
+import { useState } from 'react';
 
 type Props = {
   data: string;
@@ -20,6 +23,9 @@ const InputText = ({
   type,
   onChange,
 }: Props): JSX.Element => {
+
+  const [click, setClick] = useState();
+  
   return (
     <>
       <span className="label">{title}</span>
@@ -29,6 +35,22 @@ const InputText = ({
           setData={setData}
           placeholder={placeholder}
         />
+      ) : type === 'email' ? (
+        <EmailAddress setClick={setClick} setData={setData} placeholder={placeholder} />
+      ) : type === 'certificationNumber' ? (
+        <div className="certificationNumber_input">
+          <input
+            className="data_input"
+            placeholder={placeholder}
+            value={data}
+            onChange={(e) => {
+              setData(e.target.value);
+            }}
+          />
+          <MainEventButton width={48} height={20.35} color={'#FF6135'}>
+            확인
+          </MainEventButton>
+        </div>
       ) : (
         <input
           value={data}

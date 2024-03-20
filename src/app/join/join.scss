@@ -2,8 +2,11 @@
 
 .join-wrapper {
     padding: $default_padding;
+    position: relative;
+    min-height: 1053px;
 
-    >img {
-        margin-top: 27px;
+    >button{
+        position: absolute;
+        bottom: 10px;
     }
 }
