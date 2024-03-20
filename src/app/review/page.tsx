@@ -28,13 +28,15 @@ const Review = () => {
         <div key={review.id}>
           <div className="review_wrapper">
             <div className="review_header">
-              <div className="review_header_data_wrapper">
+              <div className="review_header_first_row">
                 <span className="review_date">{review.date}</span>
-                <span className="review_item">{review.item_name}</span>
+                <div className="button_wrapper">
+                  <span className="button edit_button">수정</span>
+                  <span className="button delete_button">삭제</span>
+                </div>
               </div>
-              <div className="button_wrapper">
-                <span className="button edit_button">수정</span>
-                <span className="button delete_button">삭제</span>
+              <div className="review_header_second_row">
+                <span className="review_item">{review.item_name}</span>
               </div>
             </div>
             <div className="review_content">

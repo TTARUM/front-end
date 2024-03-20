@@ -9,18 +9,19 @@ div.review_wrapper {
   padding-bottom: 25px;
   .review_header {
     padding: $default_padding;
-    @include flex_container(space-between);
-    .review_header_data_wrapper {
-      @include flex_container();
-      flex-direction: column;
-      gap: 5px;
-    }
-    .button_wrapper {
-      @include flex_container();
-      gap: 10px;
-      .button {
-        color: $mainColor;
-        cursor: pointer;
+    @include flex_container(space-between, flex-start);
+    flex-direction: column;
+    gap: 5px;
+    .review_header_first_row {
+      width: 100%;
+      @include flex_container(space-between);
+      .button_wrapper {
+        @include flex_container();
+        gap: 10px;
+        .button {
+          color: $mainColor;
+          cursor: pointer;
+        }
       }
     }
   }
