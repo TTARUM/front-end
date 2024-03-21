@@ -38,8 +38,8 @@ export default function Login() {
           로그인
         </MainEventButton>
         <div className="subBtn">
-          <p>아이디 찾기</p>
-          <p>비밀번호 찾기</p>
+          <p onClick={() => router.push('/findId')}>아이디 찾기</p>
+          <p onClick={() => router.push('/findPassword')}>비밀번호 찾기</p>
           <p
             onClick={() => {
               router.push('/join');
