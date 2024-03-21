@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import InputText from '@/components/InputText/InputText';
 import { useState } from 'react';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
+import Checkbox from '../Checkbox/Checkbox';
 
 const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
   const [address, setAddress] = useState('');
   const [addressDetail, setAddressDetail] = useState('');
   const [phone, setPhone] = useState('');
+  const [defaultDelivery, setDefaultDelivery] = useState<boolean>(false); // 이곳에는 API 데이터가 들어가야 함.
 
   const handlePhoneChange = (e) => {
     const formattedPhoneNumber = e.target.value
@@ -73,11 +75,11 @@ const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
             onChange={inputData.onChange}
           />
         ))}
-        <div className="checkbox_wrapper">
-          <input type="checkbox" id="setDefault"></input>
-          <label htmlFor="setDefault"></label>
-          <label htmlFor="setDefault">기본 배송지로 선택</label>
-        </div>
+        <Checkbox
+          title="기본 배송지로 선택"
+          data={defaultDelivery}
+          setData={setDefaultDelivery}
+        />
         <MainEventButton width={345} height={41} color={'#ff6135'}>
           저장
         </MainEventButton>

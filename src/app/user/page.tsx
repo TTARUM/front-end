@@ -111,7 +111,7 @@ export default function User() {
               <li className="title">회원정보 관리</li>
               <div className="line"></div>
               <ul>
-                <li>
+                <li onClick={()=>{router.push('/order/deliveryList')}}>
                   배송지 관리
                   <Image src={right_arrow} alt="right_arrow" />
                 </li>

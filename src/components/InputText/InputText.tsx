@@ -36,21 +36,7 @@ const InputText = ({
           placeholder={placeholder}
         />
       ) : type === 'email' ? (
-        <EmailAddress setClick={setClick} setData={setData} placeholder={placeholder} />
-      ) : type === 'certificationNumber' ? (
-        <div className="certificationNumber_input">
-          <input
-            className="data_input"
-            placeholder={placeholder}
-            value={data}
-            onChange={(e) => {
-              setData(e.target.value);
-            }}
-          />
-          <MainEventButton width={48} height={20.35} color={'#FF6135'}>
-            확인
-          </MainEventButton>
-        </div>
+        <EmailAddress data={data} setClick={setClick} setData={setData} placeholder={placeholder} />
       ) : (
         <input
           value={data}
