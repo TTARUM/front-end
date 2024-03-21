@@ -40,7 +40,13 @@ export default function Login() {
         <div className="subBtn">
           <p>아이디 찾기</p>
           <p>비밀번호 찾기</p>
-          <p>회원가입</p>
+          <p
+            onClick={() => {
+              router.push('/join');
+            }}
+          >
+            회원가입
+          </p>
         </div>
         <div className="social-login">
           <p>SNS계정으로 간편하게 로그인하기</p>
