@@ -1,0 +1,10 @@
+@import '../globals.scss';
+
+.findId_container {
+  @include flex_container(space-between);
+  flex-direction: column;
+  .findId_wrapper {
+    padding: $default_padding;
+    margin-bottom: 30px;
+  }
+}
