@@ -9,6 +9,7 @@ import './writeAsk.scss';
 import Image from 'next/image';
 import useInput from '@/hooks/useInput';
 import usePreview from '@/hooks/usePreview';
+import Checkbox from '@/components/Checkbox/Checkbox';
 
 export default function WriteAsk({ params }) {
   const 더미데이터 = [
@@ -35,6 +36,7 @@ export default function WriteAsk({ params }) {
   const [title, setTitle, titleChange] = useInput();
   const [content, setContent] = useState<string>('');
   const [sendAsk, setSendAsk] = useState<boolean>(false);
+  const [secret, setSecret] = useState<boolean>(false);
 
   const contentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length > 1000) return;
@@ -56,7 +58,7 @@ export default function WriteAsk({ params }) {
 
   return (
     <div className="WriteAsk">
-      <Header type='subMenu' title="문의하기" />
+      <Header type="subMenu" title="문의하기" />
       <div className="WriteAsk-content">
         <input
           onChange={titleChange}
@@ -98,9 +100,7 @@ export default function WriteAsk({ params }) {
           </div>
         </div>
         <div className="secret-writeBox">
-          <input type="checkbox" id="secret" name="scales" />
-          <label htmlFor="secret"></label>
-          <label htmlFor="secret">비밀글로 작성</label>
+          <Checkbox title="비밀글로 작성" data={secret} setData={setSecret} />
         </div>
         <footer className="footer">
           <button onClick={sendWriteAsk}>작성하기</button>

@@ -49,7 +49,7 @@ export default function Delivery() {
           textColor={'#FF6135'}
           border={true}
           onClick={() => {
-            router.push('/order/deliveryAdd');
+            router.push('/order/newDelivery');
           }}
         >
           배송지 추가

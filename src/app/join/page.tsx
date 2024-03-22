@@ -62,13 +62,6 @@ export default function Join() {
       type: 'email',
     },
     {
-      data: certificationNumber,
-      setData: setCertificationNumber,
-      title: '인증번호',
-      placeholder: '인증번호를 입력해주세요.',
-      type: 'certificationNumber',
-    },
-    {
       data: userPhone,
       setData: setUserPhone,
       title: '휴대폰 번호',
