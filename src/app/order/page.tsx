@@ -13,6 +13,8 @@ import check from '../../../public/check.svg';
 import check_on from '../../../public/check_on.svg';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 import { useRouter } from 'next/navigation';
+import PersonalInformation from '@/components/AgreementPage/PersonalInformation';
+import TermsInformation from '@/components/AgreementPage/TermsInformation';
 
 type queryData = {
   id: number;
@@ -47,6 +49,10 @@ const Order = () => {
   const [showDeliveryPopup, setShowDeliveryPopup] = useState<boolean>(false);
   const [showCouponPopup, setShowCouponPopup] = useState<boolean>(false);
   const [getCoupon, setGetCoupon] = useState<coupon>([]);
+  const [showPersonalInformation, setShowPersonalInformation] =
+    useState<boolean>(false);
+  const [showTermsInformation, setShowTermsInformation] =
+    useState<boolean>(false);
 
   const payment = getUrl?.map((value, indx) => value.price);
   const totalAmount = payment?.reduce(function add(sum, currValue) {
@@ -80,7 +86,13 @@ const Order = () => {
           <button>기본</button>
           <button>최근</button>
         </div>
-        <button onClick={()=>{router.push('/order/deliveryList')}}>배송지 목록</button>
+        <button
+          onClick={() => {
+            router.push('/order/deliveryList');
+          }}
+        >
+          배송지 목록
+        </button>
       </div>
       <div className="order_wrap">
         {/* 배송 */}
@@ -254,7 +266,14 @@ const Order = () => {
               />
               <p>개인정보 취급 위탁 동의</p>
             </div>
-            <p>보기</p>
+            <p
+              onClick={() => {
+                setShowPersonalInformation(true);
+                window.scrollTo(0,0);
+              }}
+            >
+              보기
+            </p>
           </div>
           <div>
             <div>
@@ -267,7 +286,14 @@ const Order = () => {
               />
               <p>개인정보 수집 및 이용 동의</p>
             </div>
-            <p>보기</p>
+            <p
+              onClick={() => {
+                setShowTermsInformation(true);
+                window.scrollTo(0,0);
+              }}
+            >
+              보기
+            </p>
           </div>
           <MainEventButton
             disabled={
@@ -353,6 +379,14 @@ const Order = () => {
           </div>
         </div>
       ) : null}
+      <PersonalInformation
+        show={showPersonalInformation}
+        setShow={setShowPersonalInformation}
+      />
+      <TermsInformation
+        show={showTermsInformation}
+        setShow={setShowTermsInformation}
+      />
     </div>
   );
 };
