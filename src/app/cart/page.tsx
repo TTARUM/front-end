@@ -78,6 +78,7 @@ export default function Cart() {
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [getData, setGetData] = useState<Props[]>([]);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
   const handleItemValueChange = (itemId: number, newValue: number) => {
     console.log(itemId, '111');
@@ -162,7 +163,15 @@ export default function Cart() {
             </div>
             <p>전체선택</p>
           </div>
-          <p>상품삭제</p>
+          <p
+            onClick={() => {
+              getData.length === 0
+                ? alert('상품을 선택해주세요.')
+                : setShowDeleteModal(true);
+            }}
+          >
+            상품삭제
+          </p>
         </div>
         <div className="line"></div>
         {test?.length == 0 ? (
@@ -280,6 +289,25 @@ export default function Cart() {
                 : '상품을 선택해주세요'}
             </MainEventButton>
           </Link>
+        </div>
+      </div>
+      <div
+        className={
+          showDeleteModal === true ? 'delete_modal active' : 'delete_modal'
+        }
+      >
+        <div className="modal">
+          <p>상품을 삭제하시겠어요?</p>
+          <div>
+            <button
+              onClick={() => {
+                setShowDeleteModal(false);
+              }}
+            >
+              취소
+            </button>
+            <button>삭제</button>
+          </div>
         </div>
       </div>
     </div>
