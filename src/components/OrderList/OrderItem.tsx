@@ -13,7 +13,6 @@ type Item = {
   img: string;
   name: string;
   count: number;
-  price: number;
 };
 
 type Data = {
@@ -57,13 +56,10 @@ export default function OrderItem({ data, page }: Props) {
             </div>
             <div>
               <p>{value.name}</p>
-              <p className="orderItem_price">
-                {value.price.toLocaleString()}원
-              </p>
               <div>
                 <p>주문수량 - {value.count}개</p>
-                <p>리뷰 작성</p>
               </div>
+              <p className='review'>리뷰 작성</p>
             </div>
           </div>
         );
