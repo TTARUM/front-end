@@ -10,7 +10,9 @@ const EmailAddress = ({ data, setData, placeholder, setClick }) => {
   const [getEmail, setGetEmail] = useState<string>('');
   const [pushEmail, setPushEmail] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [certificationNumber, setCertificationNumber] = useState<number>();
+  const [certificationNumber, setCertificationNumber] = useState<number | ''>(
+    '',
+  );
 
   const certificationCheck = () => {
     // 이메일 인증 API 구역
@@ -64,7 +66,9 @@ const EmailAddress = ({ data, setData, placeholder, setClick }) => {
           placeholder="인증번호를 입력해주세요."
           value={certificationNumber}
           onChange={(e) => {
-            setCertificationNumber(parseInt(e.target.value, 10));
+            const input = e.target.value;
+            // 빈 문자열인 경우 바로 설정, 숫자인 경우에만 parseInt 사용
+            setCertificationNumber(input === '' ? '' : parseInt(input, 10));
           }}
         />
         <MainEventButton width={48} height={20.35} color={'#FF6135'}>
