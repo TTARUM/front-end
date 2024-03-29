@@ -79,7 +79,11 @@ export default function Write({ page, params }) {
           <textarea
             maxLength={1000}
             onChange={contentChange}
-            placeholder="여기에 문의 내용을 작성해주세요."
+            placeholder={
+              page === 'products'
+                ? '여기에 문의 내용을 작성해주세요.'
+                : '여기에 사용후기를 작성해주세요.'
+            }
           />
           <p>{content.length}/1000</p>
         </div>
@@ -109,9 +113,11 @@ export default function Write({ page, params }) {
             })}
           </div>
         </div>
-        <div className="secret-writeBox">
-          <Checkbox title="비밀글로 작성" data={secret} setData={setSecret} />
-        </div>
+        {page === 'products' ? (
+          <div className="secret-writeBox">
+            <Checkbox title="비밀글로 작성" data={secret} setData={setSecret} />
+          </div>
+        ) : null}
         <footer className="footer">
           <button onClick={sendWriteAsk}>작성하기</button>
         </footer>
