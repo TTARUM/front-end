@@ -1,15 +1,20 @@
 'use client';
 import './findId.scss';
 
+import closeBtn from '../../../public/closeBtn.svg';
+import lumi from '../../../public/Lumi2.svg';
+
 import Header from '@/components/Header/Header';
 import InputText from '@/components/InputText/InputText';
 import LogoTitle from '@/components/LogoTitle/LogoTitle';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 import { useState } from 'react';
+import Image from 'next/image';
 
 const FindId = () => {
   const [userName, setUserName] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>('');
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const inputDataArr = [
     {
@@ -46,9 +51,39 @@ const FindId = () => {
           />
         ))}
       </div>
-      <MainEventButton width={345} height={41} color={'#FF6135'}>
+      <MainEventButton
+        width={345}
+        height={41}
+        color={'#FF6135'}
+        onClick={() => setIsSuccess(true)}
+      >
         아이디 찾기
       </MainEventButton>
+      {isSuccess && (
+        <div className="success_modal">
+          <div className="closeBtn_wrapper">
+            <Image
+              src={closeBtn}
+              alt="close button"
+              width={17}
+              height={17}
+              onClick={() => setIsSuccess(false)}
+            />
+          </div>
+          <Image src={lumi} alt="lumi" width={109} height={92} />
+          <p>
+            고객님의 아이디는 <span>"test12"</span> 입니다.
+          </p>
+          <div className="button_wrapper">
+            <MainEventButton width={110} height={36} color={'#C5C5C5'}>
+              비밀번호 찾기
+            </MainEventButton>
+            <MainEventButton width={110} height={36} color={'#FF6135'}>
+              로그인 하기
+            </MainEventButton>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
