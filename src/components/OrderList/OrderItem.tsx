@@ -27,6 +27,7 @@ type Props = {
 
 export default function OrderItem({ data, page }: Props) {
   // console.log(data);
+  const route = useRouter();
 
   return (
     <div className="orderArea">
@@ -59,7 +60,14 @@ export default function OrderItem({ data, page }: Props) {
               <div>
                 <p>주문수량 - {value.count}개</p>
               </div>
-              <p className='review'>리뷰 작성</p>
+              <p
+                onClick={() => {
+                  route.push('/review/newReview/1');
+                }}
+                className="review"
+              >
+                리뷰 작성
+              </p>
             </div>
           </div>
         );
