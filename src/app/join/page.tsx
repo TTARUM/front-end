@@ -2,9 +2,12 @@
 import './join.scss';
 import Header from '@/components/Header/Header';
 import LogoTitle from '@/components/LogoTitle/LogoTitle';
-import { useState } from 'react';
+import { Dispatch, useState } from 'react';
 import InputText from '@/components/InputText/InputText';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
+import { useDispatch } from 'react-redux';
+import { TTARDispatch } from '../redux/store';
+import { registerUser } from '../redux/action/action';
 
 export default function Join() {
   const [userId, setUserId] = useState();
@@ -16,11 +19,26 @@ export default function Join() {
   const [certificationNumber, setCertificationNumber] = useState();
   const [userPhone, setUserPhone] = useState();
 
+  const dispatch = useDispatch<TTARDispatch>();
+
   const handlePhoneChange = (e) => {
     const formattedPhoneNumber = e.target.value
       .replace(/[^0-9]/g, '')
       .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
     setUserPhone(formattedPhoneNumber);
+  };
+
+  const handleSubmit = async () => {
+    dispatch(
+      registerUser({
+        name: userName,
+        nickname: userNickName,
+        phoneNumber: userPhone,
+        loginId: userId,
+        password: userPassword,
+        email: userEmail,
+      }),
+    );
   };
 
   const inputDataArr = [
@@ -95,7 +113,12 @@ export default function Join() {
             />
           ))}
         </div>
-        <MainEventButton width={345} height={41} color={'#FF6135'}>
+        <MainEventButton
+          width={345}
+          height={41}
+          color={'#FF6135'}
+          onClick={handleSubmit}
+        >
           회원가입
         </MainEventButton>
       </div>
