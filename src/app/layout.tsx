@@ -3,6 +3,7 @@ import Navigation from '../components/Navigation/Navigation';
 import './globals.scss';
 import { Inter } from 'next/font/google';
 import AuthContext from '@/components/Auth/AuthContext';
+import store from './redux/store';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -12,6 +13,7 @@ export const metadata = {
 };
 
 import localFont from 'next/font/local';
+import ReduxProvider from '@/components/Provider/ReduxProvider';
 
 const myFont = localFont({
   src: './fonts/PretendardVariable.ttf',
@@ -23,8 +25,10 @@ export default function RootLayout({ children }) {
     <html lang="kr" className={myFont.className}>
       <body>
         <AuthContext>
-          {children}
-          <MainSide />
+          <ReduxProvider>
+            {children}
+            <MainSide />
+          </ReduxProvider>
         </AuthContext>
       </body>
     </html>
