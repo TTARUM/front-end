@@ -13,23 +13,12 @@ import { useEffect, useState } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import LogoTitle from '@/components/LogoTitle/LogoTitle';
-import { showLogin } from '@/util/AxiosGet';
+import { showJoin } from '@/util/AxiosGet';
 
 export default function Login() {
   const [userId, setUserId] = useState<string | number>();
   const { data: session } = useSession();
   const router = useRouter();
-
-  const login = () => {
-    showLogin(
-      '홍길동',
-      '와인조아',
-      '010-0000-0000',
-      'test12',
-      'qwerqwer',
-      'test@test.com',
-    );
-  };
 
   return (
     <div className="login-container">
@@ -46,12 +35,7 @@ export default function Login() {
         />
         <input type="text" placeholder="아이디를 입력해주세요." />
         <input type="password" placeholder="비밀번호를 입력해주세요." />
-        <MainEventButton
-          onClick={login}
-          width={345}
-          height={41}
-          color={'#FF6135'}
-        >
+        <MainEventButton width={345} height={41} color={'#FF6135'}>
           로그인
         </MainEventButton>
         <div className="subBtn">

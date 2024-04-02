@@ -12,7 +12,7 @@ interface LoginFrom {
 const getPopularList = () =>
   AxiosConfig.get('/items/popular-list').then((res) => res.data);
 
-const showLogin = (
+const showJoin = (
   name: string,
   nickname: string,
   phoneNumber: string,
@@ -37,4 +37,4 @@ const getCategory = (id) =>
     res.data;
   });
 
-export { getPopularList, showLogin, getCategory };
+export { getPopularList, showJoin, getCategory };

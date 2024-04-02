@@ -23,9 +23,8 @@ const InputText = ({
   type,
   onChange,
 }: Props): JSX.Element => {
-
   const [click, setClick] = useState();
-  
+
   return (
     <>
       <span className="label">{title}</span>
@@ -36,7 +35,20 @@ const InputText = ({
           placeholder={placeholder}
         />
       ) : type === 'email' ? (
-        <EmailAddress data={data} setClick={setClick} setData={setData} placeholder={placeholder} />
+        <EmailAddress
+          data={data}
+          setClick={setClick}
+          setData={setData}
+          placeholder={placeholder}
+        />
+      ) : type === 'password' ? (
+        <input
+          value={data}
+          type="password"
+          className="data_input"
+          placeholder={placeholder}
+          onChange={(e) => (onChange ? onChange(e) : setData(e.target.value))}
+        />
       ) : (
         <input
           value={data}

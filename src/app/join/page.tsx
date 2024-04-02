@@ -2,24 +2,20 @@
 import './join.scss';
 import Header from '@/components/Header/Header';
 import LogoTitle from '@/components/LogoTitle/LogoTitle';
-import { Dispatch, useState } from 'react';
+import { useState } from 'react';
 import InputText from '@/components/InputText/InputText';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
-import { useDispatch } from 'react-redux';
-import { TTARDispatch } from '../redux/store';
-import { registerUser } from '../redux/action/action';
+import { showJoin } from '@/util/AxiosGet';
 
 export default function Join() {
-  const [userId, setUserId] = useState();
-  const [userNickName, setUserNickName] = useState();
-  const [userPassword, setUserPassword] = useState();
-  const [checkPassword, setCheckPassword] = useState();
-  const [userName, setUserName] = useState();
-  const [userEmail, setUserEmail] = useState();
+  const [userId, setUserId] = useState<string>();
+  const [userNickName, setUserNickName] = useState<string>();
+  const [userPassword, setUserPassword] = useState<string>();
+  const [checkPassword, setCheckPassword] = useState<string>();
+  const [userName, setUserName] = useState<string>();
+  const [userEmail, setUserEmail] = useState<string>();
   const [certificationNumber, setCertificationNumber] = useState();
-  const [userPhone, setUserPhone] = useState();
-
-  const dispatch = useDispatch<TTARDispatch>();
+  const [userPhone, setUserPhone] = useState<string>();
 
   const handlePhoneChange = (e) => {
     const formattedPhoneNumber = e.target.value
@@ -28,16 +24,14 @@ export default function Join() {
     setUserPhone(formattedPhoneNumber);
   };
 
-  const handleSubmit = async () => {
-    dispatch(
-      registerUser({
-        name: userName,
-        nickname: userNickName,
-        phoneNumber: userPhone,
-        loginId: userId,
-        password: userPassword,
-        email: userEmail,
-      }),
+  const handleSubmit = () => {
+    showJoin(
+      userName,
+      userNickName,
+      userPhone,
+      userId,
+      userPassword,
+      userEmail,
     );
   };
 
@@ -59,12 +53,14 @@ export default function Join() {
       setData: setUserPassword,
       title: '비밀번호',
       placeholder: '비밀번호를 입력해주세요.',
+      type: 'password',
     },
     {
       data: checkPassword,
       setData: setCheckPassword,
       title: '비밀번호 확인',
       placeholder: '비밀번호를 입력해주세요.',
+      type: 'password',
     },
     {
       data: userName,
