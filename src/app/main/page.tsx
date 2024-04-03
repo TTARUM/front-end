@@ -22,6 +22,8 @@ import event_1 from '../../../public/event_1.svg';
 import event_2 from '../../../public/event_2.svg';
 import { usePathname, useRouter } from 'next/navigation';
 import Navigation from '@/components/Navigation/Navigation';
+import { getPopularList } from '@/util/AxiosGet';
+import { useQuery } from '@tanstack/react-query';
 
 const testCategory: { img: string; name: string; id: number }[] = [
   { img: RED, name: '레드 와인', id: 2 },
@@ -49,6 +51,12 @@ export default function Main() {
   const router = useRouter();
   const path = usePathname();
 
+  const { data, status } = useQuery({
+    queryKey: ['popularList'],
+    queryFn: getPopularList,
+  });
+
+  console.log(data)
   return (
     <div className="main-container">
       <Header title={'홈'} type="main" />

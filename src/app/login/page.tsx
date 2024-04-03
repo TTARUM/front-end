@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import LogoTitle from '@/components/LogoTitle/LogoTitle';
+import { showJoin } from '@/util/AxiosGet';
 
 export default function Login() {
   const [userId, setUserId] = useState<string | number>();
