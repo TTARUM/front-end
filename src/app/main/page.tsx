@@ -56,7 +56,6 @@ export default function Main() {
     queryFn: getPopularList,
   });
 
-  console.log(data)
   return (
     <div className="main-container">
       <Header title={'홈'} type="main" />

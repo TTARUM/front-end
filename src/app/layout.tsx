@@ -1,8 +1,8 @@
 import MainSide from '@/components/MainSide/MainSide';
-import Navigation from '../components/Navigation/Navigation';
 import './globals.scss';
 import { Inter } from 'next/font/google';
 import AuthContext from '@/components/Auth/AuthContext';
+import ReactQueryProviders from '@/util/ReactQueryProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -12,6 +12,7 @@ export const metadata = {
 };
 
 import localFont from 'next/font/local';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const myFont = localFont({
   src: './fonts/PretendardVariable.ttf',
@@ -22,10 +23,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="kr" className={myFont.className}>
       <body>
-        <AuthContext>
-          {children}
-          <MainSide />
-        </AuthContext>
+        <ReactQueryProviders>
+          <AuthContext>
+            {children}
+            <MainSide />
+          </AuthContext>
+        </ReactQueryProviders>
       </body>
     </html>
   );

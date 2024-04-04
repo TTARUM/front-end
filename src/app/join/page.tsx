@@ -47,36 +47,14 @@ export default function Join() {
   };
 
   const handleSubmit = () => {
-    if (
-      userId &&
-      userName &&
-      userNickName &&
-      userPassword &&
-      checkPassword &&
-      userEmail &&
-      userPhone
-    ) {
-      showJoin(
-        userName,
-        userNickName,
-        userPhone,
-        userId,
-        userPassword,
-        userEmail,
-      )
-        .then((response) => {
-          setShowModal(true);
-          setGetModalMessage(
-            <p>
-              <span>'TTARUM'</span> 회원가입을 축하드립니다!!
-            </p>,
-          );
-        })
-        .catch((error) => {
-          setShowModal(true);
-          setGetModalMessage(<p>{error.response.data.message}</p>);
-        });
-    }
+    showJoin({
+      name: userName,
+      nickname: userNickName,
+      phoneNumber: userPhone,
+      loginId: userId,
+      password: userPassword,
+      email: userEmail,
+    });
   };
 
   useEffect(() => {
