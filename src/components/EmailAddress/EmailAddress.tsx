@@ -19,6 +19,12 @@ const EmailAddress = ({ data, setData, placeholder, setClick }) => {
     setClick('이메일 인증 번호');
   };
 
+  const checkEmail = () => {
+    const regEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    return regEmail.test(data);
+  };
+
   useEffect(() => {
     setData(`${email}@${getEmail === '직접' ? pushEmail : getEmail}`);
   }, [email, getEmail, pushEmail]);
@@ -53,7 +59,8 @@ const EmailAddress = ({ data, setData, placeholder, setClick }) => {
           onClick={certificationCheck}
           width={48}
           height={20.35}
-          color={'#FF6135'}
+          color={checkEmail() === false ? '#D9D9D9' : '#FF6135'}
+          disabled={checkEmail() === false ? true : false}
         >
           확인
         </MainEventButton>
@@ -100,6 +107,14 @@ const EmailAddress = ({ data, setData, placeholder, setClick }) => {
             }}
           >
             daum.net
+          </p>
+          <p
+            onClick={() => {
+              setShowEmailModal(false);
+              setGetEmail('nate.com');
+            }}
+          >
+            nate.com
           </p>
           <p
             onClick={() => {

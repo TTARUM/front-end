@@ -2,26 +2,48 @@
 import './join.scss';
 import Header from '@/components/Header/Header';
 import LogoTitle from '@/components/LogoTitle/LogoTitle';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import InputText from '@/components/InputText/InputText';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 import { showJoin } from '@/util/AxiosGet';
+import Image from 'next/image';
+
+import modal_character from '../../../public/modal_character.svg';
+import close from '../../../public/closeBtn.svg';
 
 export default function Join() {
-  const [userId, setUserId] = useState<string>();
-  const [userNickName, setUserNickName] = useState<string>();
-  const [userPassword, setUserPassword] = useState<string>();
-  const [checkPassword, setCheckPassword] = useState<string>();
-  const [userName, setUserName] = useState<string>();
-  const [userEmail, setUserEmail] = useState<string>();
-  const [certificationNumber, setCertificationNumber] = useState();
-  const [userPhone, setUserPhone] = useState<string>();
+  const [userId, setUserId] = useState<string>('');
+  const [userNickName, setUserNickName] = useState<string>('');
+  const [userPassword, setUserPassword] = useState<string>('');
+  const [checkPassword, setCheckPassword] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
+  const [userEmail, setUserEmail] = useState<string>('');
+  const [certificationNumber, setCertificationNumber] = useState('');
+  const [userPhone, setUserPhone] = useState<string>('');
+  const [success, setSuccess] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [getModalMessage, setGetModalMessage] = useState<string | JSX.Element>(
+    '',
+  );
 
   const handlePhoneChange = (e) => {
-    const formattedPhoneNumber = e.target.value
-      .replace(/[^0-9]/g, '')
-      .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    let formattedPhoneNumber = e.target.value.replace(/[^0-9]/g, '');
+
+    if (formattedPhoneNumber.length > 11) {
+      formattedPhoneNumber = formattedPhoneNumber.slice(0, 11);
+    }
+
+    formattedPhoneNumber = formattedPhoneNumber.replace(
+      /(\d{3})(\d{4})(\d{4})/,
+      '$1-$2-$3',
+    );
     setUserPhone(formattedPhoneNumber);
+  };
+
+  const reviewPassword = () => {
+    const regPassword = /^(?=.*[^A-Za-z0-9])[^\s(){}\[\]'"]{8,20}$/;
+
+    return regPassword.test(userPassword);
   };
 
   const handleSubmit = () => {
@@ -34,6 +56,30 @@ export default function Join() {
       email: userEmail,
     });
   };
+
+  useEffect(() => {
+    if (
+      userId &&
+      userName &&
+      userNickName &&
+      userPassword &&
+      checkPassword &&
+      userEmail &&
+      userPhone
+    ) {
+      setSuccess(true);
+    } else {
+      setSuccess(false);
+    }
+  }, [
+    userId,
+    userName,
+    userNickName,
+    userPassword,
+    checkPassword,
+    userEmail,
+    userPhone,
+  ]);
 
   const inputDataArr = [
     {
@@ -54,6 +100,12 @@ export default function Join() {
       title: '비밀번호',
       placeholder: '비밀번호를 입력해주세요.',
       type: 'password',
+      warning:
+        userPassword === ''
+          ? null
+          : reviewPassword() === true
+            ? null
+            : '8~20자 사이, 괄호, 따옴표를 제외한 특수문자를 포함해야합니다. ',
     },
     {
       data: checkPassword,
@@ -61,6 +113,12 @@ export default function Join() {
       title: '비밀번호 확인',
       placeholder: '비밀번호를 입력해주세요.',
       type: 'password',
+      warning:
+        userPassword === ''
+          ? null
+          : userPassword === checkPassword
+            ? null
+            : '비밀번호가 일치하지 않습니다.',
     },
     {
       data: userName,
@@ -106,18 +164,42 @@ export default function Join() {
               placeholder={inputData.placeholder}
               type={inputData.type}
               onChange={inputData.onChange}
+              warning={inputData.warning}
             />
           ))}
         </div>
         <MainEventButton
           width={345}
           height={41}
-          color={'#FF6135'}
+          color={success === false ? '#D9D9D9' : '#FF6135'}
           onClick={handleSubmit}
+          disabled={success === false ? true : false}
         >
           회원가입
         </MainEventButton>
       </div>
+      {showModal === true ? (
+        <div className="modal">
+          <Image src={modal_character} alt="modal_character" />
+          <Image
+            onClick={() => {
+              setShowModal(false);
+            }}
+            src={close}
+            alt="close"
+          />
+          {getModalMessage}
+          {(getModalMessage as any).props.children[1] === ' 회원가입을 축하드립니다!!' ? (
+            <MainEventButton width={205} height={36} color={'#FF6135'}>
+              로그인하기
+            </MainEventButton>
+          ) : (
+            <MainEventButton width={205} height={36} color={'#FF6135'}>
+              확인
+            </MainEventButton>
+          )}
+        </div>
+      ) : null}
     </div>
   );
 }
