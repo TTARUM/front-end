@@ -4,7 +4,7 @@ import './InputText.scss';
 import SearchAddress from '../SearchAddress/SearchAddress';
 import EmailAddress from '../EmailAddress/EmailAddress';
 import { MainEventButton } from '../Style/MainEventBtn/MainEventBtn';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type Props = {
   data: string;
@@ -13,6 +13,7 @@ type Props = {
   placeholder: string;
   type?: string;
   onChange?: (InputEvent) => void;
+  warning?: string;
 };
 
 const InputText = ({
@@ -22,6 +23,7 @@ const InputText = ({
   placeholder,
   type,
   onChange,
+  warning,
 }: Props): JSX.Element => {
   const [click, setClick] = useState();
 
@@ -30,28 +32,31 @@ const InputText = ({
       <span className="label">{title}</span>
       {type === 'search' ? (
         <SearchAddress
-          data={data}
+          data={data || ''}
           setData={setData}
           placeholder={placeholder}
         />
       ) : type === 'email' ? (
         <EmailAddress
-          data={data}
+          data={data || ''}
           setClick={setClick}
           setData={setData}
           placeholder={placeholder}
         />
       ) : type === 'password' ? (
-        <input
-          value={data}
-          type="password"
-          className="data_input"
-          placeholder={placeholder}
-          onChange={(e) => (onChange ? onChange(e) : setData(e.target.value))}
-        />
+        <>
+          <input
+            value={data || ''}
+            type="password"
+            className="data_input"
+            placeholder={placeholder}
+            onChange={(e) => (onChange ? onChange(e) : setData(e.target.value))}
+          />
+          <p className="warning">{warning}</p>
+        </>
       ) : (
         <input
-          value={data}
+          value={data || ''}
           className="data_input"
           placeholder={placeholder}
           onChange={(e) => (onChange ? onChange(e) : setData(e.target.value))}
