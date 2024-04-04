@@ -25,14 +25,14 @@ export default function Join() {
   };
 
   const handleSubmit = () => {
-    showJoin(
-      userName,
-      userNickName,
-      userPhone,
-      userId,
-      userPassword,
-      userEmail,
-    );
+    showJoin({
+      name: userName,
+      nickname: userNickName,
+      phoneNumber: userPhone,
+      loginId: userId,
+      password: userPassword,
+      email: userEmail,
+    });
   };
 
   const inputDataArr = [
