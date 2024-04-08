@@ -7,11 +7,13 @@ import InputText from '@/components/InputText/InputText';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 import { showJoin } from '@/util/AxiosGet';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import modal_character from '../../../public/modal_character.svg';
 import close from '../../../public/closeBtn.svg';
 
 export default function Join() {
+  const router = useRouter();
   const [userId, setUserId] = useState<string>('');
   const [userNickName, setUserNickName] = useState<string>('');
   const [userPassword, setUserPassword] = useState<string>('');
@@ -54,7 +56,23 @@ export default function Join() {
       loginId: userId,
       password: userPassword,
       email: userEmail,
-    });
+    })
+      .then((res) => {
+        setShowModal(true);
+        setGetModalMessage(
+          <p>
+            <span>'TTARUM'</span> 회원가입을 축하드립니다!!
+          </p>,
+        );
+      })
+      .catch((error) => {
+        setShowModal(true);
+        setGetModalMessage(
+          <p>
+           {error.response.data.message}
+          </p>,
+        );
+      });
   };
 
   useEffect(() => {
@@ -189,12 +207,13 @@ export default function Join() {
             alt="close"
           />
           {getModalMessage}
-          {(getModalMessage as any).props.children[1] === ' 회원가입을 축하드립니다!!' ? (
-            <MainEventButton width={205} height={36} color={'#FF6135'}>
+          {(getModalMessage as any).props.children[1] ===
+          ' 회원가입을 축하드립니다!!' ? (
+            <MainEventButton onClick={()=>{router.push('/login')}} width={205} height={36} color={'#FF6135'}>
               로그인하기
             </MainEventButton>
           ) : (
-            <MainEventButton width={205} height={36} color={'#FF6135'}>
+            <MainEventButton onClick={()=>{setShowModal(false)}} width={205} height={36} color={'#FF6135'}>
               확인
             </MainEventButton>
           )}
