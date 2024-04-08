@@ -6,3 +6,8 @@ export interface IUser {
   password: string;
   email: string;
 }
+
+export interface Login {
+  loginId : string;
+  password : string;
+}

@@ -31,6 +31,14 @@
             border-radius: 5px;
         }
     }
+    .notInput{
+        &::placeholder{
+            color: $mainColor;
+        }
+    }
+    >p{
+        text-align: left;
+    }
 
     >.subBtn {
         display: flex;

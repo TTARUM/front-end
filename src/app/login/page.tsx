@@ -13,12 +13,33 @@ import { useEffect, useState } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import LogoTitle from '@/components/LogoTitle/LogoTitle';
-import { showJoin } from '@/util/AxiosGet';
+import { showLogin } from '@/util/AxiosGet';
 
 export default function Login() {
-  const [userId, setUserId] = useState<string | number>();
+  const [userId, setUserId] = useState<string>('');
+  const [userPassword, setUserPassword] = useState<string>('');
+  const [warning, setWarning] = useState<string>(null);
   const { data: session } = useSession();
   const router = useRouter();
+
+  const handleSubmit = () => {
+    if (userId && userPassword) {
+      showLogin({
+        loginId: userId,
+        password: userPassword,
+      })
+        .then((res) => {
+          console.log(res);
+          sessionStorage.setItem('token', res.data.token);
+          router.push('/main');
+        })
+        .catch((error) => {
+          console.log(error);
+          setWarning(error.response.data.message);
+        });
+    } 
+  };
+
 
   return (
     <div className="login-container">
@@ -33,9 +54,30 @@ export default function Login() {
             </p>
           }
         />
-        <input type="text" placeholder="아이디를 입력해주세요." />
-        <input type="password" placeholder="비밀번호를 입력해주세요." />
-        <MainEventButton width={345} height={41} color={'#FF6135'}>
+        <input
+          value={userId}
+          onChange={(e) => {
+            setUserId(e.target.value);
+          }}
+          type="text"
+          placeholder="아이디를 입력해주세요."
+        />
+        <input
+          value={userPassword}
+          onChange={(e) => {
+            setUserPassword(e.target.value);
+          }}
+          type="password"
+          placeholder="비밀번호를 입력해주세요."
+        />
+        {warning? <p>아이디와 비밀번호를 확인해주세요.</p> : null}
+        <MainEventButton
+          onClick={handleSubmit}
+          width={345}
+          height={41}
+          color={userId && userPassword? '#FF6135' : '#D9D9D9'}
+          disabled={userId && userPassword? false : true}
+        >
           로그인
         </MainEventButton>
         <div className="subBtn">
