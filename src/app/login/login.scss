@@ -36,8 +36,14 @@
             color: $mainColor;
         }
     }
-    >p{
-        text-align: left;
+    
+    >.warningText{
+        width: 100%;
+        font-size: 14px;
+        line-height: 22px;
+        color: $mainColor;
+        margin-bottom: 23px;
+        padding-left: 10px;
     }
 
     >.subBtn {

@@ -29,17 +29,20 @@ export default function Login() {
         password: userPassword,
       })
         .then((res) => {
-          console.log(res);
-          sessionStorage.setItem('token', res.data.token);
+          window.sessionStorage.setItem('token', JSON.stringify(res.data));
           router.push('/main');
         })
         .catch((error) => {
-          console.log(error);
+          window.sessionStorage.clear();
           setWarning(error.response.data.message);
         });
-    } 
+    }
   };
-
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
 
   return (
     <div className="login-container">
@@ -59,6 +62,7 @@ export default function Login() {
           onChange={(e) => {
             setUserId(e.target.value);
           }}
+          onKeyPress={handleKeyPress}
           type="text"
           placeholder="아이디를 입력해주세요."
         />
@@ -67,16 +71,17 @@ export default function Login() {
           onChange={(e) => {
             setUserPassword(e.target.value);
           }}
+          onKeyPress={handleKeyPress}
           type="password"
           placeholder="비밀번호를 입력해주세요."
         />
-        {warning? <p>아이디와 비밀번호를 확인해주세요.</p> : null}
+        {warning ? <p className="warningText">아이디와 비밀번호를 확인해주세요.</p> : null}
         <MainEventButton
           onClick={handleSubmit}
           width={345}
           height={41}
-          color={userId && userPassword? '#FF6135' : '#D9D9D9'}
-          disabled={userId && userPassword? false : true}
+          color={userId && userPassword ? '#FF6135' : '#D9D9D9'}
+          disabled={userId && userPassword ? false : true}
         >
           로그인
         </MainEventButton>
