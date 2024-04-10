@@ -13,10 +13,24 @@
             position: relative;
             width: 66px;
             cursor: pointer;
+
+            .userImg {
+                border-radius: 50%;
+            }
+
             .setting {
                 position: absolute;
                 bottom: 0px;
                 right: 0px;
+            }
+
+            >input[type="file"] {
+                position: absolute;
+                width: 0;
+                height: 0;
+                padding: 0;
+                overflow: hidden;
+                border: 0;
             }
         }
 
