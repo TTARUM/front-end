@@ -46,20 +46,10 @@ const getCategory = (id) => {
 
 // 문의글 작성하기
 const inquiries = (inquiry: IInquiry, images: string[], Token: string) => {
-  const formData = new FormData();
-
-  formData.append('title', inquiry.title);
-  formData.append('content', inquiry.content);
-  formData.append('itemId', inquiry.itemId.toString());
-  formData.append('secret', inquiry.secret.toString());
-
-  images.forEach((image, index) => {
-    formData.append(`images[$(index)]`, image);
-  });
-
+  
   return AxiosConfig.post(
     '/inquiries',
-    { inquiry },
+    { inquiry, images },
     {
       headers: {
         'Content-Type': 'multipart/form-data',

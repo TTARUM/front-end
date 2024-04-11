@@ -44,8 +44,6 @@ export default function Write({ page, params }) {
         secret,
       };
 
-      console.log(inquiry, image);
-
       inquiries(inquiry, image, userInformation.token);
     }
     setSendAsk(bool);
