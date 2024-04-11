@@ -11,6 +11,13 @@ const showLogin = (login: ILogin) => {
   return AxiosConfig.post('/auth/login', login).then((res) => res);
 };
 
+// 회원탈퇴
+const showSecession = (Token: string) => {
+  return AxiosConfig.delete('/members/withdraw', {
+    headers: { Authorization: `Bearer ${Token}` },
+  }).then((res) => res.data);
+};
+
 // 프로필 이미지 업데이트
 const updateImage = (imgUrl: string, Token: string) => {
   return AxiosConfig.post(
@@ -60,10 +67,11 @@ const inquiries = (inquiry: IInquiry, images: string[], Token: string) => {
 };
 
 export {
-  getPopularList,
   showJoin,
-  getCategory,
+  showSecession,
   showLogin,
+  getCategory,
+  getPopularList,
   updateImage,
   addCart,
   inquiries,
