@@ -11,3 +11,8 @@ export interface Login {
   loginId : string;
   password : string;
 }
+
+export interface AddCart{
+  id : number;
+  amount : number;
+}
