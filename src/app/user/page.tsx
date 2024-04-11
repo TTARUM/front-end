@@ -5,7 +5,9 @@ import { useState, useRef, useEffect } from 'react';
 import Header from '@/components/Header/Header';
 import Navigation from '@/components/Navigation/Navigation';
 import { usePathname, useRouter } from 'next/navigation';
+import { showSecession, updateImage } from '@/util/AxiosGet';
 import Image from 'next/image';
+import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 
 import not_user from '../../../public/not_user.svg';
 import setting_profile from '../../../public/setting_profile.svg';
@@ -14,7 +16,8 @@ import user_coupon from '../../../public/user_coupon.svg';
 import user_heart from '../../../public/user_heart.svg';
 import user_order from '../../../public/user_order.svg';
 import right_arrow from '../../../public/rightArrow.svg';
-import { updateImage } from '@/util/AxiosGet';
+import Logo from '../../../public/joinLogo.svg';
+import close from '../../../public/closeBtn.svg';
 
 export default function User() {
   const router = useRouter();
@@ -22,6 +25,9 @@ export default function User() {
   const userInformation = JSON.parse(window.sessionStorage.getItem('token'));
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploadImgUrl, setUploadImgUrl] = useState<string>(null);
+  const [showSecessionModal, setShowSecessionModal] = useState<boolean>(false);
+
+  console.log(userInformation);
 
   const handleImageChange = (e) => {
     if (!e.target.files) return;
@@ -36,11 +42,19 @@ export default function User() {
     fileRef.current.click();
   };
 
+  const handleSecession = () => {
+    showSecession(userInformation.token).then((res) => {
+      window.sessionStorage.removeItem('token');
+      router.push('/main');
+    });
+  };
+
   useEffect(() => {
     if (uploadImgUrl != null) {
       updateImage(uploadImgUrl, userInformation.token);
     }
   }, [uploadImgUrl]);
+
   return (
     <div className="main">
       <div className="main-container">
@@ -165,16 +179,60 @@ export default function User() {
                   <Image src={right_arrow} alt="right_arrow" />
                 </li>
                 <li className="line"></li>
-                <li>
+                <li
+                  onClick={() => {
+                    setShowSecessionModal(true);
+                  }}
+                >
                   회원탈퇴
                   <Image src={right_arrow} alt="right_arrow" />
                 </li>
                 <li className="line"></li>
+                {userInformation !== null ? (
+                  <>
+                    <li
+                      onClick={() => {
+                        window.sessionStorage.removeItem('token');
+                        location.reload();
+                      }}
+                    >
+                      로그아웃
+                      <Image src={right_arrow} alt="right_arrow" />
+                    </li>
+                    <li className="line"></li>
+                  </>
+                ) : null}
               </ul>
             </ul>
           </div>
         </div>
       </div>
+      {showSecessionModal === true ? (
+        <div className="secessionModal">
+          <Image src={Logo} alt="Logo" />
+          <Image
+            onClick={() => {
+              setShowSecessionModal(false);
+            }}
+            className="close"
+            src={close}
+            alt="close"
+          />
+          <p>더 많은 와인이 있어요!</p>
+          <p>
+            그래도 <span>탈퇴</span>하시겠습니까?
+          </p>
+          <MainEventButton
+            onClick={handleSecession}
+            width={205}
+            height={36}
+            color={'#FF6135'}
+          >
+            탈퇴하기
+          </MainEventButton>
+        </div>
+      ) : null}
+
       <Navigation pathName={path} />
     </div>
   );

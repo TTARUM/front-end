@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { addCart } from '@/util/AxiosGet';
 
 type Props = {
   title: string;
@@ -32,6 +33,17 @@ export default function ProductDetailBuyInform({
   const router = useRouter();
   const [quantity, setQuantity] = useState<number>(1);
   const [getData, setGetData] = useState<Props[]>();
+  const userInformation = JSON.parse(window.sessionStorage.getItem('token'));
+
+  const HandleAddCart = () => {
+    addCart(
+      {
+        id: id,
+        amount: quantity,
+      },
+      userInformation.token,
+    );
+  };
 
   useEffect(() => {
     const productData: Props = {
@@ -48,7 +60,6 @@ export default function ProductDetailBuyInform({
     setGetData([productData]);
   }, [quantity]);
 
-  console.log(getData);
   return (
     <main className="ProductDetailBuyBg">
       <div className="ProductDetailBuyBg-section">
@@ -92,7 +103,7 @@ export default function ProductDetailBuyInform({
           <p className="totalPrice">{(price * quantity).toLocaleString()}원</p>
         </div>
         <div className="btnArea">
-          <button>장비구니</button>
+          <button onClick={HandleAddCart}>장비구니</button>
           <Link
             href={{
               pathname: '/order',
