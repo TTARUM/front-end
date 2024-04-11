@@ -1,7 +1,7 @@
 'use client';
 
 import './Write.scss';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Header from '../Header/Header';
 import Image from 'next/image';
 import useInput from '@/hooks/useInput';
@@ -9,27 +9,8 @@ import usePreview from '@/hooks/usePreview';
 import Checkbox from '../Checkbox/Checkbox';
 
 import picture from '../../../public/productDetail-picture.svg';
-import dummyPicture from '../../../public/productDetail-askPicture1.svg';
-import dummyPicture2 from '../../../public/productDetail-askPicture2.svg';
-
-const 더미데이터 = [
-  {
-    id: 1,
-    image: dummyPicture,
-  },
-  {
-    id: 2,
-    image: dummyPicture2,
-  },
-  {
-    id: 3,
-    image: dummyPicture,
-  },
-  {
-    id: 4,
-    image: dummyPicture2,
-  },
-];
+import { inquiries } from '@/util/AxiosGet';
+import { IInquiry } from '@/types/user';
 
 export default function Write({ page, params }) {
   const { file, image, handleImage } = usePreview();
@@ -38,6 +19,7 @@ export default function Write({ page, params }) {
   const [content, setContent] = useState<string>('');
   const [sendAsk, setSendAsk] = useState<boolean>(false);
   const [secret, setSecret] = useState<boolean>(false);
+  const userInformation = JSON.parse(window.sessionStorage.getItem('token'));
 
   const contentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length > 1000) return;
@@ -53,8 +35,20 @@ export default function Write({ page, params }) {
     fileRef.current.click();
   };
 
-  const sendWriteAsk = () => {
-    setSendAsk((pre) => !pre);
+  const sendWriteAsk = (bool: boolean) => {
+    if (bool) {
+      const inquiry: IInquiry = {
+        title,
+        content,
+        itemId: params.params,
+        secret,
+      };
+
+      console.log(inquiry, image);
+
+      inquiries(inquiry, image, userInformation.token);
+    }
+    setSendAsk(bool);
   };
 
   return (
@@ -119,7 +113,7 @@ export default function Write({ page, params }) {
           </div>
         ) : null}
         <footer className="footer">
-          <button onClick={sendWriteAsk}>작성하기</button>
+          <button onClick={() => sendWriteAsk(true)}>작성하기</button>
         </footer>
       </div>
       {sendAsk && (
@@ -132,7 +126,7 @@ export default function Write({ page, params }) {
                   ? '리뷰가 수정되었습니다!'
                   : '리뷰가 작성되었습니다!'}
             </h1>
-            <button onClick={sendWriteAsk}>확인</button>
+            <button onClick={() => sendWriteAsk(false)}>확인</button>
           </div>
         </div>
       )}
