@@ -1,4 +1,4 @@
-import { AddCart, IUser, Login } from '@/types/user';
+import { IAddCart, IUser, ILogin } from '@/types/user';
 import AxiosConfig from './AxiosConfig';
 
 // 회원가입
@@ -7,7 +7,7 @@ const showJoin = (user: IUser) => {
 };
 
 // 로그인
-const showLogin = (login: Login) => {
+const showLogin = (login: ILogin) => {
   return AxiosConfig.post('/auth/login', login).then((res) => res);
 };
 
@@ -29,7 +29,7 @@ const getPopularList = () =>
   AxiosConfig.get('/items/popular-list').then((res) => res.data);
 
 // 장바구니 추가
-const addCart = (cartValue: AddCart, Token) => {
+const addCart = (cartValue: IAddCart, Token) => {
   return AxiosConfig.post(
     '/members/carts',
     { cartValue },

@@ -7,12 +7,12 @@ export interface IUser {
   email: string;
 }
 
-export interface Login {
+export interface ILogin {
   loginId : string;
   password : string;
 }
 
-export interface AddCart{
+export interface IAddCart{
   id : number;
   amount : number;
 }
