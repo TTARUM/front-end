@@ -8,11 +8,18 @@ export interface IUser {
 }
 
 export interface ILogin {
-  loginId : string;
-  password : string;
+  loginId: string;
+  password: string;
 }
 
-export interface IAddCart{
-  id : number;
-  amount : number;
+export interface IAddCart {
+  id: number;
+  amount: number;
+}
+
+export interface IInquiry {
+  title: string;
+  content: string;
+  itemId: number;
+  secret: boolean;
 }
