@@ -23,3 +23,13 @@ export interface IInquiry {
   itemId: number;
   secret: boolean;
 }
+
+export interface IAddress {
+  addressId?: number;
+  addressAlias: string;
+  recipient: string;
+  address: string;
+  detailAddress: string;
+  phoneNumber: string;
+  isDefault: boolean;
+}

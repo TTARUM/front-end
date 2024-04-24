@@ -10,7 +10,7 @@ import Checkbox from '../Checkbox/Checkbox';
 
 import picture from '../../../public/productDetail-picture.svg';
 import { inquiries } from '@/util/AxiosGet';
-import { IInquiry } from '@/types/user';
+import { IInquiry } from '@/types/common';
 
 export default function Write({ page, params }) {
   const { file, image, handleImage } = usePreview();

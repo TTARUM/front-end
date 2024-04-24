@@ -1,4 +1,4 @@
-import { IAddCart, IUser, ILogin, IInquiry } from '@/types/user';
+import { IAddCart, IUser, ILogin, IInquiry } from '@/types/common';
 import AxiosConfig from './AxiosConfig';
 
 // 회원가입
@@ -53,7 +53,6 @@ const getCategory = (id) => {
 
 // 문의글 작성하기
 const inquiries = (inquiry: IInquiry, images: string[], Token: string) => {
-  
   return AxiosConfig.post(
     '/inquiries',
     { inquiry, images },
