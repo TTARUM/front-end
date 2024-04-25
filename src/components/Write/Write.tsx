@@ -9,8 +9,9 @@ import usePreview from '@/hooks/usePreview';
 import Checkbox from '../Checkbox/Checkbox';
 
 import picture from '../../../public/productDetail-picture.svg';
-import { inquiries } from '@/util/AxiosGet';
+import { inquiries } from '@/util/Axiosinquiry';
 import { IInquiry } from '@/types/common';
+import userStore from '@/store/userInformation';
 
 export default function Write({ page, params }) {
   const { file, image, handleImage } = usePreview();
@@ -19,7 +20,8 @@ export default function Write({ page, params }) {
   const [content, setContent] = useState<string>('');
   const [sendAsk, setSendAsk] = useState<boolean>(false);
   const [secret, setSecret] = useState<boolean>(false);
-  const userInformation = JSON.parse(window.sessionStorage.getItem('token'));
+  const { user }: any = userStore();
+  const Token = user?.token;
 
   const contentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length > 1000) return;
@@ -44,7 +46,7 @@ export default function Write({ page, params }) {
         secret,
       };
 
-      inquiries(inquiry, image, userInformation.token);
+      inquiries(inquiry, image, Token);
     }
     setSendAsk(bool);
   };

@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from 'react';
 import Header from '@/components/Header/Header';
 import Navigation from '@/components/Navigation/Navigation';
 import { usePathname, useRouter } from 'next/navigation';
-import { showSecession, updateImage } from '@/util/AxiosGet';
+import { showSecession, updateImage } from '@/util/AxiosMember';
 import Image from 'next/image';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 
@@ -18,16 +18,15 @@ import user_order from '../../../public/user_order.svg';
 import right_arrow from '../../../public/rightArrow.svg';
 import Logo from '../../../public/joinLogo.svg';
 import close from '../../../public/closeBtn.svg';
+import { useMutation } from '@tanstack/react-query';
 
 export default function User() {
   const router = useRouter();
   const path = usePathname();
-  const userInformation = JSON.parse(window.sessionStorage.getItem('token'));
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploadImgUrl, setUploadImgUrl] = useState<string>(null);
   const [showSecessionModal, setShowSecessionModal] = useState<boolean>(false);
-
-  console.log(userInformation);
+  const [token, setToken] = useState(null);
 
   const handleImageChange = (e) => {
     if (!e.target.files) return;
@@ -42,18 +41,31 @@ export default function User() {
     fileRef.current.click();
   };
 
-  const handleSecession = () => {
-    showSecession(userInformation.token).then((res) => {
-      window.sessionStorage.removeItem('token');
+  const deleteUser = useMutation({
+    mutationFn: (token: string) => showSecession(token),
+    onSuccess: (res) => {
+      window.localStorage.removeItem('token');
       router.push('/main');
-    });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const handleSecession = () => {
+    deleteUser.mutate(token.token);
   };
 
   useEffect(() => {
     if (uploadImgUrl != null) {
-      updateImage(uploadImgUrl, userInformation.token);
+      updateImage(uploadImgUrl, token.token);
     }
   }, [uploadImgUrl]);
+
+  useEffect(() => {
+    const userInformation = JSON.parse(window.localStorage.getItem('token'));
+    setToken(userInformation);
+  }, []);
 
   return (
     <div className="main">
@@ -83,8 +95,8 @@ export default function User() {
               />
             </div>
 
-            {userInformation ? (
-              <p>{userInformation.name}</p>
+            {token ? (
+              <p>{token.name}</p>
             ) : (
               <p
                 onClick={() => {
@@ -179,20 +191,25 @@ export default function User() {
                   <Image src={right_arrow} alt="right_arrow" />
                 </li>
                 <li className="line"></li>
-                <li
-                  onClick={() => {
-                    setShowSecessionModal(true);
-                  }}
-                >
-                  회원탈퇴
-                  <Image src={right_arrow} alt="right_arrow" />
-                </li>
-                <li className="line"></li>
-                {userInformation !== null ? (
+                {token ? (
                   <>
                     <li
                       onClick={() => {
-                        window.sessionStorage.removeItem('token');
+                        setShowSecessionModal(true);
+                      }}
+                    >
+                      회원탈퇴
+                      <Image src={right_arrow} alt="right_arrow" />
+                    </li>
+                    <li className="line"></li>
+                  </>
+                ) : null}
+
+                {token !== null ? (
+                  <>
+                    <li
+                      onClick={() => {
+                        window.localStorage.removeItem('token');
                         location.reload();
                       }}
                     >
@@ -224,9 +241,9 @@ export default function User() {
           </p>
           <MainEventButton
             onClick={handleSecession}
-            width={205}
-            height={36}
-            color={'#FF6135'}
+            $width={205}
+            $height={36}
+            $color={'#FF6135'}
           >
             탈퇴하기
           </MainEventButton>

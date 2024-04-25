@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { deleteAddress, getAddress } from '@/util/AxiosMember';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { IAddress } from '@/types/common';
+import userStore from '@/store/userInformation';
 
 export default function Delivery() {
   const router = useRouter();
@@ -19,8 +20,9 @@ export default function Delivery() {
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const userInformation = JSON.parse(window.sessionStorage.getItem('token'));
-  const Token = userInformation.token;
+  const { user }: any = userStore();
+  const Token = user?.token
+
   const { data, status } = useQuery({
     queryKey: ['address', Token],
     queryFn: () => getAddress(Token),
@@ -88,17 +90,18 @@ export default function Delivery() {
           </div>
         ))}
         <MainEventButton
-          width={345}
-          height={41}
-          color="white"
-          textColor={'#FF6135'}
-          border={true}
+          $width={345}
+          $height={41}
+          $color="white"
+          $textColor={'#FF6135'}
+          $border={true}
           onClick={() => {
             router.push('/order/newDelivery');
           }}
         >
           배송지 추가
         </MainEventButton>
+
         {showDelete === true ? (
           <div className="delete-modal">
             <Image src={modal_character} alt="modal_character" />
@@ -106,9 +109,9 @@ export default function Delivery() {
               정말로 <span>삭제</span> 하시겠습니까?
             </p>
             <MainEventButton
-              width={205}
-              height={36}
-              color={'#FF6135'}
+              $width={205}
+              $height={36}
+              $color={'#FF6135'}
               onClick={deleteHandler}
             >
               삭제하기
@@ -128,9 +131,9 @@ export default function Delivery() {
             <Image src={modal_character} alt="modal_character" />
             <p dangerouslySetInnerHTML={{ __html: errorMessage }}></p>
             <MainEventButton
-              width={205}
-              height={36}
-              color={'#FF6135'}
+              $width={205}
+              $height={36}
+              $color={'#FF6135'}
               onClick={() => {
                 setIsError(false);
               }}

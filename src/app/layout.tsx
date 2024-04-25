@@ -12,7 +12,6 @@ export const metadata = {
 };
 
 import localFont from 'next/font/local';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const myFont = localFont({
   src: './fonts/PretendardVariable.ttf',

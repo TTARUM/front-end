@@ -14,6 +14,7 @@ type Props = {
   type?: string;
   onChange?: (InputEvent) => void;
   warning?: string;
+  maxLength?: number;
 };
 
 const InputText = ({
@@ -24,6 +25,7 @@ const InputText = ({
   type,
   onChange,
   warning,
+  maxLength,
 }: Props): JSX.Element => {
   const [click, setClick] = useState();
 
@@ -60,6 +62,7 @@ const InputText = ({
           className="data_input"
           placeholder={placeholder}
           onChange={(e) => (onChange ? onChange(e) : setData(e.target.value))}
+          maxLength={maxLength}
         />
       )}
     </>
