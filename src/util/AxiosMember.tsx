@@ -1,5 +1,44 @@
-import { IAddress } from '@/types/common';
+import { IAddress, IUser, ILogin, IAddCart } from '@/types/common';
 import AxiosConfig from './AxiosConfig';
+
+// 회원가입
+const showJoin = (user: IUser) => {
+  return AxiosConfig.post('/members/register', user).then((res) => res);
+};
+
+// 로그인
+const showLogin = (login: ILogin) => {
+  return AxiosConfig.post('/auth/login', login).then((res) => res);
+};
+
+// 회원탈퇴
+const showSecession = (Token: string) => {
+  return AxiosConfig.delete('/members/withdraw', {
+    headers: { Authorization: `Bearer ${Token}` },
+  }).then((res) => res.data);
+};
+
+// 프로필 이미지 업데이트
+const updateImage = (imgUrl: string, Token: string) => {
+  return AxiosConfig.post(
+    '/members/profile-image',
+    { imgUrl },
+    {
+      headers: {
+        Authorization: `Bearer ${Token}`,
+      },
+    },
+  ).then((res) => res);
+};
+
+// 장바구니 추가
+const addCart = (cartValue: IAddCart, Token: string) => {
+  return AxiosConfig.post(
+    '/members/carts',
+    { cartValue },
+    { headers: { Authorization: `Bearer ${Token}` } },
+  ).then((res) => res);
+};
 
 // 배송지 조회
 const getAddress = (Token: string) => {
@@ -19,7 +58,7 @@ const addAddress = (address: IAddress, Token: string) => {
 };
 
 // 배송지 수정
-const updateAddress = (addressId: number, address: IAddress, Token) => {
+const updateAddress = (addressId: number, address: IAddress, Token: string) => {
   return AxiosConfig.post(
     `/members/address/${addressId}`,
     { address },
@@ -34,4 +73,14 @@ const deleteAddress = (addressId: number, Token: string) => {
   }).then((res) => res);
 };
 
-export { getAddress, addAddress, updateAddress, deleteAddress };
+export {
+  showJoin,
+  showSecession,
+  showLogin,
+  updateImage,
+  addCart,
+  getAddress,
+  addAddress,
+  updateAddress,
+  deleteAddress,
+};

@@ -4,6 +4,14 @@ import './main.scss';
 import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Category from '@/components/CategoryItem/Category';
+import ItemBox from '@/components/Item/ItemBox';
+import { usePathname, useRouter } from 'next/navigation';
+import Navigation from '@/components/Navigation/Navigation';
+import { getPopularList } from '@/util/AxiosItem';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+
+// img
 import bannerCh from '../../../public/bannerCh.svg';
 import RED from '../../../public/RED.svg';
 import WHITE from '../../../public/WHITE.svg';
@@ -12,7 +20,6 @@ import SPARKLING from '../../../public/SPARKLING.svg';
 import SNACK from '../../../public/SNACK.svg';
 import all from '../../../public/all.svg';
 import bottom from '../../../public/bottom.svg';
-import ItemBox from '@/components/Item/ItemBox';
 import collection_1 from '../../../public/collection_1.svg';
 import collection_2 from '../../../public/collection_2.svg';
 import collection_3 from '../../../public/collection_3.svg';
@@ -20,10 +27,7 @@ import collection_4 from '../../../public/collection_4.svg';
 import CollectionBox from '@/components/CollectionBox/CollectionBox';
 import event_1 from '../../../public/event_1.svg';
 import event_2 from '../../../public/event_2.svg';
-import { usePathname, useRouter } from 'next/navigation';
-import Navigation from '@/components/Navigation/Navigation';
-import { getPopularList } from '@/util/AxiosGet';
-import { useQuery } from '@tanstack/react-query';
+import userStore from '@/store/userInformation';
 
 const testCategory: { img: string; name: string; id: number }[] = [
   { img: RED, name: '레드 와인', id: 2 },
@@ -55,6 +59,13 @@ export default function Main() {
     queryKey: ['popularList'],
     queryFn: getPopularList,
   });
+
+  const { setUser }: any = userStore();
+
+  useEffect(() => {
+    const userInformation = JSON.parse(window.localStorage.getItem('token'));
+    setUser(userInformation);
+  }, []);
 
   return (
     <div className="main-container">

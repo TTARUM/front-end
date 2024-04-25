@@ -8,7 +8,9 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { addCart } from '@/util/AxiosGet';
+import { addCart } from '@/util/AxiosMember';
+import userStore from '@/store/userInformation';
+import { useMutation } from '@tanstack/react-query';
 
 type Props = {
   title: string;
@@ -33,7 +35,18 @@ export default function ProductDetailBuyInform({
   const router = useRouter();
   const [quantity, setQuantity] = useState<number>(1);
   const [getData, setGetData] = useState<Props[]>();
-  const userInformation = JSON.parse(window.sessionStorage.getItem('token'));
+  const { user }: any = userStore();
+  const Token = user?.token;
+
+  const addCart = useMutation({
+    mutationFn: (item) => addCart(item, Token),
+    onSuccess: (res) => {
+      console.log(res);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   const HandleAddCart = () => {
     addCart(
@@ -41,7 +54,7 @@ export default function ProductDetailBuyInform({
         id: id,
         amount: quantity,
       },
-      userInformation.token,
+      Token,
     );
   };
 

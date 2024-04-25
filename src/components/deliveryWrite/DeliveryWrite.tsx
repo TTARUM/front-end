@@ -4,19 +4,21 @@ import './DeliveryWrite.scss';
 
 import { useRouter } from 'next/navigation';
 import InputText from '@/components/InputText/InputText';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 import Checkbox from '../Checkbox/Checkbox';
 import { addAddress, updateAddress } from '@/util/AxiosMember';
 import { IAddress } from '@/types/common';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
+import userStore from '@/store/userInformation';
+import { useQuery } from '@tanstack/react-query';
+import { getAddress } from '@/util/AxiosMember';
 
 const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
   const router = useRouter();
 
-  const userInformation = JSON.parse(window.sessionStorage.getItem('token'));
-  const Token = userInformation.token;
-  const queryClient = useQueryClient();
+  const { user }: any = userStore();
+  const Token = user?.token;
 
   const [alias, setAlias] = useState('');
   const [receiver, setReceiver] = useState('');
@@ -28,7 +30,6 @@ const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
   const addMutation = useMutation({
     mutationFn: (newAddress: IAddress) => addAddress(newAddress, Token),
     onSuccess: () => {
-      // queryClient.invalidateQueries(['address', Token]);
       router.push('/order/deliveryList');
     },
   });
@@ -65,7 +66,7 @@ const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
       isDefault: defaultDelivery,
     };
 
-    updateAddress(board_id, addressParam, userInformation.token).then((res) => {
+    updateAddress(board_id, addressParam, Token).then((res) => {
       router.push('/order/deliveryList');
     });
   };
@@ -102,8 +103,16 @@ const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
       title: '휴대폰 번호',
       placeholder: '휴대폰 번호를 입력해주세요.',
       onChange: handlePhoneChange,
+      maxLength: 11,
     },
   ];
+
+  // 수정할 때 적어놨던 배송지는 그대로 유지한 상태로 수정으로 하는것이 좋다고 생각함.
+  // const { data, status } = useQuery({
+  //   queryKey: ['address', Token],
+  //   queryFn: () => getAddress(Token),
+  //   enabled: !!Token,
+  // });
 
   return (
     <div className="deliveryAdd_container">
@@ -118,6 +127,7 @@ const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
             placeholder={inputData.placeholder}
             type={inputData.type}
             onChange={inputData.onChange}
+            maxLength={inputData.maxLength}
           />
         ))}
         <Checkbox
@@ -126,9 +136,9 @@ const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
           setData={setDefaultDelivery}
         />
         <MainEventButton
-          width={345}
-          height={41}
-          color={'#ff6135'}
+          $width={345}
+          $height={41}
+          $color={'#ff6135'}
           onClick={() => {
             if (isEdit) {
               updateAddressHandler;
