@@ -2,9 +2,9 @@
 import Header from '@/components/Header/Header';
 import './DeliveryWrite.scss';
 
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import InputText from '@/components/InputText/InputText';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 import Checkbox from '../Checkbox/Checkbox';
 import { addAddress, updateAddress } from '@/util/AxiosMember';
@@ -14,8 +14,9 @@ import userStore from '@/store/userInformation';
 import { useQuery } from '@tanstack/react-query';
 import { getAddress } from '@/util/AxiosMember';
 
-const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
+const DeliveryWrite = () => {
   const router = useRouter();
+  const addressId = Number(useParams().deliveryId as string);
 
   const { user }: any = userStore();
   const Token = user?.token;
@@ -27,8 +28,36 @@ const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
   const [phone, setPhone] = useState('');
   const [defaultDelivery, setDefaultDelivery] = useState<boolean>(false); // 이곳에는 API 데이터가 들어가야 함.
 
+  const { data, status } = useQuery<IAddress[]>({
+    queryKey: ['address', Token],
+    queryFn: () => getAddress(Token),
+    enabled: !!Token,
+  });
+
+  useEffect(() => {
+    if (data && addressId) {
+      const address: IAddress = data.filter(
+        (add) => add.addressId === addressId,
+      )[0];
+
+      setAlias(address.addressAlias);
+      setReceiver(address.recipient);
+      setAddress(address.address);
+      setAddressDetail(address.detailAddress);
+      setPhone(address.phoneNumber);
+      setDefaultDelivery(address.isDefault);
+    }
+  }, [data, addressId]);
+
   const addMutation = useMutation({
     mutationFn: (newAddress: IAddress) => addAddress(newAddress, Token),
+    onSuccess: () => {
+      router.push('/order/deliveryList');
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: (address: IAddress) => updateAddress(addressId, address, Token),
     onSuccess: () => {
       router.push('/order/deliveryList');
     },
@@ -51,13 +80,11 @@ const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
       isDefault: defaultDelivery,
     };
 
-    console.log(newAddress);
-
     addMutation.mutate(newAddress);
   };
 
-  const updateAddressHandler = (board_id: number) => {
-    const addressParam: IAddress = {
+  const updateAddressHandler = () => {
+    const updateAddress: IAddress = {
       addressAlias: alias,
       recipient: receiver,
       address,
@@ -66,9 +93,7 @@ const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
       isDefault: defaultDelivery,
     };
 
-    updateAddress(board_id, addressParam, Token).then((res) => {
-      router.push('/order/deliveryList');
-    });
+    updateMutation.mutate(updateAddress);
   };
 
   const inputDataArr = [
@@ -107,16 +132,9 @@ const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
     },
   ];
 
-  // 수정할 때 적어놨던 배송지는 그대로 유지한 상태로 수정으로 하는것이 좋다고 생각함.
-  // const { data, status } = useQuery({
-  //   queryKey: ['address', Token],
-  //   queryFn: () => getAddress(Token),
-  //   enabled: !!Token,
-  // });
-
   return (
     <div className="deliveryAdd_container">
-      <Header title={isEdit ? '배송지 수정' : '배송지 추가'} type="subMenu" />
+      <Header title={data ? '배송지 수정' : '배송지 추가'} type="subMenu" />
       <div className="deliveryAdd_wrapper">
         {inputDataArr.map((inputData) => (
           <InputText
@@ -140,8 +158,8 @@ const DeliveryWrite = ({ isEdit }: { isEdit: boolean }) => {
           $height={41}
           $color={'#ff6135'}
           onClick={() => {
-            if (isEdit) {
-              updateAddressHandler;
+            if (data) {
+              updateAddressHandler();
             } else {
               addAddressHandler();
             }

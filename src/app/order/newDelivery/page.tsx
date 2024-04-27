@@ -1,7 +1,7 @@
 import DeliveryWrite from '@/components/deliveryWrite/DeliveryWrite';
 
 const NewDelivery = () => {
-  return <DeliveryWrite isEdit={false} />;
+  return <DeliveryWrite />;
 };
 
 export default NewDelivery;

@@ -15,6 +15,7 @@ const Checkbox = ({ title, data, setData }: CheckboxProps) => {
         type="checkbox"
         id="checkbox"
         className="input_checkbox"
+        checked={data}
         onChange={() => setData(!data)}
       ></input>
       <label htmlFor="checkbox" className="display_checkbox"></label>
