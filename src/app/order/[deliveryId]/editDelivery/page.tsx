@@ -1,7 +1,8 @@
+'use client';
 import DeliveryWrite from '@/components/deliveryWrite/DeliveryWrite';
 
 const EditDelivery = () => {
-  return <DeliveryWrite isEdit={true} />;
+  return <DeliveryWrite />;
 };
 
 export default EditDelivery;

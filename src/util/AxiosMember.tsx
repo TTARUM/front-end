@@ -59,11 +59,9 @@ const addAddress = (address: IAddress, Token: string) => {
 
 // 배송지 수정
 const updateAddress = (addressId: number, address: IAddress, Token: string) => {
-  return AxiosConfig.post(
-    `/members/address/${addressId}`,
-    { address },
-    { headers: { Authorization: `Bearer ${Token}` } },
-  ).then((res) => res);
+  return AxiosConfig.post(`/members/address/${addressId}`, address, {
+    headers: { Authorization: `Bearer ${Token}` },
+  }).then((res) => res);
 };
 
 // 배송지 삭제
