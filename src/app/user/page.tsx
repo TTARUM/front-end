@@ -8,6 +8,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { showSecession, updateImage } from '@/util/AxiosMember';
 import Image from 'next/image';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
+import axios from 'axios';
 
 import not_user from '../../../public/not_user.svg';
 import setting_profile from '../../../public/setting_profile.svg';
@@ -24,16 +25,37 @@ export default function User() {
   const router = useRouter();
   const path = usePathname();
   const fileRef = useRef<HTMLInputElement>(null);
-  const [uploadImgUrl, setUploadImgUrl] = useState<string>(null);
+  const [image, setImage] = useState(null);
   const [showSecessionModal, setShowSecessionModal] = useState<boolean>(false);
   const [token, setToken] = useState(null);
 
-  const handleImageChange = (e) => {
-    if (!e.target.files) return;
+  const getImage = (e: any) => {
     const file = e.target.files[0];
-    if (file) {
-      let image = window.URL.createObjectURL(file);
-      setUploadImgUrl(image);
+    setImage(file);
+  };
+
+  const changeProfile = useMutation({
+    mutationFn: ( imgData ) => updateImage(imgData),
+    onSuccess: (res) => {
+      console.log(res);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  // console.log(token);
+
+  const handleImageChange = () => {
+    // const formData = new FormData();
+    // if(image){
+    //   formData.append('image', image);
+    // }
+    const allData :any = [image, token?.token];
+    try {
+      changeProfile.mutate(allData);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -56,11 +78,16 @@ export default function User() {
     deleteUser.mutate(token.token);
   };
 
+
   useEffect(() => {
-    if (uploadImgUrl != null) {
-      updateImage(uploadImgUrl, token.token);
-    }
-  }, [uploadImgUrl]);
+    handleImageChange();
+  }, [image]);
+
+  // useEffect(() => {
+  //   if (uploadImgUrl != null) {
+  //     updateImage(uploadImgUrl, token.token);
+  //   }
+  // }, [uploadImgUrl]);
 
   useEffect(() => {
     const userInformation = JSON.parse(window.localStorage.getItem('token'));
@@ -79,7 +106,7 @@ export default function User() {
                 className="userImg"
                 width={64}
                 height={64}
-                src={uploadImgUrl !== null ? uploadImgUrl : not_user}
+                src={not_user}
                 alt="not_user"
               />
               <Image
@@ -91,10 +118,9 @@ export default function User() {
                 ref={fileRef}
                 type="file"
                 accept="image/*"
-                onChange={handleImageChange}
+                onChange={getImage}
               />
             </div>
-
             {token ? (
               <p>{token.name}</p>
             ) : (
