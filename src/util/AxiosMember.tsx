@@ -34,7 +34,8 @@ const updateImage = (allData):any => {
 };
 
 // 장바구니 추가
-const addCart = (cartValue: IAddCart, Token: string) => {
+const addCart = (cartValue: any, Token: string):any => {
+  console.log(cartValue);
   return AxiosConfig.post(
     '/members/carts',
     { cartValue },

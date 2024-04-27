@@ -57,9 +57,9 @@ const EmailAddress = ({ data, setData, placeholder, setClick }) => {
         />
         <MainEventButton
           onClick={certificationCheck}
-          width={48}
-          height={20.35}
-          color={checkEmail() === false ? '#D9D9D9' : '#FF6135'}
+          $width={48}
+          $height={20.35}
+          $color={checkEmail() === false ? '#D9D9D9' : '#FF6135'}
           disabled={checkEmail() === false ? true : false}
         >
           확인
@@ -78,7 +78,7 @@ const EmailAddress = ({ data, setData, placeholder, setClick }) => {
             setCertificationNumber(input === '' ? '' : parseInt(input, 10));
           }}
         />
-        <MainEventButton width={48} height={20.35} color={'#FF6135'}>
+        <MainEventButton $width={48} $height={20.35} $color={'#FF6135'}>
           확인
         </MainEventButton>
       </div>

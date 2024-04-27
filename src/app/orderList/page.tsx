@@ -87,9 +87,9 @@ export default function OrderList() {
             onClick={() => {
               router.push('/');
             }}
-            width={345}
-            height={40}
-            color={'#FF6135'}
+            $width={345}
+            $height={40}
+            $color={'#FF6135'}
           >
             주문하러가기
           </MainEventButton>

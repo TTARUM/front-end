@@ -93,18 +93,18 @@ const FindPassword = () => {
       </div>
       {isCertify ? (
         <MainEventButton
-          width={345}
-          height={41}
-          color={'#FF6135'}
+          $width={345}
+          $height={41}
+          $color={'#FF6135'}
           onClick={() => setIsCertify(false)}
         >
           비밀번호 변경
         </MainEventButton>
       ) : (
         <MainEventButton
-          width={345}
-          height={41}
-          color={'#FF6135'}
+          $width={345}
+          $height={41}
+          $color={'#FF6135'}
           onClick={() => setIsCertify(true)}
         >
           비밀번호 찾기
