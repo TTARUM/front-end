@@ -19,10 +19,10 @@ const showSecession = (Token: string) => {
 };
 
 // 프로필 이미지 업데이트
-const updateImage = (allData):any => {
+const updateImage = (allData): any => {
   console.log(allData);
   const formData = new FormData();
-  if (allData[0]){
+  if (allData[0]) {
     formData.append('image', allData[0]);
   }
   return AxiosConfig.post('/members/profile-image', formData, {
@@ -34,7 +34,7 @@ const updateImage = (allData):any => {
 };
 
 // 장바구니 추가
-const addCart = (cartValue: any, Token: string):any => {
+const addCart = (cartValue: any, Token: string): any => {
   console.log(cartValue);
   return AxiosConfig.post(
     '/members/carts',

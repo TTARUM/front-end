@@ -33,3 +33,9 @@ export interface IAddress {
   phoneNumber: string;
   isDefault: boolean;
 }
+
+export interface IReview {
+  reviewId?: number;
+  content: string;
+  rating: number;
+}
