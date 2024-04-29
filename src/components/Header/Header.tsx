@@ -27,31 +27,6 @@ export default function Header({
   back,
 }: Props) {
   const router = useRouter();
-  let titleName: string;
-
-  switch (title) {
-    case '1':
-      titleName = '전체보기';
-      break;
-    case '2':
-      titleName = '레드 와인';
-      break;
-    case '3':
-      titleName = '화이트 와인';
-      break;
-    case '4':
-      titleName = '로제 와인';
-      break;
-    case '5':
-      titleName = '스파클링 와인';
-      break;
-    case '6':
-      titleName = '안주';
-      break;
-    default:
-      titleName = title;
-  }
-
   return (
     <>
       {type === 'main' ? (
@@ -89,7 +64,7 @@ export default function Header({
         </div>
       ) : type === 'menu' ? (
         <div className="header-container">
-          <p>{titleName}</p>
+          <p>{title}</p>
           <div className="header-menu">
             {search === true ? (
               <Image
@@ -130,7 +105,7 @@ export default function Header({
             src={backIcon}
             alt="Back"
           />
-          <p className='center'>{titleName}</p>
+          <p className='center'>{title}</p>
           <div className="header-menu">
             {search === true ? (
               <Image

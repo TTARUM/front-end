@@ -33,3 +33,9 @@ export interface IAddress {
   phoneNumber: string;
   isDefault: boolean;
 }
+
+export interface ICategory {
+  category: string;
+  page: number;
+  size: number;
+}
