@@ -19,20 +19,23 @@ const showSecession = (Token: string) => {
 };
 
 // 프로필 이미지 업데이트
-const updateImage = (imgUrl: string, Token: string) => {
-  return AxiosConfig.post(
-    '/members/profile-image',
-    { imgUrl },
-    {
-      headers: {
-        Authorization: `Bearer ${Token}`,
-      },
+const updateImage = (allData):any => {
+  console.log(allData);
+  const formData = new FormData();
+  if (allData[0]){
+    formData.append('image', allData[0]);
+  }
+  return AxiosConfig.post('/members/profile-image', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${allData[1]}`,
     },
-  ).then((res) => res);
+  }).then((res) => res);
 };
 
 // 장바구니 추가
-const addCart = (cartValue: IAddCart, Token: string) => {
+const addCart = (cartValue: any, Token: string):any => {
+  console.log(cartValue);
   return AxiosConfig.post(
     '/members/carts',
     { cartValue },

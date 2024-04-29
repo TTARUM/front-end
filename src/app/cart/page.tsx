@@ -275,9 +275,9 @@ export default function Cart() {
             aria-disabled={calculateTotalProductAmount() ? false : true}
           >
             <MainEventButton
-              width={345}
-              height={41}
-              color={calculateTotalProductAmount() ? '#FF6135' : '#D9D9D9'}
+              $width={345}
+              $height={41}
+              $color={calculateTotalProductAmount() ? '#FF6135' : '#D9D9D9'}
               disabled={calculateTotalProductAmount() ? false : true}
             >
               {calculateTotalProductAmount()

@@ -38,8 +38,8 @@ export default function ProductDetailBuyInform({
   const { user }: any = userStore();
   const Token = user?.token;
 
-  const addCart = useMutation({
-    mutationFn: (item) => addCart(item, Token),
+  const addCartList = useMutation({
+    mutationFn: (item): any => addCart(item, Token),
     onSuccess: (res) => {
       console.log(res);
     },
@@ -49,13 +49,7 @@ export default function ProductDetailBuyInform({
   });
 
   const HandleAddCart = () => {
-    addCart(
-      {
-        id: id,
-        amount: quantity,
-      },
-      Token,
-    );
+    addCartList.mutate({ itemId: id, amount: quantity } as any, Token);
   };
 
   useEffect(() => {

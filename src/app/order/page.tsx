@@ -299,9 +299,9 @@ const Order = () => {
             disabled={
               agreeTreatment == false || agreeCollection == false ? true : false
             }
-            width={345}
-            height={41}
-            color={
+            $width={345}
+            $height={41}
+            $color={
               agreeTreatment == false || agreeCollection == false
                 ? '#999999'
                 : '#FF6135'

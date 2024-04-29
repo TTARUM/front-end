@@ -52,9 +52,9 @@ const FindId = () => {
         ))}
       </div>
       <MainEventButton
-        width={345}
-        height={41}
-        color={'#FF6135'}
+        $width={345}
+        $height={41}
+        $color={'#FF6135'}
         onClick={() => setIsSuccess(true)}
       >
         아이디 찾기
@@ -75,10 +75,10 @@ const FindId = () => {
             고객님의 아이디는 <span>"test12"</span> 입니다.
           </p>
           <div className="button_wrapper">
-            <MainEventButton width={110} height={36} color={'#C5C5C5'}>
+            <MainEventButton $width={110} $height={36} $color={'#C5C5C5'}>
               비밀번호 찾기
             </MainEventButton>
-            <MainEventButton width={110} height={36} color={'#FF6135'}>
+            <MainEventButton $width={110} $height={36} $color={'#FF6135'}>
               로그인 하기
             </MainEventButton>
           </div>

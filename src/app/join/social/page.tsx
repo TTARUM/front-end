@@ -72,9 +72,9 @@ export default function Social() {
             maxLength={13}
           />
           <MainEventButton
-            width={345}
-            height={41}
-            color={
+            $width={345}
+            $height={41}
+            $color={
               regex.test(userPhone) && userNickName ? '#FF6135' : '#D9D9D9'
             }
             disabled={regex.test(userPhone) && userNickName ? false : true}
@@ -102,9 +102,9 @@ export default function Social() {
             onClick={() => {
               router.push('/login');
             }}
-            width={205}
-            height={36}
-            color={'#FF6135'}
+            $width={205}
+            $height={36}
+            $color={'#FF6135'}
           >
             로그인하기
           </MainEventButton>

@@ -13,7 +13,7 @@ export interface ILogin {
 }
 
 export interface IAddCart {
-  id: number;
+  itemId: number;
   amount: number;
 }
 

@@ -134,7 +134,7 @@ export default function ProductsDetail({ params }: Props) {
           setShow={setShow}
           showBuy={show}
           type={"레드 와인"}
-          id={1}
+          id={234}
           quantity={1}
         />
       ) : null}
