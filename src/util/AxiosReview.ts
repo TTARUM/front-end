@@ -1,12 +1,8 @@
-import userStore from '@/store/userInformation';
 import AxiosConfig from './AxiosConfig';
 import { IReview } from '@/types/common';
 
-const { user }: any = userStore();
-const Token = user?.token;
-
 // 리뷰 업데이트
-const updateReview = (reviewId: number, review: IReview) => {
+const updateReview = (reviewId: number, review: IReview, Token: string) => {
   return AxiosConfig.put(`/reviews/update/${reviewId}`, review, {
     headers: {
       Authorization: `Bearer ${Token}`,
@@ -16,7 +12,7 @@ const updateReview = (reviewId: number, review: IReview) => {
 };
 
 // 특정 리뷰 제거
-const deleteReview = (reviewId: number) => {
+const deleteReview = (reviewId: number, Token: string) => {
   return AxiosConfig.delete(`/reviews/${reviewId}`, {
     headers: {
       Authorization: `Bearer ${Token}`,
@@ -30,7 +26,7 @@ const readReview = (itemId: number, page: number, size: number) => {
 };
 
 // 리뷰 작성
-const writeReview = (images: string[], review: IReview) => {
+const writeReview = (images: string[], review: IReview, Token: string) => {
   return AxiosConfig.post(
     '/reviews',
     { images, review },
@@ -44,7 +40,7 @@ const writeReview = (images: string[], review: IReview) => {
 };
 
 // 리뷰 업데이트를 위한 데이터 조회
-const updateDataReview = (reviewId: number) => {
+const updateDataReview = (reviewId: number, Token: string) => {
   return AxiosConfig.get(`/reviews/${reviewId}/update`, {
     headers: {
       Authorization: `Bearer ${Token}`,
@@ -52,4 +48,10 @@ const updateDataReview = (reviewId: number) => {
   }).then((res) => res.data);
 };
 
-export { updateReview };
+export {
+  updateReview,
+  deleteReview,
+  readReview,
+  writeReview,
+  updateDataReview,
+};

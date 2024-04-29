@@ -8,8 +8,26 @@ import downright_triangle from '../../../public/downright-triangle.svg';
 import reviewScore from '../../../public/score-star.svg';
 import fillReviewScore from '../../../public/fillStar.svg';
 import Image from 'next/image';
+import { useQuery } from '@tanstack/react-query';
+import { readReview } from '@/util/AxiosReview';
+import userStore from '@/store/userInformation';
+import { useParams } from 'next/navigation';
 
 export default function ProductDetailReview() {
+  const { user }: any = userStore();
+  const Token = user?.token;
+  const { itemId } = useParams();
+
+  const { data, status } = useQuery({
+    queryKey: ['review', Token],
+    queryFn: () => readReview(Number(itemId)),
+    enabled: !!Token,
+  });
+
+  useEffect(() => {
+    console.log(data);
+  });
+
   const 더미데이터: {
     id: number;
     img: string;

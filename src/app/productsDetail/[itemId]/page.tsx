@@ -39,7 +39,7 @@ export default function ProductsDetail({ params }: Props) {
 
   return (
     <main className="detail">
-      <Header type='subMenu' title="상세보기" heart={true} cart={true} />
+      <Header type="subMenu" title="상세보기" heart={true} cart={true} />
 
       {/**상품 정보 */}
       <div className="detail-inform">
@@ -133,7 +133,7 @@ export default function ProductsDetail({ params }: Props) {
           price={20000}
           setShow={setShow}
           showBuy={show}
-          type={"레드 와인"}
+          type={'레드 와인'}
           id={234}
           quantity={1}
         />
