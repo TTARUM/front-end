@@ -27,8 +27,6 @@ const sortText = ['최근등록순', '판매인기순', '낮은가격순', '높�
 export default function Products({ params }: Props) {
   const [sort, setSort] = useState<string>('최근등록순');
   const [showSortAlert, setShowSortAlert] = useState<boolean>(false);
-  const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(null);
 
   const sortHandle = (value: string) => {
     setSort(value);
@@ -36,14 +34,6 @@ export default function Products({ params }: Props) {
   };
 
   const decode = decodeURI(decodeURIComponent(params.params));
-  const categoryData = [
-    { category: decode.split(' ')[0], page: page, size: 20 },
-  ];
-
-  // const { data, status } = useQuery({
-  //   queryKey: ['category'],
-  //   queryFn: () => getCategory(categoryData),
-  // });
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -52,19 +42,18 @@ export default function Products({ params }: Props) {
       const clientHeight = document.documentElement.clientHeight;
 
       if (clientHeight >= scrollHeight - scrollTop) {
-        setPage(page + 1);
         fetchNextPage();
       }
     });
-  }, [page]);
+  }, []);
 
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: ['getPlacesOfCategory'],
     queryFn: ({ pageParam }) =>
       getCategory({
         category: decode.split(' ')[0],
         page: pageParam,
-        size: 20,
+        size: 20
       }),
     initialPageParam: 1,
 
@@ -123,7 +112,6 @@ export default function Products({ params }: Props) {
             )),
           )}
         </div>
-        <button onClick={() => fetchNextPage()}>ss</button>
       </div>
     </main>
   );

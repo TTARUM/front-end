@@ -8,7 +8,7 @@ const getPopularList = () =>
 // 카테고리별 제품 조회
 const getCategory = (categoryData: ICategory): any => {
   if (categoryData.category === '전체보기') {
-    return AxiosConfig.get(`/items/list?query=`);
+    return AxiosConfig.get(`/items/list?query=&page=${categoryData?.page}&size=${categoryData?.size}`);
   }
   return AxiosConfig.get(
     `/items/category?category=${categoryData?.category}&page=${categoryData?.page}&size=${categoryData?.size}`,
