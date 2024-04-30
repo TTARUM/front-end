@@ -6,7 +6,7 @@ import ItemBox from '@/components/Item/ItemBox';
 import Image from 'next/image';
 import downArrow from '../../../../public/downdark-triangle.svg';
 import upArrow from '../../../../public/updark-triangle.svg';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getCategory, getPopularList } from '@/util/AxiosItem';
 
@@ -27,7 +27,7 @@ const sortText = ['최근등록순', '판매인기순', '낮은가격순', '높�
 export default function Products({ params }: Props) {
   const [sort, setSort] = useState<string>('최근등록순');
   const [showSortAlert, setShowSortAlert] = useState<boolean>(false);
-  const [page, setPage] = useState();
+  const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(null);
 
   const sortHandle = (value: string) => {
@@ -36,24 +36,47 @@ export default function Products({ params }: Props) {
   };
 
   const decode = decodeURI(decodeURIComponent(params.params));
-  const categoryData = [{ category: decode.split(' ')[0], page: 1, size: 20 }];
+  const categoryData = [
+    { category: decode.split(' ')[0], page: page, size: 20 },
+  ];
 
-  const { data, status } = useQuery({
-    queryKey: ['category'],
-    queryFn: () => getCategory(categoryData),
+  // const { data, status } = useQuery({
+  //   queryKey: ['category'],
+  //   queryFn: () => getCategory(categoryData),
+  // });
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = document.documentElement.clientHeight;
+
+      if (clientHeight >= scrollHeight - scrollTop) {
+        setPage(page + 1);
+        fetchNextPage();
+      }
+    });
+  }, [page]);
+
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['getPlacesOfCategory'],
+    queryFn: ({ pageParam }) =>
+      getCategory({
+        category: decode.split(' ')[0],
+        page: pageParam,
+        size: 20,
+      }),
+    initialPageParam: 1,
+
+    getNextPageParam: (lastPage, pages) => {
+      const currentPage = pages.length - 1 + 1;
+      return currentPage + 1;
+    },
+
+    retry: 0,
   });
 
-  // // 데이터 패칭
-  // const { data, fetchNextPage, hasNextPage, isLoading, isError } = useInfiniteQuery(
-  //   ['category'],
-  //   ({ pageParam = 0 }) => getCategory(categoryData),
-  //   {
-  //       getNextPageParam: (lastPage, allPosts) => {
-  //           return lastPage.page !== allPosts[0].totalPage ? lastPage.page + 1 : undefined;
-  //       },
-  //   },
-  // );
-
+  console.log('data::', data);
   return (
     <main className="products-container">
       <Header type="subMenu" title={decode} />
@@ -64,7 +87,7 @@ export default function Products({ params }: Props) {
               setShowSortAlert(!showSortAlert);
             }}
           >
-            {sort}{' '}
+            {sort}
             <Image src={showSortAlert === false ? downArrow : upArrow} alt="" />
           </p>
           <div
@@ -94,11 +117,13 @@ export default function Products({ params }: Props) {
           </div>
         </div>
         <div className="products-item-area">
-          {data?.data.itemSummaryResponseList.map((value) => {
-            console.log(value);
-            return <ItemBox page="products" data={value} />;
-          })}
+          {data?.pages?.map((value) =>
+            value?.data?.itemSummaryResponseList.map((item) => (
+              <ItemBox key={item.id} page="products" data={item} />
+            )),
+          )}
         </div>
+        <button onClick={() => fetchNextPage()}>ss</button>
       </div>
     </main>
   );
