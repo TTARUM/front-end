@@ -53,7 +53,7 @@ export default function Products({ params }: Props) {
       getCategory({
         category: decode.split(' ')[0],
         page: pageParam,
-        size: 20
+        size: 20,
       }),
     initialPageParam: 1,
 
@@ -61,8 +61,6 @@ export default function Products({ params }: Props) {
       const currentPage = pages.length - 1 + 1;
       return currentPage + 1;
     },
-
-    retry: 0,
   });
 
   console.log('data::', data);
