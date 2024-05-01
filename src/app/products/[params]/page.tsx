@@ -63,7 +63,7 @@ export default function Products({ params }: Props) {
     },
   });
 
-  console.log('data::', data);
+  // console.log('data::', data);
   return (
     <main className="products-container">
       <Header type="subMenu" title={decode} />

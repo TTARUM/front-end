@@ -1,15 +1,17 @@
 import React, { useRef, useState } from 'react';
 import './ProductDetailAddInform.scss';
-import detailPicture from '../../../public/productDetail_picture.svg';
 import alcol from '../../../public/alcohol1.svg';
 import alcol2 from '../../../public/alcohol2.svg';
 import alcol3 from '../../../public/alcohol3.svg';
+import noImage from '../../../public/bannerCh.svg';
 import heart from '../../../public/heartFill.svg';
 import notHeart from '../../../public/heartNotFill.svg';
 import Image from 'next/image';
 import useTouchScroll from '@/hooks/useTouchScroll';
+import { useQuery } from '@tanstack/react-query';
+import { getPopularCategory, getSimilarPrice } from '@/util/AxiosItem';
 
-export default function ProductDetailAddInform() {
+export default function ProductDetailAddInform({ descriptionImageUrl, price }) {
   const DUMMY: {
     id: number;
     img: string;
@@ -56,6 +58,8 @@ export default function ProductDetailAddInform() {
 
   const hotProductRef = useRef<HTMLDivElement | null>(null);
   const similarProductRef = useRef<HTMLDivElement | null>(null);
+  const query = location.search;
+  const decode = decodeURI(decodeURIComponent(query));
 
   const [
     HotHandleMouseDown,
@@ -70,6 +74,17 @@ export default function ProductDetailAddInform() {
     SimilarHandleMouseUp,
     SimilarHandleMouseLeave,
   ] = useTouchScroll(similarProductRef);
+
+  const { data: similar } = useQuery({
+    queryKey: ['similar'],
+    queryFn: () => getSimilarPrice(price),
+  });
+
+  const { data: popularCategory } = useQuery({
+    queryKey: ['popularCategory'],
+    queryFn: () => getPopularCategory(decode.split('=')[1]),
+  });
+  console.log(popularCategory);
 
   const [isAddInform, setIsAddInform] = useState<boolean>(false);
   const [item, setItem] = useState(DUMMY);
@@ -97,7 +112,20 @@ export default function ProductDetailAddInform() {
             : 'productDetailAddInform-list-hide'
         }`}
       >
-        <Image src={detailPicture} alt="detailPicture" />
+        {descriptionImageUrl ? (
+          <Image
+            width={633}
+            height={393}
+            src={descriptionImageUrl}
+            alt="detailPicture"
+            className="detail"
+          />
+        ) : (
+          <>
+            <Image className="noImage" src={noImage} alt="noImage" />
+            <p>이미지가 없습니다.</p>
+          </>
+        )}
       </div>
 
       <button
@@ -162,26 +190,27 @@ export default function ProductDetailAddInform() {
           onMouseUp={SimilarHandleMouseUp}
           onMouseLeave={SimilarHandleMouseLeave}
         >
-          {item.map((drink, index) => {
+          {similar?.data?.itemSummaryList.map((drink) => {
+            // console.log(drink);
             return (
               <div
-                key={index}
+                key={drink.itemId}
                 className="ProductDetailSimilarPrice-SimilarProduct"
               >
                 <div>
                   <div className="ProductDetailSimilarPrice-SimilarProductImg">
-                    <Image src={drink.img} fill alt="drink" />
-                    <div id="ProductDetail-heart" data-id={drink.id}>
-                      {drink.like ? (
+                    <Image src={drink.imageUrl} fill alt="drink" />
+                    <div id="ProductDetail-heart" data-id={drink.itemId}>
+                      {drink.inWishList ? (
                         <Image src={heart} alt="heart" />
                       ) : (
                         <Image src={notHeart} alt="heart" />
                       )}
                     </div>
                   </div>
-                  <p>{drink.name}</p>
+                  <p>{drink.itemName}</p>
                   <span>
-                    <strong>{drink.price}</strong>원
+                    <strong>{drink.price?.toLocaleString()}</strong>원
                   </span>
                 </div>
               </div>

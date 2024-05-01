@@ -9,6 +9,25 @@
   height: 300px;
   overflow: hidden;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .detail {
+    width: 100%;
+    height: 100%;
+  }
+
+  .noImage {
+    border-radius: 50%;
+  }
+
+  >p {
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 700;
+  }
 
   &>div {
     min-width: 393px;
@@ -18,6 +37,10 @@
 }
 
 .productDetailAddInform-list-hide {
+  .detail {
+    width: 100%;
+    height: 100vh;
+  }
   &::before {
     content: '';
     background: linear-gradient(to top, white, transparent);
@@ -25,7 +48,7 @@
     bottom: 0;
     height: 30%;
     width: 100%;
-    z-index: 0;
+    z-index: 1;
   }
 }
 
