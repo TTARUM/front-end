@@ -54,7 +54,7 @@ export default function ItemBox({
             <div
               className="box"
               onClick={() => {
-                router.push(`/productsDetail/${data?.id}`);
+                router.push(`/productsDetail/${data?.id}?category=${data?.categoryName}`);
               }}
             >
               <div className="itemBox-main-img">
@@ -97,7 +97,7 @@ export default function ItemBox({
           <div
             className="itemBox-area"
             onClick={() => {
-              router.push(`/productsDetail/${data?.id}`);
+              router.push(`/productsDetail/${data?.id}?category=${data?.categoryName}`);
             }}
           >
             <div className="itemBox-img">

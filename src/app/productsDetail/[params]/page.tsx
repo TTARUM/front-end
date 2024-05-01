@@ -13,6 +13,8 @@ import ProductDetailBuyInform from '@/components/ProductDetailBuyInform/ProductD
 import ProductDetailReview from '@/components/ProductDetailReview/ProductDetailReview';
 import ProductDetailAsk from '@/components/ProductDetailAsk/ProductDetailAsk';
 import ProductDetailChange from '@/components/ProductDetailChange/ProductDetailChange';
+import { useQuery } from '@tanstack/react-query';
+import { getDetail } from '@/util/AxiosItem';
 
 type Props = {
   img?: string;
@@ -23,7 +25,9 @@ type Props = {
   score?: string;
   page?: string;
   number?: number;
-  params?: string;
+  params?: {
+    params: string;
+  };
 };
 
 export default function ProductsDetail({ params }: Props) {
@@ -35,33 +39,39 @@ export default function ProductsDetail({ params }: Props) {
     setCurrentInform(target.innerText);
   };
 
+  const { data } = useQuery({
+    queryKey: ['detail'],
+    queryFn: () => getDetail(params.params),
+  });
+
+  // console.log(data?.data);
+
   const navList = ['상품정보', '리뷰24', '문의', '교환/반품'];
 
   return (
     <main className="detail">
-      <Header type='subMenu' title="상세보기" heart={true} cart={true} />
+      <Header type="subMenu" title="상세보기" heart={true} cart={true} />
 
       {/**상품 정보 */}
       <div className="detail-inform">
         <div className="detail-inform-img">
-          <Image src={detail} alt="detail" />
+          <Image
+            width={393}
+            height={393}
+            src={data?.data.imageUrl}
+            alt="detail"
+          />
         </div>
         <section className="detail-inform-introduce">
           <article>
-            <p>
-              <span>Christmas Rose</span> <br />
-              모젤 크리스마스, 로제
-            </p>
+            <p>{data?.data?.name}</p>
             <div>
               <div>
                 <Image src={share} alt="share" />
               </div>
             </div>
           </article>
-          <p>
-            영롱한 핑크빛 색감, 산뜻한 과일 아로마와 가벼운 바디감으로 연인이나
-            가족들과 함께 즐기기 좋은 와인입니다.
-          </p>
+          <p>{data?.data.description}</p>
           <article className="detail-inform-score">
             <div>
               <div>
@@ -86,7 +96,7 @@ export default function ProductsDetail({ params }: Props) {
             </div>
           </article>
           <article className="detail-inform-price">
-            <span>35,000</span>
+            <span>{data?.data.price?.toLocaleString()}</span>
             <span>원</span>
           </article>
         </section>
@@ -105,7 +115,7 @@ export default function ProductsDetail({ params }: Props) {
         })}
       </div>
 
-      {currentInform === '상품정보' && <ProductDetailAddInform />}
+      {currentInform === '상품정보' && <ProductDetailAddInform price={data?.data.price} descriptionImageUrl={data?.data.descriptionImageUrl} />}
       {currentInform === '리뷰24' && <ProductDetailReview />}
       {currentInform === '문의' && <ProductDetailAsk />}
       {currentInform === '교환/반품' && <ProductDetailChange />}
@@ -133,8 +143,8 @@ export default function ProductsDetail({ params }: Props) {
           price={20000}
           setShow={setShow}
           showBuy={show}
-          type={"레드 와인"}
-          id={234}
+          type={'레드 와인'}
+          id={243}
           quantity={1}
         />
       ) : null}
