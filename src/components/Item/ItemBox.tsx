@@ -51,6 +51,7 @@ export default function ItemBox({ data, page, number }: Props) {
     },
   });
 
+
   const clickHeart = (id: number) => {
     addMutation.mutate({ itemId: id }, Token);
     setOnHeart(!onHeart);

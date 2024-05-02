@@ -26,17 +26,13 @@ const showSecession = (Token: string) => {
 
 // 제품 찜하기
 const addWishItem = (wish: IWish, Token: string) => {
-  console.log(wish.itemId);
+  console.log(wish);
   console.log(Token);
-  return AxiosConfig.post(
-    `/members/wish-item`,
-    { wish },
-    {
-      headers: {
-        Authorization: `Bearer ${Token}`,
-      },
+  return AxiosConfig.post(`/members/wish-item`, wish, {
+    headers: {
+      Authorization: `Bearer ${Token}`,
     },
-  ).then((res) => res);
+  }).then((res) => res);
 };
 
 // 프로필 이미지 업데이트
