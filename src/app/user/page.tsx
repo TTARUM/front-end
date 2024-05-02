@@ -35,7 +35,7 @@ export default function User() {
   };
 
   const changeProfile = useMutation({
-    mutationFn: ( imgData ) => updateImage(imgData),
+    mutationFn: (imgData) => updateImage(imgData),
     onSuccess: (res) => {
       console.log(res);
     },
@@ -47,11 +47,11 @@ export default function User() {
   // console.log(token);
 
   const handleImageChange = () => {
-    // const formData = new FormData();
-    // if(image){
-    //   formData.append('image', image);
-    // }
-    const allData :any = [image, token?.token];
+    const formData = new FormData();
+    if (image) {
+      formData.append('image', image);
+    }
+    const allData: any = [image, token?.token];
     try {
       changeProfile.mutate(allData);
     } catch (error) {
@@ -78,21 +78,16 @@ export default function User() {
     deleteUser.mutate(token.token);
   };
 
-
   useEffect(() => {
     handleImageChange();
   }, [image]);
-
-  // useEffect(() => {
-  //   if (uploadImgUrl != null) {
-  //     updateImage(uploadImgUrl, token.token);
-  //   }
-  // }, [uploadImgUrl]);
 
   useEffect(() => {
     const userInformation = JSON.parse(window.localStorage.getItem('token'));
     setToken(userInformation);
   }, []);
+
+  console.log(token);
 
   return (
     <div className="main">
@@ -106,7 +101,7 @@ export default function User() {
                 className="userImg"
                 width={64}
                 height={64}
-                src={not_user}
+                src={token?.imageUrl ? token.imageUrl : not_user}
                 alt="not_user"
               />
               <Image

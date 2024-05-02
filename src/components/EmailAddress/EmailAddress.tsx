@@ -4,8 +4,10 @@ import Image from 'next/image';
 
 import downArrow from '../../../public/downArrow.svg';
 import { MainEventButton } from '../Style/MainEventBtn/MainEventBtn';
+import { Mutation, useMutation, useQuery } from '@tanstack/react-query';
+import { showMailCertification } from '@/util/AxiosMember';
 
-const EmailAddress = ({ data, setData, placeholder, setClick }) => {
+const EmailAddress = ({ data, setData, placeholder }) => {
   const [showEmailModal, setShowEmailModal] = useState<boolean>(false);
   const [getEmail, setGetEmail] = useState<string>('');
   const [pushEmail, setPushEmail] = useState<string>('');
@@ -14,9 +16,25 @@ const EmailAddress = ({ data, setData, placeholder, setClick }) => {
     '',
   );
 
+  interface IEmail {
+    email: string;
+  }
+
+  const returnMail = (email: IEmail) => {
+    return showMailCertification(email);
+  };
+
+  const mailCertificationMutation = useMutation({
+    mutationFn: (emailAddress: IEmail) => returnMail(emailAddress),
+    onSuccess: (res) => {
+      console.log(res);
+    },
+    onError: (error: any) => {},
+  });
+
   const certificationCheck = () => {
-    // 이메일 인증 API 구역
-    setClick('이메일 인증 번호');
+    const emailToUse = `${email}@${getEmail === '직접' ? pushEmail : getEmail}`;
+    mailCertificationMutation.mutate({ email: emailToUse });
   };
 
   const checkEmail = () => {
@@ -74,7 +92,6 @@ const EmailAddress = ({ data, setData, placeholder, setClick }) => {
           value={certificationNumber}
           onChange={(e) => {
             const input = e.target.value;
-            // 빈 문자열인 경우 바로 설정, 숫자인 경우에만 parseInt 사용
             setCertificationNumber(input === '' ? '' : parseInt(input, 10));
           }}
         />
