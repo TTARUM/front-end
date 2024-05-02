@@ -44,3 +44,7 @@ export interface ISearch {
   decode : string | number;
   pageParam :number
 }
+
+export interface IWish {
+  itemId: number;
+}
