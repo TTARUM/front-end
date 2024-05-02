@@ -27,11 +27,16 @@ const showSecession = (Token: string) => {
 // 제품 찜하기
 const addWishItem = (wish: IWish, Token: string) => {
   console.log(wish.itemId);
-  return AxiosConfig.post('/members/wish-item', wish.itemId, {
-    headers: {
-      Authorization: `Bearer ${Token}`,
+  console.log(Token);
+  return AxiosConfig.post(
+    `/members/wish-item`,
+    { wish },
+    {
+      headers: {
+        Authorization: `Bearer ${Token}`,
+      },
     },
-  }).then((res) => res);
+  ).then((res) => res);
 };
 
 // 프로필 이미지 업데이트
@@ -53,7 +58,7 @@ const updateImage = (allData): any => {
 const addCart = (cartValue: any, Token: string): any => {
   console.log(cartValue);
   return AxiosConfig.post(
-    '/members/carts',
+    `/members/carts`,
     { cartValue },
     { headers: { Authorization: `Bearer ${Token}` } },
   ).then((res) => res);

@@ -3,15 +3,12 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import redWine from '../../../public/red-wine.svg';
-import redWineMain from '../../../public/redWine-main.svg';
-import productWine from '../../../public/products-wine.svg';
 import heart from '../../../public/heart.svg';
 import on_heart from '../../../public/on-heart.svg';
 import scoreStar from '../../../public/score-star.svg';
 import heart_cart from '../../../public/heart_cart.svg';
 import './ItemBox.scss';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { addWishItem } from '@/util/AxiosMember';
 import userStore from '@/store/userInformation';
 import { IWish } from '@/types/common';
@@ -54,20 +51,20 @@ export default function ItemBox({ data, page, number }: Props) {
     },
   });
 
-  const clickHeart = (id) => {
+  const clickHeart = (id: number) => {
     addMutation.mutate({ itemId: id }, Token);
     setOnHeart(!onHeart);
   };
 
   return (
     <div className="itemBox-container">
+      {/* 메인화면 탑 3 */}
       {page === 'main' ? (
         <>
           <div className="itemBox-main-number">
             <p>{number}</p>
           </div>
           <div className="itemBox-main-item">
-            {/* 지금은 params지만 나중엔 아이템 id로 대체 */}
             <div
               className="box"
               onClick={() => {
@@ -108,6 +105,7 @@ export default function ItemBox({ data, page, number }: Props) {
           </div>
         </>
       ) : (
+        // 나머지
         <div className="itemBox-item">
           {page === 'heart' ? null : (
             <Image
