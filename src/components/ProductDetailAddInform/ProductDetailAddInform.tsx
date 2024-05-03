@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './ProductDetailAddInform.scss';
 import alcol from '../../../public/alcohol1.svg';
 import alcol2 from '../../../public/alcohol2.svg';
@@ -58,8 +58,11 @@ export default function ProductDetailAddInform({ descriptionImageUrl, price }) {
 
   const hotProductRef = useRef<HTMLDivElement | null>(null);
   const similarProductRef = useRef<HTMLDivElement | null>(null);
-  const query = location.search;
-  const decode = decodeURI(decodeURIComponent(query));
+  const [category, setCategory] = useState<string>();
+
+  useEffect(() => {
+    setCategory(decodeURI(decodeURIComponent(location.search)));
+  }, []);
 
   const [
     HotHandleMouseDown,
@@ -82,7 +85,7 @@ export default function ProductDetailAddInform({ descriptionImageUrl, price }) {
 
   const { data: popularCategory } = useQuery({
     queryKey: ['popularCategory'],
-    queryFn: () => getPopularCategory(decode.split('=')[1]),
+    queryFn: () => getPopularCategory(category.split('=')[1]),
   });
   console.log(popularCategory);
 
