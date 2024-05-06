@@ -21,8 +21,20 @@ const deleteReview = (reviewId: number, Token: string) => {
 };
 
 // 특정 리뷰 조회
-const readReview = (itemId: number, page: number, size: number) => {
-  return AxiosConfig.get('/reviews').then((res) => res.data);
+const readReview = (
+  itemId: number,
+  Token: string,
+  page?: number,
+  size?: number,
+) => {
+  return AxiosConfig.get(
+    `/reviews?itemId=${itemId}&page=${page}&size=${size}`,
+    {
+      headers: {
+        Authorization: `Bearer ${Token}`,
+      },
+    },
+  ).then((res) => res.data);
 };
 
 // 리뷰 작성

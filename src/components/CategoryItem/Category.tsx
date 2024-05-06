@@ -16,7 +16,7 @@ export default function Category({ img, title, id }: Props) {
     <div
       className="category-area"
       onClick={() => {
-        router.push(`/products/${id}`);
+        router.push(`/products/${title}`);
       }}
     >
       <div className="category-box">

@@ -6,7 +6,9 @@ import ItemBox from '@/components/Item/ItemBox';
 import Image from 'next/image';
 import downArrow from '../../../../public/downdark-triangle.svg';
 import upArrow from '../../../../public/updark-triangle.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { getCategory, getPopularList } from '@/util/AxiosItem';
 
 type Props = {
   params: {
@@ -25,14 +27,36 @@ const sortText = ['최근등록순', '판매인기순', '낮은가격순', '높�
 export default function Products({ params }: Props) {
   const [sort, setSort] = useState<string>('최근등록순');
   const [showSortAlert, setShowSortAlert] = useState<boolean>(false);
+  const [page, setPage] = useState();
+  const [totalPage, setTotalPage] = useState(null);
 
   const sortHandle = (value: string) => {
     setSort(value);
     setShowSortAlert(false);
   };
+
+  const decode = decodeURI(decodeURIComponent(params.params));
+  const categoryData = [{ category: decode.split(' ')[0], page: 1, size: 20 }];
+
+  const { data, status } = useQuery({
+    queryKey: ['category'],
+    queryFn: () => getCategory(categoryData),
+  });
+
+  // // 데이터 패칭
+  // const { data, fetchNextPage, hasNextPage, isLoading, isError } = useInfiniteQuery(
+  //   ['category'],
+  //   ({ pageParam = 0 }) => getCategory(categoryData),
+  //   {
+  //       getNextPageParam: (lastPage, allPosts) => {
+  //           return lastPage.page !== allPosts[0].totalPage ? lastPage.page + 1 : undefined;
+  //       },
+  //   },
+  // );
+
   return (
     <main className="products-container">
-      <Header type='subMenu' title={params.params} />
+      <Header type="subMenu" title={decode} />
       <div className="products-wrap">
         <div className="products-sort">
           <p
@@ -69,13 +93,11 @@ export default function Products({ params }: Props) {
             })}
           </div>
         </div>
-
         <div className="products-item-area">
-          <ItemBox page="products" params={params.params} />
-          <ItemBox page="products" params={params.params} />
-          <ItemBox page="products" params={params.params} />
-          <ItemBox page="products" params={params.params} />
-
+          {data?.data.itemSummaryResponseList.map((value) => {
+            console.log(value);
+            return <ItemBox page="products" data={value} />;
+          })}
         </div>
       </div>
     </main>

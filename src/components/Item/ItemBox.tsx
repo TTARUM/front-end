@@ -12,30 +12,27 @@ import scoreStar from '../../../public/score-star.svg';
 import heart_cart from '../../../public/heart_cart.svg';
 import './ItemBox.scss';
 
+interface Data {
+  id: number;
+  categoryName: string;
+  name: string;
+  price: number;
+  rating: number;
+  imageUrl: string;
+  createdAt: Date;
+  salesVolume: number;
+  inWishList: boolean;
+}
 type Props = {
-  img?: string;
-  type?: string;
-  name?: string;
-  volume?: string;
-  price?: string;
-  score?: string;
+  data? : Data;
   page?: string;
   number?: number;
-  params?: string;
-  cart?: boolean;
 };
 
 export default function ItemBox({
-  img,
-  type,
-  name,
-  volume,
-  price,
-  score,
+  data,
   page,
   number,
-  params,
-  cart,
 }: Props) {
   const [onHeart, setOnHeart] = useState(false);
   const router = useRouter();
@@ -57,21 +54,23 @@ export default function ItemBox({
             <div
               className="box"
               onClick={() => {
-                router.push(`/productsDetail/${params}`);
+                router.push(`/productsDetail/${data?.id}`);
               }}
             >
               <div className="itemBox-main-img">
                 <Image
+                  width={104}
+                  height={104}
                   objectFit={'cover'}
-                  src={redWineMain}
+                  src={data?.imageUrl}
                   alt="red wine image"
                 />
               </div>
               <div className="itemBox-main-contact">
-                <p className="type_font">레드 와인</p>
-                <p className="name_font">토토 피에몬테 로쏘</p>
+                <p className="type_font">{data?.categoryName}</p>
+                <p className="name_font">{data?.name.length > 10 ? `${data?.name.slice(0, 10)}...` : data?.name}</p>
                 <p style={{ marginTop: '25px' }} className="price_font">
-                  99,999원
+                  {data?.price.toLocaleString()}원
                 </p>
               </div>
             </div>
@@ -79,7 +78,7 @@ export default function ItemBox({
               <Image
                 onClick={clickHeart}
                 className="itemBox-heart"
-                src={onHeart ? on_heart : heart}
+                src={data?.inWishList ? on_heart : heart}
                 alt="heart"
               />
             </div>
@@ -91,42 +90,42 @@ export default function ItemBox({
             <Image
               onClick={clickHeart}
               className="itemBox-heart"
-              src={onHeart ? on_heart : heart}
+              src={data?.inWishList ? on_heart : heart}
               alt="heart"
             />
           )}
           <div
             className="itemBox-area"
             onClick={() => {
-              router.push(`/productsDetail/${params}`);
+              router.push(`/productsDetail/${data?.id}`);
             }}
           >
             <div className="itemBox-img">
               {page === 'products' ? (
-                <Image src={productWine} alt="red wine image" />
+                <Image width={168} height={164} src={data?.imageUrl} alt="red wine image" />
               ) : page === 'heart' ? (
                 <>
-                  <Image src={img} alt="red wine image" />
+                  <Image width={168} height={164} src={data?.imageUrl} alt="red wine image" />
                   <Image
                     onClick={clickHeart}
                     className="itemBox-heart"
-                    src={onHeart ? on_heart : heart}
+                    src={data?.inWishList ? on_heart : heart}
                     alt="heart"
                   />
                 </>
               ) : (
-                <Image src={redWine} alt="red wine image" />
+                <Image width={168} height={164} src={data?.imageUrl} alt="red wine image" />
               )}
             </div>
 
             <div className="itemBox-contact">
-              <p className="type_font">레드 와인</p>
-              <p className="name_font">토토 피에몬테 로쏘</p>
+              <p className="type_font">{data?.categoryName}</p>
+              <p className="name_font">{data?.name.length > 10 ? `${data?.name.slice(0, 10)}...` : data?.name}</p>
               <p className="price_font">
-                99,999<span className="unit_font">원</span>
+                {data?.price.toLocaleString()}<span className="unit_font">원</span>
               </p>
               <p className="score_font">
-                <Image src={scoreStar} alt="score" /> 4.5
+                <Image src={scoreStar} alt="score" /> {data?.rating}
               </p>
             </div>
           </div>

@@ -17,15 +17,17 @@ export default function ProductDetailReview() {
   const { user }: any = userStore();
   const Token = user?.token;
   const { itemId } = useParams();
+  const [page, setPage] = useState<number>(1);
+  const [size, setSize] = useState<number>(10);
 
   const { data, status } = useQuery({
     queryKey: ['review', Token],
-    queryFn: () => readReview(Number(itemId)),
+    queryFn: () => readReview(Number(itemId), Token, page, size),
     enabled: !!Token,
   });
 
   useEffect(() => {
-    console.log(data);
+    console.log(itemId);
   });
 
   const 더미데이터: {

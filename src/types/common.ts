@@ -39,3 +39,9 @@ export interface IReview {
   content: string;
   rating: number;
 }
+
+export interface ICategory {
+  category: string;
+  page: number;
+  size: number;
+}

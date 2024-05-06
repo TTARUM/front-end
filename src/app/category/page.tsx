@@ -11,7 +11,6 @@ import category_sparklingWine from '../../../public/category_sparklingWine.svg';
 import category_snack from '../../../public/category_snack.svg';
 import Image from 'next/image';
 import Navigation from '@/components/Navigation/Navigation';
-
 export default function Category() {
   const router = useRouter();
   const path = usePathname();
@@ -36,7 +35,7 @@ export default function Category() {
                 key={item.id}
                 className="category-itemBox"
                 onClick={() => {
-                  router.push(`/products/${item.id}`);
+                  router.push(`/products/${item.name}`);
                 }}
               >
                 <Image src={item.img} alt={item.name} />
