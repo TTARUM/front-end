@@ -59,9 +59,10 @@ export default function ProductDetailAddInform({ descriptionImageUrl, price }) {
   const hotProductRef = useRef<HTMLDivElement | null>(null);
   const similarProductRef = useRef<HTMLDivElement | null>(null);
   const [category, setCategory] = useState<string>();
+  const path = location.pathname.split('/');
 
   useEffect(() => {
-    setCategory(decodeURI(decodeURIComponent(location.search)));
+    setCategory(path[2]);
   }, []);
 
   const [
@@ -85,9 +86,8 @@ export default function ProductDetailAddInform({ descriptionImageUrl, price }) {
 
   const { data: popularCategory } = useQuery({
     queryKey: ['popularCategory'],
-    queryFn: () => getPopularCategory(category.split('=')[1]),
+    queryFn: () => getPopularCategory(category),
   });
-  console.log(popularCategory);
 
   const [isAddInform, setIsAddInform] = useState<boolean>(false);
   const [item, setItem] = useState(DUMMY);

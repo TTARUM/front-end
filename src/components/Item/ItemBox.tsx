@@ -70,7 +70,7 @@ export default function ItemBox({ data, page, number }: Props) {
               className="box"
               onClick={() => {
                 router.push(
-                  `/productsDetail/${data?.id}?category=${data?.categoryName}`,
+                  `/productsDetail/${data?.id}`,
                 );
               }}
             >
@@ -120,7 +120,7 @@ export default function ItemBox({ data, page, number }: Props) {
             className="itemBox-area"
             onClick={() => {
               router.push(
-                `/productsDetail/${data?.id}?category=${data?.categoryName}`,
+                `/productsDetail/${data?.id}`,
               );
             }}
           >
