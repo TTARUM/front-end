@@ -33,7 +33,7 @@ export default function Products({ params }: Props) {
     setShowSortAlert(false);
   };
 
-  const decode = decodeURI(decodeURIComponent(params.params));
+  const param = params.params;
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -51,11 +51,11 @@ export default function Products({ params }: Props) {
     queryKey: ['getPlacesOfCategory'],
     queryFn: ({ pageParam }) =>
       getCategory({
-        category: decode.split(' ')[0],
+        category: param,
         page: pageParam,
         size: 20,
       }),
-    initialPageParam: 1,
+    initialPageParam: 0,
 
     getNextPageParam: (lastPage, pages) => {
       const currentPage = pages.length - 1 + 1;
@@ -63,10 +63,32 @@ export default function Products({ params }: Props) {
     },
   });
 
-  // console.log('data::', data);
+  let Title;
+
+  switch (param) {
+    case '1':
+      Title = '레드와인';
+      break;
+    case '2':
+      Title = '화이트와인';
+      break;
+    case '3':
+      Title = '로제와인';
+      break;
+    case '4':
+      Title = '스파클링 와인';
+      break;
+    case '5':
+      Title = '주정강화';
+      break;
+    case '0':
+      Title = '전체보기';
+      break;
+  }
+
   return (
     <main className="products-container">
-      <Header type="subMenu" title={decode} />
+      <Header type="subMenu" title={Title} />
       <div className="products-wrap">
         <div className="products-sort">
           <p
