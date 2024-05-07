@@ -9,16 +9,20 @@ import { useQuery } from '@tanstack/react-query';
 import { getPopularCategory, getSimilarPrice } from '@/util/AxiosItem';
 import { useRouter } from 'next/navigation';
 
-export default function ProductDetailAddInform({ descriptionImageUrl, price }) {
+export default function ProductDetailAddInform({
+  descriptionImageUrl,
+  price = 0,
+}) {
   const hotProductRef = useRef<HTMLDivElement | null>(null);
   const similarProductRef = useRef<HTMLDivElement | null>(null);
   const [category, setCategory] = useState<string>();
-  const path = location.search.split('=');
+  const [isAddInform, setIsAddInform] = useState<boolean>(false);
   const router = useRouter();
+  let path;
 
-  useEffect(() => {
-    setCategory(path[1]);
-  }, []);
+  if (typeof window !== 'undefined') {
+    path = location.search.split('=');
+  }
 
   const [
     HotHandleMouseDown,
@@ -44,8 +48,9 @@ export default function ProductDetailAddInform({ descriptionImageUrl, price }) {
     queryFn: () => getPopularCategory(category),
   });
 
-  const [isAddInform, setIsAddInform] = useState<boolean>(false);
-
+  useEffect(() => {
+    setCategory(path[1]);
+  }, []);
 
   return (
     <div className="productDetailAddInform">
