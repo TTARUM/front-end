@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import heart from '../../../public/heart.svg';
 import on_heart from '../../../public/on-heart.svg';
@@ -33,6 +33,7 @@ interface Props {
 export default function ItemBox({ data, page, number }: Props) {
   const [onHeart, setOnHeart] = useState(false);
   const { user }: any = userStore();
+  const path = location.pathname.split('/');
   const Token = user?.token;
 
   const router = useRouter();
@@ -70,7 +71,7 @@ export default function ItemBox({ data, page, number }: Props) {
               className="box"
               onClick={() => {
                 router.push(
-                  `/productsDetail/${data?.id}?category=${data?.categoryName}`,
+                  `/productsDetail/${data?.id}?category=${path[2]}`,
                 );
               }}
             >
@@ -120,7 +121,7 @@ export default function ItemBox({ data, page, number }: Props) {
             className="itemBox-area"
             onClick={() => {
               router.push(
-                `/productsDetail/${data?.id}?category=${data?.categoryName}`,
+                `/productsDetail/${data?.id}?category=${path[2]}`,
               );
             }}
           >

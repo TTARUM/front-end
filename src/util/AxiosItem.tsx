@@ -7,34 +7,38 @@ const getPopularList = () =>
 
 // 카테고리별 제품 조회
 const getCategory = (categoryData: ICategory): any => {
-  if (categoryData.category === '전체보기') {
+  if (categoryData.category === '0') {
     return AxiosConfig.get(
       `/items/list?query=&page=${categoryData?.page}&size=${categoryData?.size}`,
     );
   }
   return AxiosConfig.get(
-    `/items/category?category=${categoryData?.category}&page=${categoryData?.page}&size=${categoryData?.size}`,
+    `/items/category/${categoryData?.category}?page=${categoryData?.page}&size=${categoryData?.size}`,
   );
 };
 
+// 특정 제품의 상세정보
 const getDetail = (itemId: string) => {
   return AxiosConfig.get(`/items/${itemId}`);
 };
 
+// 가격대가 비슷한 술 조회
 const getSimilarPrice = (price: number) => {
   return AxiosConfig.get(`/items/similar-price?price=${price}`);
 };
 
+// 이름으로 검색
 const getSearchItem = (SearchData: ISearch) => {
+  console.log(SearchData);
   return AxiosConfig.get(
-    `/items/list?query=${SearchData?.decode === '' ? null : SearchData?.decode}`,
+    `/items/list?query=${SearchData?.decode === '' ? null : SearchData?.decode}&page=${SearchData?.pageParam}`,
   );
 };
 
-const getPopularCategory = (category:string)=>{
-  return AxiosConfig.get(`/items/popular-in-category?category=${category}`)
-}
-
+// 카테고리 인기상품
+const getPopularCategory = (category: string) => {
+  return AxiosConfig.get(`/items/popular-in-category/${category}`);
+};
 
 export {
   getCategory,
@@ -42,5 +46,5 @@ export {
   getDetail,
   getSimilarPrice,
   getSearchItem,
-  getPopularCategory
+  getPopularCategory,
 };

@@ -9,9 +9,9 @@ import search from '../../../public/search.svg';
 import close from '../../../public/close.svg';
 import Navigation from '@/components/Navigation/Navigation';
 import { usePathname, useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { getPopularList, getSearchItem } from '@/util/AxiosItem';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getPopularList } from '@/util/AxiosItem';
 
 export default function Search() {
   const path = usePathname();
@@ -93,7 +93,7 @@ export default function Search() {
           </div>
           <div className="search-popular">
             <p className="search-popular-title">인기 검색어</p>
-            {popularData?.itemList.map((item, index) => {
+            {popularData?.map((item, index) => {
               return (
                 <div key={item.itemId} className="search-popular-item">
                   <p className="number">{index + 1}</p>
