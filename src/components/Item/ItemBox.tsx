@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import heart from '../../../public/heart.svg';
 import on_heart from '../../../public/on-heart.svg';
@@ -31,11 +31,17 @@ interface Props {
 }
 
 export default function ItemBox({ data, page, number }: Props) {
-  const [onHeart, setOnHeart] = useState(false);
+  const [onHeart, setOnHeart] = useState<boolean>(false);
   const { user }: any = userStore();
   const Token = user?.token;
 
   const router = useRouter();
+
+  let path;
+
+  if (typeof window !== 'undefined') {
+    path = location.pathname.split('/');
+  }
 
   const returnWish = (wish: IWish) => {
     return addWishItem(wish, Token);
@@ -50,7 +56,6 @@ export default function ItemBox({ data, page, number }: Props) {
       console.log(error);
     },
   });
-
 
   const clickHeart = (id: number) => {
     addMutation.mutate({ itemId: id }, Token);
@@ -69,9 +74,7 @@ export default function ItemBox({ data, page, number }: Props) {
             <div
               className="box"
               onClick={() => {
-                router.push(
-                  `/productsDetail/${data?.id}`,
-                );
+                router.push(`/productsDetail/${data?.id}?category=${path[2]}`);
               }}
             >
               <div className="itemBox-main-img">
@@ -119,9 +122,7 @@ export default function ItemBox({ data, page, number }: Props) {
           <div
             className="itemBox-area"
             onClick={() => {
-              router.push(
-                `/productsDetail/${data?.id}`,
-              );
+              router.push(`/productsDetail/${data?.id}?category=${path[2]}`);
             }}
           >
             <div className="itemBox-img">
