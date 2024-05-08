@@ -27,7 +27,6 @@ const InputText = ({
   warning,
   maxLength,
 }: Props): JSX.Element => {
-  const [click, setClick] = useState();
 
   return (
     <>
@@ -41,7 +40,6 @@ const InputText = ({
       ) : type === 'email' ? (
         <EmailAddress
           data={data || ''}
-          setClick={setClick}
           setData={setData}
           placeholder={placeholder}
         />

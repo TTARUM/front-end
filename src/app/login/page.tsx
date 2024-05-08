@@ -82,9 +82,7 @@ export default function Login() {
           type="password"
           placeholder="비밀번호를 입력해주세요."
         />
-        {warning ? (
-          <p className="warningText">아이디와 비밀번호를 확인해주세요.</p>
-        ) : null}
+        {warning ? <p className="warningText">{warning}</p> : null}
         <MainEventButton
           onClick={handleSubmit}
           $width={345}

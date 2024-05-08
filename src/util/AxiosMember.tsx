@@ -1,9 +1,15 @@
-import { IAddress, IUser, ILogin, IAddCart } from '@/types/common';
+import { IAddress, IUser, ILogin, IWish } from '@/types/common';
 import AxiosConfig from './AxiosConfig';
 
 // 회원가입
 const showJoin = (user: IUser) => {
   return AxiosConfig.post('/members/register', user).then((res) => res);
+};
+
+// 이메일 인증
+const showMailCertification = (emailAddress: any) => {
+  console.log(emailAddress);
+  return AxiosConfig.post(`/members/register/mailSend`, emailAddress);
 };
 
 // 로그인
@@ -16,6 +22,17 @@ const showSecession = (Token: string) => {
   return AxiosConfig.delete('/members/withdraw', {
     headers: { Authorization: `Bearer ${Token}` },
   }).then((res) => res.data);
+};
+
+// 제품 찜하기
+const addWishItem = (wish: IWish, Token: string) => {
+  console.log(wish);
+  console.log(Token);
+  return AxiosConfig.post(`/members/wish-item`, wish, {
+    headers: {
+      Authorization: `Bearer ${Token}`,
+    },
+  }).then((res) => res);
 };
 
 // 프로필 이미지 업데이트
@@ -37,7 +54,7 @@ const updateImage = (allData): any => {
 const addCart = (cartValue: any, Token: string): any => {
   console.log(cartValue);
   return AxiosConfig.post(
-    '/members/carts',
+    `/members/carts`,
     { cartValue },
     { headers: { Authorization: `Bearer ${Token}` } },
   ).then((res) => res);
@@ -76,8 +93,10 @@ const deleteAddress = (addressId: number, Token: string) => {
 
 export {
   showJoin,
+  showMailCertification,
   showSecession,
   showLogin,
+  addWishItem,
   updateImage,
   addCart,
   getAddress,

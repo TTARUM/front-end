@@ -45,3 +45,12 @@ export interface ICategory {
   page: number;
   size: number;
 }
+
+export interface ISearch {
+  decode : string | number;
+  pageParam :number
+}
+
+export interface IWish {
+  itemId: number;
+}

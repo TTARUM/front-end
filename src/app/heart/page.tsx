@@ -104,12 +104,6 @@ export default function Heart() {
                 <div key={item.id} className="item-box-margin">
                   <ItemBox
                     page={'heart'}
-                    img={item.img}
-                    type={item.type}
-                    name={item.name}
-                    price={item.price}
-                    score={item.score}
-                    cart={true}
                   />
                 </div>
               );

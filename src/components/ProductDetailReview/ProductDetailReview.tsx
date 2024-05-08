@@ -28,6 +28,7 @@ export default function ProductDetailReview() {
 
   useEffect(() => {
     console.log(itemId);
+    console.log(data);
   });
 
   const 더미데이터: {

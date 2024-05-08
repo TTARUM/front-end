@@ -134,7 +134,10 @@ const DeliveryWrite = () => {
 
   return (
     <div className="deliveryAdd_container">
-      <Header title={data ? '배송지 수정' : '배송지 추가'} type="subMenu" />
+      <Header
+        title={data?.length !== 0 ? '배송지 수정' : '배송지 추가'}
+        type="subMenu"
+      />
       <div className="deliveryAdd_wrapper">
         {inputDataArr.map((inputData) => (
           <InputText
@@ -158,7 +161,7 @@ const DeliveryWrite = () => {
           $height={41}
           $color={'#ff6135'}
           onClick={() => {
-            if (data) {
+            if (data?.length !== 0) {
               updateAddressHandler();
             } else {
               addAddressHandler();

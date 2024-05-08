@@ -7,8 +7,6 @@ import Category from '@/components/CategoryItem/Category';
 import ItemBox from '@/components/Item/ItemBox';
 import { usePathname, useRouter } from 'next/navigation';
 import Navigation from '@/components/Navigation/Navigation';
-import { getPopularList } from '@/util/AxiosItem';
-import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
 // img
@@ -54,11 +52,6 @@ const testCollection: { img: string; text: string }[] = [
 export default function Main() {
   const router = useRouter();
   const path = usePathname();
-
-  const { data, status } = useQuery({
-    queryKey: ['popularList'],
-    queryFn: getPopularList,
-  });
 
   const { setUser }: any = userStore();
 
