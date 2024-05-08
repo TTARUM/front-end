@@ -18,7 +18,6 @@ type Props = {
   showBuy: boolean;
   setShow: Function;
   img: string;
-  type: string;
   id: number;
   quantity: number;
 };
@@ -27,7 +26,6 @@ export default function ProductDetailBuyInform({
   title,
   price,
   img,
-  type,
   showBuy,
   setShow,
   id,
@@ -57,7 +55,6 @@ export default function ProductDetailBuyInform({
       title,
       price: quantity * price,
       img,
-      type,
       id,
       quantity: quantity,
       showBuy, // If needed
@@ -110,7 +107,7 @@ export default function ProductDetailBuyInform({
           <p className="totalPrice">{(price * quantity).toLocaleString()}원</p>
         </div>
         <div className="btnArea">
-          <button onClick={HandleAddCart}>장비구니</button>
+          <button onClick={HandleAddCart}>장바구니</button>
           <Link
             href={{
               pathname: '/order',

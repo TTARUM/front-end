@@ -13,59 +13,12 @@ import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 import cart_logo from '../../../public/cart_logo.svg';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-
-const test: {
-  id: number;
-  img: string;
-  type: string;
-  title: string;
-  quantity: number;
-  price: number;
-}[] = [
-  {
-    id: 1,
-    img: Test,
-    type: '레드 와인',
-    title: '토트 피에몬테 로쏘',
-    quantity: 1,
-    price: 99999,
-  },
-  {
-    id: 2,
-    img: Test,
-    type: '레드 와인',
-    title: '토트 피에몬테 로쏘',
-    quantity: 1,
-    price: 45000,
-  },
-  {
-    id: 3,
-    img: Test,
-    type: '레드 와인',
-    title: '토트 피에몬테 로쏘',
-    quantity: 1,
-    price: 50000,
-  },
-  {
-    id: 4,
-    img: Test,
-    type: '레드 와인',
-    title: '토트 피에몬테 로쏘',
-    quantity: 1,
-    price: 30000,
-  },
-  {
-    id: 5,
-    img: Test,
-    type: '레드 와인',
-    title: '토트 피에몬테 로쏘',
-    quantity: 1,
-    price: 15000,
-  },
-];
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { deleteCart, getCart } from '@/util/AxiosMember';
+import userStore from '@/store/userInformation';
 
 type Props = {
-  id: number;
+  itemId: number;
   img: string;
   type: string;
   title: string;
@@ -80,9 +33,17 @@ export default function Cart() {
   const [getData, setGetData] = useState<Props[]>([]);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
+  const { user }: any = userStore();
+  const Token = user.token;
+
+  const { data } = useQuery({
+    queryKey: ['getCart'],
+    queryFn: () => getCart(Token),
+  });
+  console.log(selectedItems);
+
   const handleItemValueChange = (itemId: number, newValue: number) => {
-    console.log(itemId, '111');
-    console.log(newValue, '222');
+    console.log(itemId);
     setItemValues((prevItemValues) => ({
       ...prevItemValues,
       [itemId]: newValue,
@@ -90,7 +51,7 @@ export default function Cart() {
 
     setGetData((prevGetData) =>
       prevGetData.map((item) =>
-        item.id === itemId ? { ...item, quantity: newValue } : item,
+        item.itemId === itemId ? { ...item, quantity: newValue } : item,
       ),
     );
   };
@@ -105,8 +66,8 @@ export default function Cart() {
       setSelectedItems([]);
       setGetData([]);
     } else {
-      const allItemIds = test?.map((item) => item.id);
-      const allItem = test?.map((item) => item);
+      const allItemIds = data?.data.map((item) => item.itemId);
+      const allItem = data?.data.map((item) => item);
       setSelectedItems(allItemIds);
       setGetData(allItem);
     }
@@ -114,39 +75,45 @@ export default function Cart() {
   };
 
   const handleToggleItemSelect = (value: Props) => {
-    const isSelected = selectedItems.includes(value.id);
+    const isSelected = selectedItems.includes(value.itemId);
     let updatedSelectedItems;
 
     if (isSelected) {
-      updatedSelectedItems = selectedItems.filter((id) => id !== value.id);
+      updatedSelectedItems = selectedItems.filter((id) => id !== value.itemId);
       setGetData((prevGetData) =>
-        prevGetData.filter((item) => item.id !== value.id),
+        prevGetData.filter((item) => item.itemId !== value.itemId),
       );
     } else {
-      updatedSelectedItems = [...selectedItems, value.id];
+      updatedSelectedItems = [...selectedItems, value.itemId];
       setGetData((prevGetData) => [
         ...prevGetData,
-        { ...value, quantity: itemValues[value.id] || 1 },
+        { ...value, quantity: itemValues[value.itemId] || 1 },
       ]);
     }
 
     setSelectedItems(updatedSelectedItems);
-    setSelectAll(test.length === updatedSelectedItems.length);
+    setSelectAll(data?.data.length === updatedSelectedItems.length);
   };
-
-  console.log(getData);
 
   const calculateTotalProductAmount = () => {
     let totalAmount = 0;
 
     selectedItems.forEach((itemId) => {
-      const selectedItem = test.find((item) => item.id === itemId);
+      const selectedItem = data?.data.find((item) => item.itemId === itemId);
       if (selectedItem) {
         totalAmount += selectedItem.price * (itemValues[itemId] || 1);
       }
     });
 
     return totalAmount;
+  };
+
+  const deleteMutation = useMutation({
+    mutationFn: (itemId: any) => deleteCart({ itemIdList: itemId }, Token),
+  });
+
+  const handleDeleteCart = () => {
+    deleteMutation.mutate(selectedItems);
   };
 
   return (
@@ -174,7 +141,7 @@ export default function Cart() {
           </p>
         </div>
         <div className="line"></div>
-        {test?.length == 0 ? (
+        {data?.data.length == 0 ? (
           <div className="cart_noItem">
             <Image src={cart_logo} alt="cart_logo" />
             <p>장바구니에 담긴 상품이 없어요</p>
@@ -188,12 +155,12 @@ export default function Cart() {
             </button>
           </div>
         ) : null}
-        {test?.map((value, idx) => {
-          const itemId = value.id;
-          const quantity = itemValues[itemId] || 1;
+        {data?.data.map((value, idx) => {
+          const itemId = value.itemId;
+          const quantity = itemValues[itemId] || value.amount;
           const isSelected = selectedItems.includes(itemId);
           return (
-            <div key={value.id} className="user_itemBox">
+            <div key={value.itemId} className="user_itemBox">
               <div>
                 <div
                   className={
@@ -203,10 +170,19 @@ export default function Cart() {
                 >
                   <Image src={checked} alt="checked" />
                 </div>
-                <Image src={value.img} alt="test" />
+                <Image
+                  width={59.41}
+                  height={58}
+                  src={value.itemImageUrl}
+                  alt="test"
+                />
                 <div className="item_info">
-                  <p>{value.type}</p>
-                  <p>{value.title}</p>
+                  <p>{value.categoryName}</p>
+                  <p>
+                    {value.itemName.length > 15
+                      ? value.itemName.slice(0, 15) + '...'
+                      : value.itemName}
+                  </p>
                   <div>
                     <button
                       onClick={() =>
@@ -306,7 +282,7 @@ export default function Cart() {
             >
               취소
             </button>
-            <button>삭제</button>
+            <button onClick={handleDeleteCart}>삭제</button>
           </div>
         </div>
       </div>

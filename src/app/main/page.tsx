@@ -53,10 +53,11 @@ export default function Main() {
   const router = useRouter();
   const path = usePathname();
 
-  const { setUser }: any = userStore();
+  const { setUser } = userStore();
 
   useEffect(() => {
     const userInformation = JSON.parse(window.localStorage.getItem('token'));
+    console.log(userInformation);
     setUser(userInformation);
   }, []);
 

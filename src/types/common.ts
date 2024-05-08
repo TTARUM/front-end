@@ -48,3 +48,7 @@ export interface ISearch {
 export interface IWish {
   itemId: number;
 }
+
+export interface ICart {
+  itemIdList: number;
+}

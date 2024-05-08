@@ -115,7 +115,12 @@ export default function ProductsDetail({ params }: Props) {
         })}
       </div>
 
-      {currentInform === '상품정보' && <ProductDetailAddInform price={data?.data.price} descriptionImageUrl={data?.data.descriptionImageUrl} />}
+      {currentInform === '상품정보' && (
+        <ProductDetailAddInform
+          price={data?.data.price}
+          descriptionImageUrl={data?.data.descriptionImageUrl}
+        />
+      )}
       {currentInform === '리뷰24' && <ProductDetailReview />}
       {currentInform === '문의' && <ProductDetailAsk />}
       {currentInform === '교환/반품' && <ProductDetailChange />}
@@ -138,13 +143,12 @@ export default function ProductsDetail({ params }: Props) {
       </div>
       {show === true ? (
         <ProductDetailBuyInform
-          title={'모젤 크리스마스, 로제'}
-          img={detail}
-          price={20000}
+          title={data?.data.name}
+          img={data?.data.descriptionImageUrl}
+          price={data?.data.price}
           setShow={setShow}
           showBuy={show}
-          type={'레드 와인'}
-          id={243}
+          id={Number(params?.params)}
           quantity={1}
         />
       ) : null}
