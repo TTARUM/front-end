@@ -28,12 +28,12 @@ import event_2 from '../../../public/event_2.svg';
 import userStore from '@/store/userInformation';
 
 const testCategory: { img: string; name: string; id: number }[] = [
-  { img: RED, name: '레드 와인', id: 2 },
-  { img: WHITE, name: '화이트 와인', id: 3 },
-  { img: ROSE, name: '로제 와인', id: 4 },
-  { img: SPARKLING, name: '스파클링 와인', id: 5 },
-  { img: SNACK, name: '안주', id: 6 },
-  { img: all, name: '전체보기', id: 1 },
+  { img: RED, name: '레드 와인', id: 1 },
+  { img: WHITE, name: '화이트 와인', id: 2 },
+  { img: ROSE, name: '로제 와인', id: 3 },
+  { img: SPARKLING, name: '스파클링 와인', id: 4 },
+  { img: SNACK, name: '주정강화', id: 5 },
+  { img: all, name: '전체보기', id: 0 },
 ];
 
 const testCollection: { img: string; text: string }[] = [

@@ -34,11 +34,11 @@ export default function SearchItem({ params }) {
         decode,
         pageParam,
       }),
-    initialPageParam: 1,
+    initialPageParam: 0,
 
     getNextPageParam: (lastPage, pages) => {
       const currentPage = pages.length - 1 + 1;
-      return currentPage + 1;
+      return currentPage;
     },
   });
 
