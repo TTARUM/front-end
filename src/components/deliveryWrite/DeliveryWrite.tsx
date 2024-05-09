@@ -2,7 +2,7 @@
 import Header from '@/components/Header/Header';
 import './DeliveryWrite.scss';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import InputText from '@/components/InputText/InputText';
 import { useEffect, useState } from 'react';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
@@ -27,6 +27,11 @@ const DeliveryWrite = () => {
   const [addressDetail, setAddressDetail] = useState('');
   const [phone, setPhone] = useState('');
   const [defaultDelivery, setDefaultDelivery] = useState<boolean>(false); // 이곳에는 API 데이터가 들어가야 함.
+  let path;
+
+  if (typeof window !== 'undefined') {
+    path = location.pathname.split('/');
+  }
 
   const { data, status } = useQuery<IAddress[]>({
     queryKey: ['address', Token],
@@ -135,7 +140,7 @@ const DeliveryWrite = () => {
   return (
     <div className="deliveryAdd_container">
       <Header
-        title={data?.length !== 0 ? '배송지 수정' : '배송지 추가'}
+        title={path[2] === 'newDelivery' ? '배송지 추가' : '배송지 수정'}
         type="subMenu"
       />
       <div className="deliveryAdd_wrapper">
@@ -161,10 +166,10 @@ const DeliveryWrite = () => {
           $height={41}
           $color={'#ff6135'}
           onClick={() => {
-            if (data?.length !== 0) {
-              updateAddressHandler();
-            } else {
+            if (path[2] === 'newDelivery') {
               addAddressHandler();
+            } else {
+              updateAddressHandler();
             }
           }}
         >

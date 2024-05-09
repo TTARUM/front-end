@@ -32,15 +32,7 @@
         padding: 0px 9px;
         border: 1px solid $mainColor;
         border-radius: 30px;
-
-        &.default {
-          color: #fff;
-          background-color: $mainColor;
-        }
-        &.not_default {
-          color: $mainColor;
-          background-color: #fff;
-        }
+        color: $mainColor;
       }
 
       > button {
@@ -55,6 +47,7 @@
         color: #ffffff;
         font-weight: 300;
         font-size: 10px;
+        cursor: pointer;
       }
     }
 

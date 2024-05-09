@@ -155,7 +155,7 @@ export default function Cart() {
             </button>
           </div>
         ) : null}
-        {data?.data.map((value, idx) => {
+        {data?.data.map((value) => {
           const itemId = value.itemId;
           const quantity = itemValues[itemId] || value.amount;
           const isSelected = selectedItems.includes(itemId);
