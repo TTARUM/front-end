@@ -2,7 +2,7 @@
 import Header from '@/components/Header/Header';
 import './DeliveryWrite.scss';
 
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import InputText from '@/components/InputText/InputText';
 import { useEffect, useState } from 'react';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
@@ -27,32 +27,13 @@ const DeliveryWrite = () => {
   const [addressDetail, setAddressDetail] = useState('');
   const [phone, setPhone] = useState('');
   const [defaultDelivery, setDefaultDelivery] = useState<boolean>(false); // 이곳에는 API 데이터가 들어가야 함.
-  let path;
-
-  if (typeof window !== 'undefined') {
-    path = location.pathname.split('/');
-  }
+  const path = usePathname();
 
   const { data, status } = useQuery<IAddress[]>({
     queryKey: ['address', Token],
     queryFn: () => getAddress(Token),
     enabled: !!Token,
   });
-
-  useEffect(() => {
-    if (data && addressId) {
-      const address: IAddress = data.filter(
-        (add) => add.addressId === addressId,
-      )[0];
-
-      setAlias(address.addressAlias);
-      setReceiver(address.recipient);
-      setAddress(address.address);
-      setAddressDetail(address.detailAddress);
-      setPhone(address.phoneNumber);
-      setDefaultDelivery(address.isDefault);
-    }
-  }, [data, addressId]);
 
   const addMutation = useMutation({
     mutationFn: (newAddress: IAddress) => addAddress(newAddress, Token),
@@ -137,10 +118,26 @@ const DeliveryWrite = () => {
     },
   ];
 
+
+  useEffect(() => {
+    if (data && addressId) {
+      const address: IAddress = data.filter(
+        (add) => add.addressId === addressId,
+      )[0];
+
+      setAlias(address.addressAlias);
+      setReceiver(address.recipient);
+      setAddress(address.address);
+      setAddressDetail(address.detailAddress);
+      setPhone(address.phoneNumber);
+      setDefaultDelivery(address.isDefault);
+    }
+  }, [data, addressId]);
+
   return (
     <div className="deliveryAdd_container">
       <Header
-        title={path[2] === 'newDelivery' ? '배송지 추가' : '배송지 수정'}
+        title={path === '/order/newDelivery' ? '배송지 추가' : '배송지 수정'}
         type="subMenu"
       />
       <div className="deliveryAdd_wrapper">
@@ -166,7 +163,7 @@ const DeliveryWrite = () => {
           $height={41}
           $color={'#ff6135'}
           onClick={() => {
-            if (path[2] === 'newDelivery') {
+            if (path === '/order/newDelivery') {
               addAddressHandler();
             } else {
               updateAddressHandler();
