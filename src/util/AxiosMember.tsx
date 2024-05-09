@@ -1,4 +1,4 @@
-import { IAddress, IUser, ILogin, IWish } from '@/types/common';
+import { IAddress, IUser, ILogin, IWish, ICart } from '@/types/common';
 import AxiosConfig from './AxiosConfig';
 
 // 회원가입
@@ -26,8 +26,6 @@ const showSecession = (Token: string) => {
 
 // 제품 찜하기
 const addWishItem = (wish: IWish, Token: string) => {
-  console.log(wish);
-  console.log(Token);
   return AxiosConfig.post(`/members/wish-item`, wish, {
     headers: {
       Authorization: `Bearer ${Token}`,
@@ -37,7 +35,6 @@ const addWishItem = (wish: IWish, Token: string) => {
 
 // 프로필 이미지 업데이트
 const updateImage = (allData): any => {
-  console.log(allData);
   const formData = new FormData();
   if (allData[0]) {
     formData.append('image', allData[0]);
@@ -52,18 +49,41 @@ const updateImage = (allData): any => {
 
 // 장바구니 추가
 const addCart = (cartValue: any, Token: string): any => {
-  console.log(cartValue);
-  return AxiosConfig.post(
-    `/members/carts`,
-    { cartValue },
-    { headers: { Authorization: `Bearer ${Token}` } },
-  ).then((res) => res);
+  return AxiosConfig.post(`/members/carts`, cartValue, {
+    headers: { Authorization: `Bearer ${Token}` },
+  }).then((res) => res);
+};
+
+// 장바구니 조회
+const getCart = (Token: string) => {
+  return AxiosConfig.get(`/members/carts`, {
+    headers: {
+      Authorization: `Bearer ${Token}`,
+    },
+  }).then((res) => res);
+};
+
+// 장바구니 삭제
+const deleteCart = (itemIdList: ICart, Token: string) => {
+  const data = {
+    itemIdList: itemIdList,
+  };
+  const headers = {
+    Authorization: `Bearer ${Token}`,
+  };
+  return AxiosConfig.delete('/members/carts', {
+    data: data?.itemIdList,
+    headers: headers,
+  });
 };
 
 // 배송지 조회
 const getAddress = (Token: string) => {
   return AxiosConfig.get('/members/address', {
-    headers: { Authorization: `Bearer ${Token}` },
+    headers: {
+      Authorization: `Bearer ${Token}`,
+      'Content-Type': 'application/json',
+    },
   }).then((res) => res.data);
 };
 
@@ -72,7 +92,6 @@ const addAddress = (address: IAddress, Token: string) => {
   return AxiosConfig.post('/members/address', address, {
     headers: {
       Authorization: `Bearer ${Token}`,
-      'Content-Type': 'application/json',
     },
   }).then((res) => res);
 };
@@ -99,6 +118,8 @@ export {
   addWishItem,
   updateImage,
   addCart,
+  deleteCart,
+  getCart,
   getAddress,
   addAddress,
   updateAddress,

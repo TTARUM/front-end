@@ -41,10 +41,25 @@ export interface ICategory {
 }
 
 export interface ISearch {
-  decode : string | number;
-  pageParam :number
+  decode: string | number;
+  pageParam: number;
 }
 
 export interface IWish {
   itemId: number;
+}
+
+export interface ICart {
+  itemIdList: number;
+}
+
+export interface IOrder {
+  comment: string;
+  phoneNumber: string;
+  address: string;
+  recipient: string;
+  orderItems: {
+    itemId: number;
+    quantity: number;
+  }[];
 }
