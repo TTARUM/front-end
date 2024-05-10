@@ -93,8 +93,10 @@ const Order = () => {
 
   const orderMutation = useMutation({
     mutationFn: (orderData: IOrder) => showOrders(orderData, Token),
-    onSuccess: () => {
-      router.push(`/successOrder?item=${orderData}`);
+    onSuccess: (res) => {
+      if (res.data) {
+        router.push(`/successOrder?id=${res.data}`);
+      }
     },
   });
 

@@ -7,28 +7,39 @@ import Image from 'next/image';
 
 import rightArrow from '../../../public/rightArrow.svg';
 import Link from 'next/link';
+import moment from 'moment';
 
-type Item = {
-  id: number;
-  img: string;
-  name: string;
-  count: number;
-};
+interface Item {
+  amount: number;
+  itemId: number;
+  itemImageUrl: string;
+  itemName: string;
+  itemPrice: number;
+}
 
-type Data = {
-  date: string;
-  item?: Item[];
-};
+interface Props {
+  address: string;
+  comment: string;
+  deliveryFee: number;
+  orderDate: Date;
+  orderId: number;
+  orderItemSummaryList: Item[];
+  orderStatus: string;
+  paymentMethod: string;
+  phoneNumber: string;
+  price: number;
+  recipient: string;
+}
 
-type Props = {
-  data: Data;
+interface OrderData {
+  data: Props;
   page?: string;
-};
+}
 
-export default function OrderItem({ data, page }: Props) {
-  // console.log(data);
+export default function OrderItem({ data, page }: OrderData) {
   const route = useRouter();
-
+  const orderDate = new Date(data?.orderDate);
+  const formattedDate = moment(orderDate).format('YYYY.MM.DD');
   return (
     <div className="orderArea">
       {page === 'detail' ? (
@@ -39,26 +50,31 @@ export default function OrderItem({ data, page }: Props) {
         <Link
           href={{
             pathname: '/orderList/detail',
-            query: { detail: JSON.stringify(data) },
+            query: { id: JSON.stringify(data.orderId) },
           }}
         >
           <div className="orderTitle">
-            <p>{data?.date}</p>
+            <p>{formattedDate}</p>
             <Image src={rightArrow} alt="rightArrow" />
           </div>
         </Link>
       )}
 
-      {data?.item?.map((value) => {
+      {data?.orderItemSummaryList?.map((value) => {
         return (
-          <div key={value.id} className="orderItem">
+          <div key={value.itemId} className="orderItem">
             <div>
-              <Image src={value.img} alt="red-wine" />
+              <Image
+                width={93.22}
+                height={91}
+                src={value.itemImageUrl}
+                alt="red-wine"
+              />
             </div>
             <div>
-              <p>{value.name}</p>
+              <p>{value.itemName}</p>
               <div>
-                <p>주문수량 - {value.count}개</p>
+                <p>주문수량 - {value.amount}개</p>
               </div>
               <p
                 onClick={() => {

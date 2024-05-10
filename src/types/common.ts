@@ -63,3 +63,7 @@ export interface IOrder {
     quantity: number;
   }[];
 }
+
+export interface IPage {
+  page: number;
+}
