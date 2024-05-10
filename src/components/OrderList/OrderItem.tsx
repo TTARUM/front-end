@@ -62,7 +62,7 @@ export default function OrderItem({ data, page }: Props) {
               </div>
               <p
                 onClick={() => {
-                  route.push('/review/newReview/1');
+                  route.push('/review/newReview/');
                 }}
                 className="review"
               >

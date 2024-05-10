@@ -1,9 +1,10 @@
-import Write from '@/components/Write/Write';
+'use client';
+import ReviewWrite from '@/components/ReviewWrite/ReviewWrite';
 
 export default function NewReview({ params }) {
   return (
     <>
-      <Write page={'newReview'} params={params} />
+      <ReviewWrite isEdit={false} params={params} />
     </>
   );
 }

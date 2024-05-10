@@ -1,6 +1,6 @@
 'use client';
 
-import './Write.scss';
+import './ReviewWrite.scss';
 import React, { useRef, useState } from 'react';
 import Header from '../Header/Header';
 import Image from 'next/image';
@@ -12,14 +12,15 @@ import picture from '../../../public/productDetail-picture.svg';
 import { inquiries } from '@/util/Axiosinquiry';
 import { IInquiry } from '@/types/common';
 import userStore from '@/store/userInformation';
+import { writeReview } from '@/util/AxiosReview';
+import { useMutation } from '@tanstack/react-query';
 
-export default function Write({ params }) {
+export default function ReviewWrite({ isEdit, params }) {
   const { file, image, handleImage } = usePreview();
   const fileRef = useRef<HTMLInputElement>(null);
   const [title, setTitle, titleChange] = useInput();
   const [content, setContent] = useState<string>('');
   const [sendAsk, setSendAsk] = useState<boolean>(false);
-  const [secret, setSecret] = useState<boolean>(false);
   const { user }: any = userStore();
   const Token = user?.token;
 
@@ -39,21 +40,24 @@ export default function Write({ params }) {
 
   const sendWriteAsk = (bool: boolean) => {
     if (bool) {
-      const inquiry: IInquiry = {
+      const review = {
+        orderId: '',
+        itemId: '',
         title,
         content,
-        itemId: params.params,
-        secret,
+        rating: 4,
       };
 
-      inquiries(inquiry, image, Token);
+      useMutation({
+        mutationFn: () => writeReview(file, review, Token),
+      });
     }
     setSendAsk(bool);
   };
 
   return (
     <div className="WriteAsk">
-      <Header type="subMenu" title={'문의하기'} />
+      <Header type="subMenu" title={isEdit ? '리뷰 수정' : '리뷰 작성'} />
       <div className="WriteAsk-content">
         <input
           onChange={titleChange}
@@ -64,7 +68,7 @@ export default function Write({ params }) {
           <textarea
             maxLength={1000}
             onChange={contentChange}
-            placeholder={'여기에 문의 내용을 작성해주세요.'}
+            placeholder={'여기에 사용후기를 작성해주세요.'}
           />
           <p>{content.length}/1000</p>
         </div>
@@ -94,9 +98,6 @@ export default function Write({ params }) {
             })}
           </div>
         </div>
-        <div className="secret-writeBox">
-          <Checkbox title="비밀글로 작성" data={secret} setData={setSecret} />
-        </div>
         <footer className="footer">
           <button onClick={() => sendWriteAsk(true)}>작성하기</button>
         </footer>
@@ -104,7 +105,9 @@ export default function Write({ params }) {
       {sendAsk && (
         <div className="sendCheckBox">
           <div>
-            <h1>문의작성이 완료되었어요!</h1>
+            <h1>
+              {isEdit ? '리뷰가 수정되었습니다!' : '리뷰가 작성되었습니다!'}
+            </h1>
             <button onClick={() => sendWriteAsk(false)}>확인</button>
           </div>
         </div>

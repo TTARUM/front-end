@@ -1,9 +1,9 @@
-import Write from '@/components/Write/Write';
+import ReviewWrite from '@/components/ReviewWrite/ReviewWrite';
 
 export default function EditReview({ params }) {
   return (
     <>
-      <Write page={'editReview'} params={params} />
+      <ReviewWrite isEdit={true} params={params} />
     </>
   );
 }

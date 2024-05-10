@@ -1,8 +1,12 @@
 import AxiosConfig from './AxiosConfig';
-import { IReview } from '@/types/common';
+import { IRequestCreateReview, IRequestUpdateReview } from '@/types/common';
 
 // 리뷰 업데이트
-const updateReview = (reviewId: number, review: IReview, Token: string) => {
+const updateReview = (
+  reviewId: number,
+  review: IRequestUpdateReview,
+  Token: string,
+) => {
   return AxiosConfig.put(`/reviews/update/${reviewId}`, review, {
     headers: {
       Authorization: `Bearer ${Token}`,
@@ -38,7 +42,11 @@ const readReview = (
 };
 
 // 리뷰 작성
-const writeReview = (images: string[], review: IReview, Token: string) => {
+const writeReview = (
+  images: string[],
+  review: IRequestCreateReview,
+  Token: string,
+) => {
   return AxiosConfig.post(
     '/reviews',
     { images, review },
