@@ -2,7 +2,7 @@
 
 import './order.scss';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '@/components/Header/Header';
 import Image from 'next/image';
 
@@ -15,20 +15,20 @@ import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 import { useRouter } from 'next/navigation';
 import PersonalInformation from '@/components/AgreementPage/PersonalInformation';
 import TermsInformation from '@/components/AgreementPage/TermsInformation';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { showOrders } from '@/util/AxiosOrder';
+import userStore from '@/store/userInformation';
+import { getAddress } from '@/util/AxiosMember';
+import userAddress from '@/store/userAddress';
+import { IOrder } from '@/types/common';
 
 type queryData = {
-  id: number;
-  img: {
-    src: string;
-    height: number;
-    width: number;
-    blurHeight: number;
-    blurWidth: number;
-  };
-  quantity: number;
+  itemId: number;
+  itemImageUrl: string;
+  amount: number;
   price: number;
-  title: string;
-  type: string;
+  itemName: string;
+  categoryName: string;
 }[];
 
 type coupon = {
@@ -49,12 +49,27 @@ const Order = () => {
   const [showDeliveryPopup, setShowDeliveryPopup] = useState<boolean>(false);
   const [showCouponPopup, setShowCouponPopup] = useState<boolean>(false);
   const [getCoupon, setGetCoupon] = useState<coupon>([]);
+  const [phone, setPhone] = useState<string>('');
+  const [deliveryAddress, setDeliveryAddress] = useState<string>('');
+  const [recipient, setRecipient] = useState<string>('');
   const [showPersonalInformation, setShowPersonalInformation] =
     useState<boolean>(false);
   const [showTermsInformation, setShowTermsInformation] =
     useState<boolean>(false);
 
-  const payment = getUrl?.map((value, indx) => value.price);
+  const { user }: any = userStore();
+  const { address }: any = userAddress();
+  const Token = user?.token;
+  const { data, isLoading } = useQuery({
+    queryKey: ['getAddress'],
+    queryFn: () => getAddress(Token),
+  });
+
+  const payment = getUrl?.map((value) => value.price);
+  const items = getUrl?.map((value) => ({
+    itemId: value.itemId,
+    quantity: value.amount,
+  }));
   const totalAmount = payment?.reduce(function add(sum, currValue) {
     return sum + currValue;
   }, 0);
@@ -65,8 +80,41 @@ const Order = () => {
     setDeliveryRequest(e.target.value);
   };
 
+  const orderData = {
+    comment: selectRequest === '기타' ? deliveryRequest : selectRequest,
+    phoneNumber: address.length === 0 ? phone : address.phoneNumber,
+    address:
+      address.length === 0
+        ? deliveryAddress
+        : `${address.address}, ${address.detailAddress}`,
+    recipient: address.length === 0 ? recipient : address.recipient,
+    orderItems: items,
+  };
+
+  const orderMutation = useMutation({
+    mutationFn: (orderData: IOrder) => showOrders(orderData, Token),
+    onSuccess: () => {
+      router.push(`/successOrder?item=${orderData}`);
+    },
+  });
+
+  const handleOrder = () => {
+    orderMutation.mutate(orderData);
+  };
+
   useEffect(() => {
-    // URL에서 쿼리 문자열 가져온 후 item을 JSON 파싱하여 JavaScript 객체로 변환
+    if (isLoading === false) {
+      data?.map((value) => {
+        if (value.isDefault) {
+          setPhone(value.phoneNumber);
+          setDeliveryAddress(`${value.address}, ${value.detailAddress}`);
+          setRecipient(value.recipient);
+        }
+      });
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
     const queryString = window.location.search;
 
     const urlParams = new URLSearchParams(queryString);
@@ -97,12 +145,42 @@ const Order = () => {
       <div className="order_wrap">
         {/* 배송 */}
         <div className="delivery_address">
-          <div>
-            <h1>우리집</h1>
-            <p>기본 배송지</p>
-          </div>
-          <p>홍길동 ∙ 010-0000-0000</p>
-          <p>서울 성동구 뚝섬로 273, 1001호 [04770]</p>
+          {address.length === 0 ? (
+            <>
+              {data?.map((value) => {
+                return (
+                  <React.Fragment key={value.addressId}>
+                    {value.isDefault && (
+                      <>
+                        <div>
+                          <h1>{value.addressAlias}</h1>
+                          <p>기본 배송지</p>
+                        </div>
+                        <p>
+                          {value.recipient} ∙ {value.phoneNumber}
+                        </p>
+                        <p>
+                          {value.address}, {value.detailAddress}
+                        </p>
+                      </>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </>
+          ) : (
+            <>
+              <div>
+                <h1>{address.addressAlias}</h1>
+                {address.isDefault && <p>기본 배송지</p>}
+              </div>
+              <p>
+                {address.recipient} ∙ {address.phoneNumber}
+              </p>
+              <p>{address.address}</p>
+            </>
+          )}
+
           <div
             className="requestOption"
             onClick={() => {
@@ -159,11 +237,11 @@ const Order = () => {
           {showOrderedItem == true
             ? getUrl?.map((value, index) => {
                 return (
-                  <div className="ordered_item">
-                    <p>{value.type}</p>
+                  <div key={value.itemId} className="ordered_item">
+                    <p>{value.categoryName}</p>
                     <div>
-                      <p>{value.title}</p>
-                      <p>수량 {value.quantity}개</p>
+                      <p>{value.itemName}</p>
+                      <p>수량 {value.amount}개</p>
                     </div>
                   </div>
                 );
@@ -269,7 +347,7 @@ const Order = () => {
             <p
               onClick={() => {
                 setShowPersonalInformation(true);
-                window.scrollTo(0,0);
+                window.scrollTo(0, 0);
               }}
             >
               보기
@@ -289,13 +367,14 @@ const Order = () => {
             <p
               onClick={() => {
                 setShowTermsInformation(true);
-                window.scrollTo(0,0);
+                window.scrollTo(0, 0);
               }}
             >
               보기
             </p>
           </div>
           <MainEventButton
+            onClick={handleOrder}
             disabled={
               agreeTreatment == false || agreeCollection == false ? true : false
             }

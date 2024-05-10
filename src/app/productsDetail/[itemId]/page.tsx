@@ -143,13 +143,12 @@ export default function ProductsDetail({ params }: Props) {
       </div>
       {show === true ? (
         <ProductDetailBuyInform
-          title={'모젤 크리스마스, 로제'}
-          img={detail}
-          price={20000}
+          title={data?.data.name}
+          img={data?.data.descriptionImageUrl}
+          price={data?.data.price}
           setShow={setShow}
           showBuy={show}
-          type={'레드 와인'}
-          id={243}
+          id={Number(params?.params)}
           quantity={1}
         />
       ) : null}

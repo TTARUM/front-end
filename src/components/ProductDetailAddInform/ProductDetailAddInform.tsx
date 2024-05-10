@@ -24,7 +24,6 @@ export default function ProductDetailAddInform({
     path = location.search.split('=');
   }
 
-
   const [
     HotHandleMouseDown,
     HotHandleMouseMove,
@@ -46,13 +45,8 @@ export default function ProductDetailAddInform({
 
   const { data: popularCategory } = useQuery({
     queryKey: ['popularCategory'],
-    queryFn: () => getPopularCategory(category),
+    queryFn: () => getPopularCategory(path[1]),
   });
-
-
-  useEffect(() => {
-    setCategory(path[1]);
-  }, []);
 
   return (
     <div className="productDetailAddInform">

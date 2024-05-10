@@ -29,7 +29,6 @@ const getSimilarPrice = (price: number) => {
 
 // 이름으로 검색
 const getSearchItem = (SearchData: ISearch) => {
-  console.log(SearchData);
   return AxiosConfig.get(
     `/items/list?query=${SearchData?.decode === '' ? null : SearchData?.decode}&page=${SearchData?.pageParam}`,
   );

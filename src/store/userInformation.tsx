@@ -6,10 +6,10 @@ const userStore = create(
   persist<userState>(
     (set) => ({
       user: [],
-      setUser: (user) => set({ user: user }),
+      setUser: (user) => set({ user }),
     }),
     {
-      name: 'userIdStorage',
+      name: 'ttarum',
     },
   ),
 );

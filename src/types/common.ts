@@ -60,3 +60,18 @@ export interface ISearch {
 export interface IWish {
   itemId: number;
 }
+
+export interface ICart {
+  itemIdList: number;
+}
+
+export interface IOrder {
+  comment: string;
+  phoneNumber: string;
+  address: string;
+  recipient: string;
+  orderItems: {
+    itemId: number;
+    quantity: number;
+  }[];
+}

@@ -12,6 +12,7 @@ import { deleteAddress, getAddress } from '@/util/AxiosMember';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { IAddress } from '@/types/common';
 import userStore from '@/store/userInformation';
+import userAddress from '@/store/userAddress';
 
 export default function Delivery() {
   const router = useRouter();
@@ -21,6 +22,10 @@ export default function Delivery() {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const { user }: any = userStore();
+<<<<<<< HEAD
+=======
+  const { setAddress }: any = userAddress();
+>>>>>>> c0b5aa4806df45e5be106a899dd2b4ac766fee14
   const Token = user?.token;
 
   const { data, status } = useQuery({
@@ -49,6 +54,13 @@ export default function Delivery() {
     }
   };
 
+  const handleChoiceAddress = (data) => {
+    if (data) {
+      setAddress(data);
+      history.back();
+    }
+  };
+
   return (
     <div className="delivery_container">
       <Header title="배송지 목록" type="subMenu" />
@@ -57,12 +69,11 @@ export default function Delivery() {
           <div key={address.addressId} className="delivery_item">
             <div className="delivery_text">
               <p>{address.addressAlias}</p>
-              <p
-                className={`is_default ${address.isDefault ? 'default' : 'not_default'}`}
-              >
-                기본 배송지
-              </p>
-              <button>선택</button>
+              {address.isDefault ? (
+                <p className={`is_default`}>기본 배송지</p>
+              ) : null}
+
+              <button onClick={() => handleChoiceAddress(address)}>선택</button>
             </div>
             <p className="delivery_userInformation">
               {address.recipient} ∙ {address.phoneNumber}
