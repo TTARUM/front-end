@@ -26,11 +26,6 @@ export default function ProductDetailReview() {
     enabled: !!Token,
   });
 
-  useEffect(() => {
-    console.log(itemId);
-    console.log(data);
-  }, [data]);
-
   const dropdownRef = useRef(null);
   const [isReviewToggle, setIsReviewToggle] = useState<boolean>(false);
   const [currentToggle, setCurrentToggle] = useState<string>('최근등록순');

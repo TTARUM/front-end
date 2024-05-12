@@ -22,10 +22,7 @@ export default function Delivery() {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const { user }: any = userStore();
-<<<<<<< HEAD
-=======
   const { setAddress }: any = userAddress();
->>>>>>> c0b5aa4806df45e5be106a899dd2b4ac766fee14
   const Token = user?.token;
 
   const { data, status } = useQuery({

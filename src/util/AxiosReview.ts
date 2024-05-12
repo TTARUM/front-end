@@ -41,6 +41,15 @@ const readReview = (
   ).then((res) => res.data);
 };
 
+// 특정 회원 리뷰 조회
+const readMyReview = (page: number, size: number, Token: string) => {
+  return AxiosConfig.get(`/reviews/member?page=${page}&size=${size}`, {
+    headers: {
+      Authorization: `Bearer ${Token}`,
+    },
+  }).then((res) => res.data);
+};
+
 // 리뷰 작성
 const writeReview = (
   images: string[],
@@ -74,4 +83,5 @@ export {
   readReview,
   writeReview,
   updateDataReview,
+  readMyReview,
 };

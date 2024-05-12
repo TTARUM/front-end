@@ -1,7 +1,7 @@
 'use client';
 
 import './ReviewWrite.scss';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Header from '../Header/Header';
 import Image from 'next/image';
 import useInput from '@/hooks/useInput';
@@ -10,12 +10,20 @@ import Checkbox from '../Checkbox/Checkbox';
 
 import picture from '../../../public/productDetail-picture.svg';
 import { inquiries } from '@/util/Axiosinquiry';
-import { IInquiry } from '@/types/common';
+import { IInquiry, IRequestCreateReview } from '@/types/common';
 import userStore from '@/store/userInformation';
 import { writeReview } from '@/util/AxiosReview';
 import { useMutation } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
+
+type queryData = {
+  itemId: number;
+  orderId: number;
+};
 
 export default function ReviewWrite({ isEdit, params }) {
+  const [itemId, setItemId] = useState<number>(null);
+  const [orderId, setOrderId] = useState<number>(null);
   const { file, image, handleImage } = usePreview();
   const fileRef = useRef<HTMLInputElement>(null);
   const [title, setTitle, titleChange] = useInput();
@@ -23,6 +31,19 @@ export default function ReviewWrite({ isEdit, params }) {
   const [sendAsk, setSendAsk] = useState<boolean>(false);
   const { user }: any = userStore();
   const Token = user?.token;
+
+  useEffect(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    setItemId(Number(urlParams.get('itemId')));
+    setOrderId(Number(urlParams.get('orderId')));
+  }, []);
+
+  const createReview = useMutation({
+    mutationFn: (review: IRequestCreateReview) =>
+      writeReview(image, review, Token),
+  });
 
   const contentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length > 1000) return;
@@ -40,17 +61,15 @@ export default function ReviewWrite({ isEdit, params }) {
 
   const sendWriteAsk = (bool: boolean) => {
     if (bool) {
-      const review = {
-        orderId: '',
-        itemId: '',
+      const review: IRequestCreateReview = {
+        orderId: Number(orderId),
+        itemId: Number(itemId),
         title,
         content,
         rating: 4,
       };
 
-      useMutation({
-        mutationFn: () => writeReview(file, review, Token),
-      });
+      createReview.mutate(review);
     }
     setSendAsk(bool);
   };
