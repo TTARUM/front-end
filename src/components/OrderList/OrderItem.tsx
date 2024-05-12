@@ -37,6 +37,7 @@ interface OrderData {
 }
 
 export default function OrderItem({ data, page }: OrderData) {
+  console.log(data);
   const route = useRouter();
   const orderDate = new Date(data?.orderDate);
   const formattedDate = moment(orderDate).format('YYYY.MM.DD');
@@ -79,7 +80,7 @@ export default function OrderItem({ data, page }: OrderData) {
               <p
                 onClick={() => {
                   route.push(
-                    `/review/newReview?itemId=${value.id}&orderId=${data.id}`,
+                    `/review/newReview?itemId=${value.itemId}&orderId=${data.orderId}`,
                   );
                 }}
                 className="review"
