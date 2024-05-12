@@ -5,29 +5,28 @@ import RedWine from '../../../public/red-wine.svg';
 
 import Header from '@/components/Header/Header';
 import { useRouter } from 'next/navigation';
-
-const sampleData = [
-  {
-    id: '1',
-    date: '2024.00.00',
-    item_name: '토토 피에몬테 로쏘',
-    text: '와인이 너무 좋아요 즐겁고 빨개요',
-  },
-  {
-    id: '2',
-    date: '2024.01.01',
-    item_name: '토토 피에몬테 로쏘2',
-    text: '와인이 너무 좋아요 즐겁고 빨개요22',
-  },
-];
+import { useQuery } from '@tanstack/react-query';
+import { readMyReview } from '@/util/AxiosReview';
+import userStore from '@/store/userInformation';
+import { useState } from 'react';
 
 const Review = () => {
   const route = useRouter();
+  const { user }: any = userStore();
+  const Token = user?.token;
+  const [page, setPage] = useState<number>(0);
+  const [size, setSize] = useState<number>(10);
+
+  const { data, status } = useQuery({
+    queryKey: ['review', Token],
+    queryFn: () => readMyReview(page, size, Token),
+    enabled: !!Token,
+  });
 
   return (
     <>
       <Header title="나의 리뷰" type="subMenu" />
-      {sampleData.map((review) => (
+      {data?.map((review) => (
         <div key={review.id}>
           <div className="review_wrapper">
             <div className="review_header">

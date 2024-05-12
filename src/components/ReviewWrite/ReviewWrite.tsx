@@ -1,7 +1,7 @@
 'use client';
 
-import './Write.scss';
-import React, { useRef, useState } from 'react';
+import './ReviewWrite.scss';
+import React, { useEffect, useRef, useState } from 'react';
 import Header from '../Header/Header';
 import Image from 'next/image';
 import useInput from '@/hooks/useInput';
@@ -10,18 +10,40 @@ import Checkbox from '../Checkbox/Checkbox';
 
 import picture from '../../../public/productDetail-picture.svg';
 import { inquiries } from '@/util/Axiosinquiry';
-import { IInquiry } from '@/types/common';
+import { IInquiry, IRequestCreateReview } from '@/types/common';
 import userStore from '@/store/userInformation';
+import { writeReview } from '@/util/AxiosReview';
+import { useMutation } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
 
-export default function Write({ params }) {
+type queryData = {
+  itemId: number;
+  orderId: number;
+};
+
+export default function ReviewWrite({ isEdit, params }) {
+  const [itemId, setItemId] = useState<number>(null);
+  const [orderId, setOrderId] = useState<number>(null);
   const { file, image, handleImage } = usePreview();
   const fileRef = useRef<HTMLInputElement>(null);
   const [title, setTitle, titleChange] = useInput();
   const [content, setContent] = useState<string>('');
   const [sendAsk, setSendAsk] = useState<boolean>(false);
-  const [secret, setSecret] = useState<boolean>(false);
   const { user }: any = userStore();
   const Token = user?.token;
+
+  useEffect(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    setItemId(Number(urlParams.get('itemId')));
+    setOrderId(Number(urlParams.get('orderId')));
+  }, []);
+
+  const createReview = useMutation({
+    mutationFn: (review: IRequestCreateReview) =>
+      writeReview(image, review, Token),
+  });
 
   const contentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length > 1000) return;
@@ -39,21 +61,22 @@ export default function Write({ params }) {
 
   const sendWriteAsk = (bool: boolean) => {
     if (bool) {
-      const inquiry: IInquiry = {
+      const review: IRequestCreateReview = {
+        orderId: Number(orderId),
+        itemId: Number(itemId),
         title,
         content,
-        itemId: params.params,
-        secret,
+        rating: 4,
       };
 
-      inquiries(inquiry, image, Token);
+      createReview.mutate(review);
     }
     setSendAsk(bool);
   };
 
   return (
     <div className="WriteAsk">
-      <Header type="subMenu" title={'문의하기'} />
+      <Header type="subMenu" title={isEdit ? '리뷰 수정' : '리뷰 작성'} />
       <div className="WriteAsk-content">
         <input
           onChange={titleChange}
@@ -64,7 +87,7 @@ export default function Write({ params }) {
           <textarea
             maxLength={1000}
             onChange={contentChange}
-            placeholder={'여기에 문의 내용을 작성해주세요.'}
+            placeholder={'여기에 사용후기를 작성해주세요.'}
           />
           <p>{content.length}/1000</p>
         </div>
@@ -94,9 +117,6 @@ export default function Write({ params }) {
             })}
           </div>
         </div>
-        <div className="secret-writeBox">
-          <Checkbox title="비밀글로 작성" data={secret} setData={setSecret} />
-        </div>
         <footer className="footer">
           <button onClick={() => sendWriteAsk(true)}>작성하기</button>
         </footer>
@@ -104,7 +124,9 @@ export default function Write({ params }) {
       {sendAsk && (
         <div className="sendCheckBox">
           <div>
-            <h1>문의작성이 완료되었어요!</h1>
+            <h1>
+              {isEdit ? '리뷰가 수정되었습니다!' : '리뷰가 작성되었습니다!'}
+            </h1>
             <button onClick={() => sendWriteAsk(false)}>확인</button>
           </div>
         </div>

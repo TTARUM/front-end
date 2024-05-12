@@ -78,7 +78,9 @@ export default function OrderItem({ data, page }: OrderData) {
               </div>
               <p
                 onClick={() => {
-                  route.push('/review/newReview/1');
+                  route.push(
+                    `/review/newReview?itemId=${value.id}&orderId=${data.id}`,
+                  );
                 }}
                 className="review"
               >
