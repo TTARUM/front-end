@@ -53,6 +53,7 @@
                 border: none;
                 border-radius: 30px;
                 margin-left: 15px;
+                cursor: pointer;
 
                 &:last-of-type {
                     background: #ffffff;
@@ -153,7 +154,8 @@
                 font-size: 400;
             }
         }
-        >.total_payment{
+
+        >.total_payment {
             display: flex;
             justify-content: space-between;
             align-items: center;
