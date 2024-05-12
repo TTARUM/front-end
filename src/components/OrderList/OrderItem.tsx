@@ -16,6 +16,7 @@ type Item = {
 };
 
 type Data = {
+  id: number;
   date: string;
   item?: Item[];
 };
@@ -62,7 +63,9 @@ export default function OrderItem({ data, page }: Props) {
               </div>
               <p
                 onClick={() => {
-                  route.push('/review/newReview/1');
+                  route.push(
+                    `/review/newReview?itemId=${value.id}&orderId=${data.id}`,
+                  );
                 }}
                 className="review"
               >

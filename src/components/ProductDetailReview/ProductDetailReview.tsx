@@ -8,75 +8,23 @@ import downright_triangle from '../../../public/downright-triangle.svg';
 import reviewScore from '../../../public/score-star.svg';
 import fillReviewScore from '../../../public/fillStar.svg';
 import Image from 'next/image';
+import { useQuery } from '@tanstack/react-query';
+import { readReview } from '@/util/AxiosReview';
+import userStore from '@/store/userInformation';
+import { useParams } from 'next/navigation';
 
 export default function ProductDetailReview() {
-  const 더미데이터: {
-    id: number;
-    img: string;
-    name: string;
-    comment: string;
-    commentImg: string;
-    profile: string;
-    nickname: string;
-    date: string;
-    score: number[];
-  }[] = [
-    {
-      id: 1,
-      img: reviewPicture2,
-      name: '이름',
-      profile: reviewPicture2,
-      comment: '빠른 배송 감사합니다',
-      commentImg: null,
-      nickname: '닉네임',
-      date: '2023.09.00',
-      score: [1, 1, 1, 1, 0],
-    },
-    {
-      id: 2,
-      img: reviewPicture,
-      name: '이름2',
-      profile: reviewPicture,
-      comment: '빠른 배송 감사합니다',
-      commentImg: reviewPicture,
-      nickname: '닉네임2',
-      date: '2023.09.01',
-      score: [1, 1, 0, 0, 0],
-    },
-    {
-      id: 3,
-      img: reviewPicture3,
-      name: '이름3',
-      profile: reviewPicture3,
-      comment: '빠른 배송 감사합니다',
-      commentImg: reviewPicture,
-      nickname: '닉네임3',
-      date: '2023.09.02',
-      score: [1, 1, 1, 1, 0],
-    },
-    {
-      id: 4,
-      img: reviewPicture,
-      name: '이름4',
-      profile: reviewPicture,
-      comment: '빠른 배송 감사합니다',
-      commentImg: null,
-      nickname: '닉네임4',
-      date: '2023.09.03',
-      score: [1, 1, 0, 0, 0],
-    },
-    {
-      id: 5,
-      img: reviewPicture2,
-      name: '이름5',
-      profile: reviewPicture2,
-      comment: '빠른 배송 감사합니다',
-      commentImg: null,
-      nickname: '닉네임5',
-      date: '2023.09.04',
-      score: [0, 0, 0, 0, 0],
-    },
-  ];
+  const { user }: any = userStore();
+  const Token = user?.token;
+  const { itemId } = useParams();
+  const [page, setPage] = useState<number>(1);
+  const [size, setSize] = useState<number>(10);
+
+  const { data, status } = useQuery({
+    queryKey: ['review', Token],
+    queryFn: () => readReview(Number(itemId), Token, page, size),
+    enabled: !!Token,
+  });
 
   const dropdownRef = useRef(null);
   const [isReviewToggle, setIsReviewToggle] = useState<boolean>(false);
@@ -114,8 +62,8 @@ export default function ProductDetailReview() {
         <div>
           <h1>사진 후기</h1>
           <div>
-            {더미데이터.length > 4
-              ? 더미데이터.map((item, index) => {
+            {data?.length > 4
+              ? data?.map((item, index) => {
                   if (index >= 4) return;
                   if (index === 3) {
                     return (
@@ -129,7 +77,7 @@ export default function ProductDetailReview() {
                     <Image key={item.id} src={item.img} alt="review-picture" />
                   );
                 })
-              : 더미데이터.map((item) => {
+              : data?.map((item) => {
                   return (
                     <Image key={item.id} src={item.img} alt="review-picture" />
                   );
@@ -140,7 +88,6 @@ export default function ProductDetailReview() {
 
       <div className="ProductDetailReview-comments">
         <div className="length-sort">
-          <span>총 {더미데이터.length}개</span>
           <div
             className="sort"
             onClick={() => setIsReviewToggle((pre) => !pre)}
@@ -173,7 +120,7 @@ export default function ProductDetailReview() {
             </div>
           )}
         </div>
-        {더미데이터.map((item) => {
+        {data?.map((item) => {
           return (
             <div key={item.id} className="ProductDetailReview-comment">
               <div>

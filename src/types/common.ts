@@ -34,6 +34,18 @@ export interface IAddress {
   isDefault: boolean;
 }
 
+export interface IRequestCreateReview {
+  orderId: number;
+  itemId: number;
+  title: string;
+  content: string;
+  rating: number;
+}
+
+export interface IRequestUpdateReview extends IRequestCreateReview {
+  id: number;
+}
+
 export interface ICategory {
   category: string;
   page: number;
