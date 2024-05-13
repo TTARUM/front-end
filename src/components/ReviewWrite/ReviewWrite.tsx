@@ -4,22 +4,17 @@ import './ReviewWrite.scss';
 import React, { useEffect, useRef, useState } from 'react';
 import Header from '../Header/Header';
 import Image from 'next/image';
+import emptyStar from '../../../public/empty_star.svg';
+import fillStar from '../../../public/fill_star.svg';
 import useInput from '@/hooks/useInput';
 import usePreview from '@/hooks/usePreview';
 import Checkbox from '../Checkbox/Checkbox';
 
 import picture from '../../../public/productDetail-picture.svg';
-import { inquiries } from '@/util/Axiosinquiry';
-import { IInquiry, IRequestCreateReview } from '@/types/common';
+import { IRequestCreateReview } from '@/types/common';
 import userStore from '@/store/userInformation';
 import { writeReview } from '@/util/AxiosReview';
 import { useMutation } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
-
-type queryData = {
-  itemId: number;
-  orderId: number;
-};
 
 export default function ReviewWrite({ isEdit, params }) {
   const [itemId, setItemId] = useState<number>(null);
@@ -29,6 +24,8 @@ export default function ReviewWrite({ isEdit, params }) {
   const [title, setTitle, titleChange] = useInput();
   const [content, setContent] = useState<string>('');
   const [sendAsk, setSendAsk] = useState<boolean>(false);
+  const [star, setStar] = useState<number>(0);
+  const [rating, setRating] = useState<number>(star);
   const { user }: any = userStore();
   const Token = user?.token;
 
@@ -74,6 +71,20 @@ export default function ReviewWrite({ isEdit, params }) {
     setSendAsk(bool);
   };
 
+  const handleStarHover = (idx: number) => {
+    setStar(idx + 1);
+  };
+
+  const handleStarLeave = () => {
+    if (star !== rating) {
+      setStar(rating);
+    }
+  };
+
+  const handleStarClick = () => {
+    setRating(star);
+  };
+
   return (
     <div className="WriteAsk">
       <Header type="subMenu" title={isEdit ? '리뷰 수정' : '리뷰 작성'} />
@@ -89,7 +100,34 @@ export default function ReviewWrite({ isEdit, params }) {
             onChange={contentChange}
             placeholder={'여기에 사용후기를 작성해주세요.'}
           />
-          <p>{content.length}/1000</p>
+          <div className="rating_box">
+            <div>
+              {Array(5)
+                .fill(0)
+                .map((i, idx) => (
+                  <div key={idx}>
+                    {idx + 1 <= star ? (
+                      <Image
+                        src={fillStar}
+                        alt="fill_star"
+                        onMouseEnter={() => handleStarHover(idx)}
+                        onMouseLeave={handleStarLeave}
+                        onClick={handleStarClick}
+                      />
+                    ) : (
+                      <Image
+                        src={emptyStar}
+                        alt="empty_star"
+                        onMouseEnter={() => handleStarHover(idx)}
+                        onMouseLeave={handleStarLeave}
+                        onClick={handleStarClick}
+                      />
+                    )}
+                  </div>
+                ))}
+            </div>
+            <p>{content.length}/1000</p>
+          </div>
         </div>
         <div>
           <div className="ask-images">

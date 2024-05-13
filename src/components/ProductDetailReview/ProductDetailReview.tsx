@@ -131,15 +131,13 @@ export default function ProductDetailReview() {
               </div>
               <div>
                 <div className="comment-score">
-                  <div>
-                    {item.score.map((star) => {
-                      if (star === 1) {
-                        return <Image src={fillReviewScore} alt="score" />;
-                      } else {
-                        return <Image src={reviewScore} alt="score" />;
-                      }
-                    })}
-                  </div>
+                  {item.score.map((star) => {
+                    if (star === 1) {
+                      return <Image src={fillReviewScore} alt="score" />;
+                    } else {
+                      return <Image src={reviewScore} alt="score" />;
+                    }
+                  })}
                 </div>
                 <div className="comment-review">
                   {item.comment}
