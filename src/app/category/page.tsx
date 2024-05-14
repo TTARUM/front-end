@@ -35,7 +35,7 @@ export default function Category() {
                 key={item.id}
                 className="category-itemBox"
                 onClick={() => {
-                  router.push(`/products/${item.name}`);
+                  router.push(`/products/${item.id}`);
                 }}
               >
                 <Image src={item.img} alt={item.name} />

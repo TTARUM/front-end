@@ -40,7 +40,6 @@ export default function Cart() {
     queryKey: ['getCart'],
     queryFn: () => getCart(Token),
   });
-  console.log(selectedItems);
 
   const handleItemValueChange = (itemId: number, newValue: number) => {
     console.log(itemId);
@@ -110,6 +109,11 @@ export default function Cart() {
 
   const deleteMutation = useMutation({
     mutationFn: (itemId: any) => deleteCart({ itemIdList: itemId }, Token),
+    onSuccess: (res) => {
+      if (res.status === 200) {
+        window.location.reload();
+      }
+    },
   });
 
   const handleDeleteCart = () => {
@@ -148,7 +152,7 @@ export default function Cart() {
             <p>원하는 상품을 담아보세요!</p>
             <button
               onClick={() => {
-                router.push('/products/1');
+                router.push('/category');
               }}
             >
               상품 보러 가기
@@ -226,7 +230,11 @@ export default function Cart() {
           <div>
             <p>배송비</p>
             <p>
-              {calculateTotalProductAmount() >= 100000 ? `무료` : `3,000 원`}{' '}
+              {data?.data.length === 0
+                ? '0 원'
+                : calculateTotalProductAmount() >= 100000
+                  ? `무료`
+                  : `3,000 원 `}
             </p>
           </div>
         </div>
@@ -234,9 +242,11 @@ export default function Cart() {
         <div className="total_amount">
           <p>결제 예정 금액</p>
           <p>
-            {calculateTotalProductAmount() >= 100000
-              ? calculateTotalProductAmount().toLocaleString()
-              : (calculateTotalProductAmount() + 3000).toLocaleString()}{' '}
+            {data?.data.length === 0
+              ? '0 '
+              : calculateTotalProductAmount() >= 100000
+                ? calculateTotalProductAmount().toLocaleString()
+                : (calculateTotalProductAmount() + 3000).toLocaleString()}
             원
           </p>
         </div>

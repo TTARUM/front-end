@@ -84,6 +84,14 @@
                     justify-content: center;
                     align-items: center;
                 }
+
+                button {
+                    padding: 10px;
+                    border: 1px solid $mainColor;
+                    background: none;
+                    color: $mainColor;
+                    cursor: pointer;
+                }
             }
 
             &:last-of-type {
@@ -193,15 +201,6 @@
                 margin-bottom: 0px;
             }
 
-            >p {
-                &:last-of-type {
-                    font-size: 10px;
-                    font-weight: 500;
-                    line-height: 15px;
-                    color: #999999;
-                    margin-bottom: 5px;
-                }
-            }
 
             >div {
                 display: flex;

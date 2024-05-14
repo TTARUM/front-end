@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { addCart } from '@/util/AxiosMember';
 import userStore from '@/store/userInformation';
 import { useMutation } from '@tanstack/react-query';
+import { MainEventButton } from '../Style/MainEventBtn/MainEventBtn';
 
 type Props = {
   title: string;
@@ -21,6 +22,9 @@ type Props = {
   id: number;
   quantity: number;
 };
+interface ServerResponse {
+  status: number;
+}
 
 export default function ProductDetailBuyInform({
   title,
@@ -30,16 +34,18 @@ export default function ProductDetailBuyInform({
   setShow,
   id,
 }: Props) {
-  const router = useRouter();
   const [quantity, setQuantity] = useState<number>(1);
   const [getData, setGetData] = useState<Props[]>();
+  const [showModal, setShowModal] = useState<boolean>(false);
   const { user }: any = userStore();
   const Token = user?.token;
 
-  const addCartList = useMutation({
+  const addCartList = useMutation<ServerResponse>({
     mutationFn: (item): any => addCart(item, Token),
     onSuccess: (res) => {
-      console.log(res);
+      if (res.status === 200) {
+        setShowModal(true);
+      }
     },
     onError: (error) => {
       console.log(error);
@@ -118,6 +124,22 @@ export default function ProductDetailBuyInform({
           </Link>
         </div>
       </div>
+      {showModal ? (
+        <div className="modal">
+          <p>장바구니에 추가되었습니다.</p>
+          <MainEventButton
+            onClick={() => {
+              setShowModal(false);
+              setShow(false);
+            }}
+            $width={100}
+            $height={30}
+            $color="#FF6135"
+          >
+            확인
+          </MainEventButton>
+        </div>
+      ) : null}
     </main>
   );
 }

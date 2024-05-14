@@ -26,7 +26,7 @@ type Props = {
   page?: string;
   number?: number;
   params?: {
-    params: string;
+    itemId: string;
   };
 };
 
@@ -41,10 +41,8 @@ export default function ProductsDetail({ params }: Props) {
 
   const { data } = useQuery({
     queryKey: ['detail'],
-    queryFn: () => getDetail(params.params),
+    queryFn: () => getDetail(params.itemId),
   });
-
-  // console.log(data?.data);
 
   const navList = ['상품정보', '리뷰24', '문의', '교환/반품'];
 
@@ -148,7 +146,7 @@ export default function ProductsDetail({ params }: Props) {
           price={data?.data.price}
           setShow={setShow}
           showBuy={show}
-          id={Number(params?.params)}
+          id={Number(params?.itemId)}
           quantity={1}
         />
       ) : null}

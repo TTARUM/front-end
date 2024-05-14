@@ -110,6 +110,14 @@ const deleteAddress = (addressId: number, Token: string) => {
   }).then((res) => res);
 };
 
+const getCouponList = (Token: string) => {
+  return AxiosConfig.get('/members/coupons', {
+    headers: {
+      Authorization: `Bearer ${Token}`,
+    },
+  });
+};
+
 export {
   showJoin,
   showMailCertification,
@@ -124,4 +132,5 @@ export {
   addAddress,
   updateAddress,
   deleteAddress,
+  getCouponList,
 };

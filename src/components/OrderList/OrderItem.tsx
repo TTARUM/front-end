@@ -37,7 +37,6 @@ interface OrderData {
 }
 
 export default function OrderItem({ data, page }: OrderData) {
-  console.log(data);
   const route = useRouter();
   const orderDate = new Date(data?.orderDate);
   const formattedDate = moment(orderDate).format('YYYY.MM.DD');

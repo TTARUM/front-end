@@ -18,22 +18,23 @@ import TermsInformation from '@/components/AgreementPage/TermsInformation';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { showOrders } from '@/util/AxiosOrder';
 import userStore from '@/store/userInformation';
-import { getAddress } from '@/util/AxiosMember';
+import { getAddress, getCouponList } from '@/util/AxiosMember';
 import userAddress from '@/store/userAddress';
 import { IOrder } from '@/types/common';
 
 type queryData = {
-  itemId: number;
-  itemImageUrl: string;
-  amount: number;
+  id: number;
+  img: string;
+  quantity: number;
   price: number;
-  itemName: string;
+  title: string;
   categoryName: string;
 }[];
 
 type coupon = {
   discount: number;
   text: string;
+  couponId: number;
 }[];
 
 const Order = () => {
@@ -60,15 +61,22 @@ const Order = () => {
   const { user }: any = userStore();
   const { address }: any = userAddress();
   const Token = user?.token;
-  const { data, isLoading } = useQuery({
+  const couponId = getCoupon?.map((value) => value.couponId);
+  const couponName = getCoupon?.map((value) => value.text);
+  const { data: AddressList, isLoading } = useQuery({
     queryKey: ['getAddress'],
     queryFn: () => getAddress(Token),
   });
 
+  const { data: coupon } = useQuery({
+    queryKey: ['getCouponList'],
+    queryFn: () => getCouponList(Token),
+  });
+
   const payment = getUrl?.map((value) => value.price);
   const items = getUrl?.map((value) => ({
-    itemId: value.itemId,
-    quantity: value.amount,
+    itemId: value.id,
+    quantity: value.quantity,
   }));
   const totalAmount = payment?.reduce(function add(sum, currValue) {
     return sum + currValue;
@@ -88,6 +96,12 @@ const Order = () => {
         ? deliveryAddress
         : `${address.address}, ${address.detailAddress}`,
     recipient: address.length === 0 ? recipient : address.recipient,
+    couponId: couponId === undefined ? null : Number(couponId),
+    totalPrice:
+      totalAmount -
+      (getCoupon.length == 0
+        ? 0
+        : Math.floor(totalAmount * getCoupon[0].discount)),
     orderItems: items,
   };
 
@@ -106,7 +120,7 @@ const Order = () => {
 
   useEffect(() => {
     if (isLoading === false) {
-      data?.map((value) => {
+      AddressList?.map((value) => {
         if (value.isDefault) {
           setPhone(value.phoneNumber);
           setDeliveryAddress(`${value.address}, ${value.detailAddress}`);
@@ -149,26 +163,40 @@ const Order = () => {
         <div className="delivery_address">
           {address.length === 0 ? (
             <>
-              {data?.map((value) => {
-                return (
-                  <React.Fragment key={value.addressId}>
-                    {value.isDefault && (
-                      <>
-                        <div>
-                          <h1>{value.addressAlias}</h1>
-                          <p>기본 배송지</p>
-                        </div>
-                        <p>
-                          {value.recipient} ∙ {value.phoneNumber}
-                        </p>
-                        <p>
-                          {value.address}, {value.detailAddress}
-                        </p>
-                      </>
-                    )}
-                  </React.Fragment>
-                );
-              })}
+              {AddressList?.length === 0 ? (
+                <>
+                  <div>
+                    <button
+                      onClick={() => {
+                        router.push('/order/newDelivery');
+                      }}
+                    >
+                      배송지 추가하기
+                    </button>
+                  </div>
+                </>
+              ) : (
+                AddressList?.map((address) => {
+                  return (
+                    <React.Fragment key={address.addressId}>
+                      {address.isDefault && (
+                        <>
+                          <div>
+                            <h1>{address.addressAlias}</h1>
+                            <p>기본 배송지</p>
+                          </div>
+                          <p>
+                            {address.recipient} ∙ {address.phoneNumber}
+                          </p>
+                          <p>
+                            {address.address}, {address.detailAddress}
+                          </p>
+                        </>
+                      )}
+                    </React.Fragment>
+                  );
+                })
+              )}
             </>
           ) : (
             <>
@@ -182,7 +210,6 @@ const Order = () => {
               <p>{address.address}</p>
             </>
           )}
-
           <div
             className="requestOption"
             onClick={() => {
@@ -214,8 +241,8 @@ const Order = () => {
           >
             <p>
               {getCoupon.length === 0
-                ? '사용가능 쿠폰 0장 / 전체 n장'
-                : getCoupon[0]?.text}
+                ? `사용가능 쿠폰 ${coupon?.data.length}장 / 전체 ${coupon?.data.length}장`
+                : couponName}
             </p>
             <Image src={downArrow} alt="downArrow" />
           </div>
@@ -239,11 +266,10 @@ const Order = () => {
           {showOrderedItem == true
             ? getUrl?.map((value, index) => {
                 return (
-                  <div key={value.itemId} className="ordered_item">
-                    <p>{value.categoryName}</p>
+                  <div key={value.id} className="ordered_item">
                     <div>
-                      <p>{value.itemName}</p>
-                      <p>수량 {value.amount}개</p>
+                      <p>{value.title}</p>
+                      <p>수량 {value.quantity}개</p>
                     </div>
                   </div>
                 );
@@ -378,12 +404,18 @@ const Order = () => {
           <MainEventButton
             onClick={handleOrder}
             disabled={
-              agreeTreatment == false || agreeCollection == false ? true : false
+              address.length === 0 ||
+              agreeTreatment == false ||
+              agreeCollection == false
+                ? true
+                : false
             }
             $width={345}
             $height={41}
             $color={
-              agreeTreatment == false || agreeCollection == false
+              address.length === 0 ||
+              agreeTreatment == false ||
+              agreeCollection == false
                 ? '#999999'
                 : '#FF6135'
             }
@@ -443,20 +475,28 @@ const Order = () => {
             >
               <p>쿠폰 적용 안함</p>
             </div>
-            <div
-              onClick={() => {
-                setGetCoupon([
-                  {
-                    discount: 0.01,
-                    text: '따름 신규가입회원 10% 할인쿠폰',
-                  },
-                ]);
-                setShowCouponPopup(false);
-              }}
-            >
-              <p>따름 신규가입회원 10% 할인쿠폰</p>
-              <p>* 발급 후 3개월 이내에 사용하지 않으면 사라지는 쿠폰이에요.</p>
-            </div>
+            {coupon?.data.map((value) => {
+              return (
+                <div
+                  key={value.id}
+                  onClick={() => {
+                    setGetCoupon([
+                      {
+                        discount: value.value / 100,
+                        text: value.name,
+                        couponId: value.id,
+                      },
+                    ]);
+                    setShowCouponPopup(false);
+                  }}
+                >
+                  <p>{value.name}</p>
+                  <p>
+                    * 발급 후 3개월 이내에 사용하지 않으면 사라지는 쿠폰이에요.
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       ) : null}
