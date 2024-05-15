@@ -404,7 +404,7 @@ const Order = () => {
           <MainEventButton
             onClick={handleOrder}
             disabled={
-              address.length === 0 ||
+              (address.length === 0 && AddressList.length === 0) ||
               agreeTreatment == false ||
               agreeCollection == false
                 ? true
@@ -413,7 +413,7 @@ const Order = () => {
             $width={345}
             $height={41}
             $color={
-              address.length === 0 ||
+              (address.length === 0 && AddressList.length === 0) ||
               agreeTreatment == false ||
               agreeCollection == false
                 ? '#999999'
