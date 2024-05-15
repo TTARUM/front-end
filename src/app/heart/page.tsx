@@ -13,6 +13,9 @@ import testWhite from '../../../public/test-white.svg';
 import { useState } from 'react';
 import Navigation from '@/components/Navigation/Navigation';
 import { usePathname } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { getWishList } from '@/util/AxiosMember';
+import userStore from '@/store/userInformation';
 
 export default function Heart() {
   const testItem: {
@@ -52,14 +55,21 @@ export default function Heart() {
 
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [sort, setSort] = useState<string>('최근찜한순');
-
   const path = usePathname();
-  const clickHandle = () => {};
+  const { user }: any = userStore();
+  const Token = user.token;
+
+  const { data } = useQuery({
+    queryKey: ['wishList'],
+    queryFn: () => getWishList(Token),
+  });
+
+  console.log(data)
 
   return (
     <div className="main">
       <div className="main-container">
-        <Header title="찜한 상품" type='menu' search={true} cart={true}/>
+        <Header title="찜한 상품" type="menu" search={true} cart={true} />
         <div className="item-wrap">
           <div className="item-assistant">
             <p className="item-number">{`상품 ${123}`}</p>
@@ -85,7 +95,11 @@ export default function Heart() {
               >
                 {sortText.map((item, idx) => (
                   <p
-                    className={sort == item? 'item-alert-text active' :'item-alert-text'}
+                    className={
+                      sort == item
+                        ? 'item-alert-text active'
+                        : 'item-alert-text'
+                    }
                     onClick={() => {
                       setSort(item), setShowAlert(false);
                     }}
@@ -102,9 +116,7 @@ export default function Heart() {
             {testItem?.map((item, idx) => {
               return (
                 <div key={item.id} className="item-box-margin">
-                  <ItemBox
-                    page={'heart'}
-                  />
+                  <ItemBox page={'heart'} />
                 </div>
               );
             })}

@@ -88,6 +88,7 @@ export default function ProductDetailReview() {
 
       <div className="ProductDetailReview-comments">
         <div className="length-sort">
+          <div className='count_review'>총 0개</div>
           <div
             className="sort"
             onClick={() => setIsReviewToggle((pre) => !pre)}

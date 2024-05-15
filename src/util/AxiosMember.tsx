@@ -33,6 +33,15 @@ const addWishItem = (wish: IWish, Token: string) => {
   }).then((res) => res);
 };
 
+// 찜목록
+const getWishList = (Token: string) => {
+  return AxiosConfig.get('/members/wish-item', {
+    headers: {
+      Authorization: `Bearer ${Token}`,
+    },
+  });
+};
+
 // 프로필 이미지 업데이트
 const updateImage = (allData): any => {
   const formData = new FormData();
@@ -110,6 +119,7 @@ const deleteAddress = (addressId: number, Token: string) => {
   }).then((res) => res);
 };
 
+// 쿠폰 리스트
 const getCouponList = (Token: string) => {
   return AxiosConfig.get('/members/coupons', {
     headers: {
@@ -124,6 +134,7 @@ export {
   showSecession,
   showLogin,
   addWishItem,
+  getWishList,
   updateImage,
   addCart,
   deleteCart,

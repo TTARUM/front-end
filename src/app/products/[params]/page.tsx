@@ -33,7 +33,7 @@ export default function Products({ params }: Props) {
     setShowSortAlert(false);
   };
 
-  const param = params.params;
+  const param = params?.params;
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -85,6 +85,8 @@ export default function Products({ params }: Props) {
       Title = '전체보기';
       break;
   }
+
+  console.log(data)
 
   return (
     <main className="products-container">

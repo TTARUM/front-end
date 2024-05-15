@@ -5,9 +5,12 @@ import heart from '../../../public/heartFill.svg';
 import notHeart from '../../../public/heartNotFill.svg';
 import Image from 'next/image';
 import useTouchScroll from '@/hooks/useTouchScroll';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { getPopularCategory, getSimilarPrice } from '@/util/AxiosItem';
 import { useRouter } from 'next/navigation';
+import { addWishItem } from '@/util/AxiosMember';
+import { IWish } from '@/types/common';
+import userStore from '@/store/userInformation';
 
 export default function ProductDetailAddInform({
   descriptionImageUrl,
@@ -15,9 +18,12 @@ export default function ProductDetailAddInform({
 }) {
   const hotProductRef = useRef<HTMLDivElement | null>(null);
   const similarProductRef = useRef<HTMLDivElement | null>(null);
-  const [category, setCategory] = useState<string>();
+  const [onHeart, setOnHeart] = useState<boolean>(false);
   const [isAddInform, setIsAddInform] = useState<boolean>(false);
   const router = useRouter();
+  const { user }: any = userStore();
+  const Token = user?.token;
+
   let path;
 
   if (typeof window !== 'undefined') {
@@ -47,6 +53,27 @@ export default function ProductDetailAddInform({
     queryKey: ['popularCategory'],
     queryFn: () => getPopularCategory(path[1]),
   });
+
+  const returnWish = (wish: IWish) => {
+    return addWishItem(wish, Token);
+  };
+
+  const addMutation = useMutation({
+    mutationFn: (wish: IWish) => returnWish(wish),
+    onSuccess: (res) => {
+      console.log(res);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const clickHeart = (id: number) => {
+    addMutation.mutate({ itemId: id }, Token);
+    setOnHeart(!onHeart);
+  };
+
+  console.log(popularCategory);
 
   return (
     <div className="productDetailAddInform">
@@ -101,16 +128,23 @@ export default function ProductDetailAddInform({
                   <div>
                     <h1>{index + 1}</h1>
                   </div>
-                  <div
-                    onClick={() => {
-                      router.push(
-                        `/productsDetail/${drink.id}?category=${path[1]}`,
-                      );
-                    }}
-                  >
+                  <div>
                     <div className="ProductDetailHotProduct-hotProductImg">
-                      <Image src={drink.imageUrl} fill alt="drink" />
-                      <div id="ProductDetail-heart" data-id={drink.id}>
+                      <Image
+                        onClick={() => {
+                          router.push(
+                            `/productsDetail/${drink.id}?category=${path[1]}`,
+                          );
+                        }}
+                        src={drink.imageUrl}
+                        fill
+                        alt="drink"
+                      />
+                      <div
+                        onClick={() => clickHeart(drink.id)}
+                        id="ProductDetail-heart"
+                        data-id={drink.id}
+                      >
                         {drink.inWishList ? (
                           <Image src={heart} alt="heart" />
                         ) : (
@@ -120,7 +154,7 @@ export default function ProductDetailAddInform({
                     </div>
                     <p>{drink.name}</p>
                     <span>
-                      <strong>{drink.price}</strong>원
+                      <strong>{drink.price.toLocaleString()}</strong>원
                     </span>
                   </div>
                 </div>
