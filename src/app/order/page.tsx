@@ -96,7 +96,7 @@ const Order = () => {
         ? deliveryAddress
         : `${address.address}, ${address.detailAddress}`,
     recipient: address.length === 0 ? recipient : address.recipient,
-    couponId: couponId === undefined ? null : Number(couponId),
+    couponId: couponId.length === 0 ? null : Number(couponId),
     totalPrice:
       totalAmount -
       (getCoupon.length == 0
@@ -117,6 +117,8 @@ const Order = () => {
   const handleOrder = () => {
     orderMutation.mutate(orderData);
   };
+
+  console.log(couponId);
 
   useEffect(() => {
     if (isLoading === false) {
