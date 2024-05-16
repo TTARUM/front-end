@@ -25,6 +25,7 @@ export default function Detail() {
   const date = new Date(data?.data.orderDate);
   const formattedDate = moment(date).format('YYYY.MM.DD');
 
+  console.log(data)
   return (
     <div className="detail_container">
       {data ? (
@@ -62,10 +63,10 @@ export default function Detail() {
               </span>
             </p>
             <p>
-              총 상품 금액 <span>{data?.data.price.toLocaleString()}원</span>
+              총 상품 금액 <span>{(data?.data.price + data?.data.deliveryFee + data?.data.discountPrice).toLocaleString()}원</span>
             </p>
             <p>
-              할인금액 <span>0원</span>
+              할인금액 <span>{data?.data.discountPrice.toLocaleString()}원</span>
             </p>
             <div className="line" />
             <p className="total_payment">

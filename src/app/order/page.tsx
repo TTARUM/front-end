@@ -23,11 +23,11 @@ import userAddress from '@/store/userAddress';
 import { IOrder } from '@/types/common';
 
 type queryData = {
-  id: number;
+  itemId: number;
   img: string;
-  quantity: number;
+  amount: number;
   price: number;
-  title: string;
+  itemName: string;
   categoryName: string;
 }[];
 
@@ -75,9 +75,10 @@ const Order = () => {
 
   const payment = getUrl?.map((value) => value.price);
   const items = getUrl?.map((value) => ({
-    itemId: value.id,
-    quantity: value.quantity,
+    itemId: value.itemId,
+    quantity: value.amount,
   }));
+
   const totalAmount = payment?.reduce(function add(sum, currValue) {
     return sum + currValue;
   }, 0);
@@ -266,10 +267,10 @@ const Order = () => {
           {showOrderedItem == true
             ? getUrl?.map((value, index) => {
                 return (
-                  <div key={value.id} className="ordered_item">
+                  <div key={value.itemId} className="ordered_item">
                     <div>
-                      <p>{value.title}</p>
-                      <p>수량 {value.quantity}개</p>
+                      <p>{value.itemName}</p>
+                      <p>수량 {value.amount}개</p>
                     </div>
                   </div>
                 );
