@@ -27,17 +27,14 @@ const SuccessCertification = (emailAddress: ICheckEmail) => {
 
 // 아이디 찾기 이메일 인증
 const showFindMailCertification = (emailAddress: IFindEmail) => {
-  console.log(emailAddress)
-  return AxiosConfig.post(
-    `/members/mail/send/find-id?name=${emailAddress.name}&email=${emailAddress.email}`,
-  );
+  return AxiosConfig.post(`/members/mail/send/find-id`, emailAddress);
 };
 
-// // 아이디 찾기 이메일 인증 확인
-// const SuccessFindCertification = (emailAddress:ICheckEmail) => {
-//   console.log(emailAddress)
-//   return AxiosConfig.post(`/members/mail/check/find-id?email=${}`)
-// };
+// 아이디 찾기 이메일 인증 확인
+const SuccessFindCertification = (emailAddress: ICheckEmail) => {
+  console.log(emailAddress);
+  return AxiosConfig.post(`/members/mail/check/find-id`, emailAddress);
+};
 
 // 로그인
 const showLogin = (login: ILogin) => {
@@ -160,6 +157,7 @@ export {
   showMailCertification,
   SuccessCertification,
   showFindMailCertification,
+  SuccessFindCertification,
   showSecession,
   showLogin,
   addWishItem,

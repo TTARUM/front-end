@@ -7,6 +7,7 @@ import { MainEventButton } from '../Style/MainEventBtn/MainEventBtn';
 import { Mutation, useMutation, useQuery } from '@tanstack/react-query';
 import {
   SuccessCertification,
+  SuccessFindCertification,
   showFindMailCertification,
   showMailCertification,
 } from '@/util/AxiosMember';
@@ -43,6 +44,10 @@ const EmailAddress = ({
     return SuccessCertification(email);
   };
 
+  const checkFindReturn = (email: ICheckEmail) => {
+    return SuccessFindCertification(email);
+  };
+
   const mailCertificationMutation = useMutation({
     mutationFn: (emailAddress: IEmail) => returnMail(emailAddress),
     onSuccess: (res) => {
@@ -55,6 +60,13 @@ const EmailAddress = ({
 
   const checkCertificationMutation = useMutation({
     mutationFn: (emailAddress: ICheckEmail) => checkReturn(emailAddress),
+    onSuccess: (res) => {
+      setCertification(res.status);
+    },
+  });
+
+  const checkFindCertificationMutation = useMutation({
+    mutationFn: (emailAddress: ICheckEmail) => checkFindReturn(emailAddress),
     onSuccess: (res) => {
       setCertification(res.status);
     },
@@ -80,6 +92,10 @@ const EmailAddress = ({
   const checkCertification = () => {
     const emailToUse = `${email}@${getEmail === '직접' ? pushEmail : getEmail}`;
     if (path === '/findId') {
+      checkFindCertificationMutation.mutate({
+        email : emailToUse,
+        verificationCode: String(certificationNumber)
+      })
     } else {
       checkCertificationMutation.mutate({
         email: emailToUse,
