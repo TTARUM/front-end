@@ -17,6 +17,7 @@ const FindId = () => {
   const [userName, setUserName] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [certification, setCertification] = useState();
 
   const inputDataArr = [
     {
@@ -52,14 +53,17 @@ const FindId = () => {
             type={inputData.type}
             path={path}
             name={userName}
+            setCertification={setCertification}
+            certification={certification}
           />
         ))}
       </div>
       <MainEventButton
         $width={345}
         $height={41}
-        $color={'#FF6135'}
+        $color={certification ? '#FF6135' : '#D9D9D9'}
         onClick={() => setIsSuccess(true)}
+        disabled={certification ? false : true}
       >
         아이디 찾기
       </MainEventButton>

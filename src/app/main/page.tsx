@@ -57,7 +57,6 @@ export default function Main() {
 
   useEffect(() => {
     const userInformation = JSON.parse(window.localStorage.getItem('token'));
-    console.log(userInformation);
     setUser(userInformation);
   }, []);
 
