@@ -72,6 +72,9 @@
     justify-content: space-between;
     font-size: 14px;
     font-weight: 400;
+    >.count_review{
+      color: #151515;
+    }
     & > .sort-modal {
       position: absolute;
       top: 25px;

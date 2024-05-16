@@ -1,4 +1,13 @@
-import { IAddress, IUser, ILogin, IWish, ICart } from '@/types/common';
+import {
+  IAddress,
+  IUser,
+  ILogin,
+  IWish,
+  ICart,
+  ICheckEmail,
+  IFindEmail,
+  IEmail,
+} from '@/types/common';
 import AxiosConfig from './AxiosConfig';
 
 // 회원가입
@@ -6,11 +15,29 @@ const showJoin = (user: IUser) => {
   return AxiosConfig.post('/members/register', user).then((res) => res);
 };
 
-// 이메일 인증
-const showMailCertification = (emailAddress: any) => {
-  console.log(emailAddress);
-  return AxiosConfig.post(`/members/register/mailSend`, emailAddress);
+// 회원가입 이메일 인증
+const showMailCertification = (emailAddress: IEmail) => {
+  return AxiosConfig.post(`/members/mail/send`, emailAddress);
 };
+
+// 회원가입 이메일 인증 확인
+const SuccessCertification = (emailAddress: ICheckEmail) => {
+  return AxiosConfig.post(`/members/mail/check`, emailAddress);
+};
+
+// 아이디 찾기 이메일 인증
+const showFindMailCertification = (emailAddress: IFindEmail) => {
+  console.log(emailAddress)
+  return AxiosConfig.post(
+    `/members/mail/send/find-id?name=${emailAddress.name}&email=${emailAddress.email}`,
+  );
+};
+
+// // 아이디 찾기 이메일 인증 확인
+// const SuccessFindCertification = (emailAddress:ICheckEmail) => {
+//   console.log(emailAddress)
+//   return AxiosConfig.post(`/members/mail/check/find-id?email=${}`)
+// };
 
 // 로그인
 const showLogin = (login: ILogin) => {
@@ -31,6 +58,15 @@ const addWishItem = (wish: IWish, Token: string) => {
       Authorization: `Bearer ${Token}`,
     },
   }).then((res) => res);
+};
+
+// 찜목록
+const getWishList = (Token: string) => {
+  return AxiosConfig.get('/members/wish-item', {
+    headers: {
+      Authorization: `Bearer ${Token}`,
+    },
+  });
 };
 
 // 프로필 이미지 업데이트
@@ -110,6 +146,7 @@ const deleteAddress = (addressId: number, Token: string) => {
   }).then((res) => res);
 };
 
+// 쿠폰 리스트
 const getCouponList = (Token: string) => {
   return AxiosConfig.get('/members/coupons', {
     headers: {
@@ -121,9 +158,12 @@ const getCouponList = (Token: string) => {
 export {
   showJoin,
   showMailCertification,
+  SuccessCertification,
+  showFindMailCertification,
   showSecession,
   showLogin,
   addWishItem,
+  getWishList,
   updateImage,
   addCart,
   deleteCart,

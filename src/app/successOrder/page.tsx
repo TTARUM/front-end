@@ -87,10 +87,10 @@ export default function SuccessOrder() {
           <div className="information">
             <div>
               <p>상품 금액</p>{' '}
-              <span>{data?.data.price.toLocaleString()}원</span>
+              <span>{(data?.data.price + data?.data.deliveryFee + data?.data.discountPrice).toLocaleString()}원</span>
             </div>
             <div>
-              <p>할인 금액</p> <span>0,000원</span>
+              <p>할인 금액</p> <span>{data?.data.discountPrice.toLocaleString()}원</span>
             </div>
           </div>
           <div className="line"></div>

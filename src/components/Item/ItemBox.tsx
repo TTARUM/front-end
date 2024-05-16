@@ -15,6 +15,7 @@ import { IWish } from '@/types/common';
 
 interface Data {
   id: number;
+  itemId: number;
   categoryName: string;
   name: string;
   price: number;
@@ -61,6 +62,26 @@ export default function ItemBox({ data, page, number }: Props) {
     addMutation.mutate({ itemId: id }, Token);
     setOnHeart(!onHeart);
   };
+
+  let category;
+
+  switch (data?.name) {
+    case '레드':
+      category = '1';
+      break;
+    case '화이트':
+      category = '2';
+      break;
+    case '로제':
+      category = '3';
+      break;
+    case '스파클링':
+      category = '4';
+      break;
+    case '주정강화':
+      category = '5';
+      break;
+  }
 
   return (
     <div className="itemBox-container">
@@ -113,7 +134,9 @@ export default function ItemBox({ data, page, number }: Props) {
         <div className="itemBox-item">
           {page === 'heart' ? null : (
             <Image
-              onClick={() => clickHeart(data?.id)}
+              onClick={() =>
+                clickHeart(data?.id === undefined ? data?.itemId : data?.id)
+              }
               className="itemBox-heart"
               src={data?.inWishList ? on_heart : heart}
               alt="heart"
@@ -122,7 +145,9 @@ export default function ItemBox({ data, page, number }: Props) {
           <div
             className="itemBox-area"
             onClick={() => {
-              router.push(`/productsDetail/${data?.id}?category=${path[2]}`);
+              router.push(
+                `/productsDetail/${data?.id === undefined ? data?.itemId : data?.id}?category=${path[2] === undefined ? category : path[2]}`,
+              );
             }}
           >
             <div className="itemBox-img">
@@ -142,7 +167,11 @@ export default function ItemBox({ data, page, number }: Props) {
                     alt="red wine image"
                   />
                   <Image
-                    onClick={() => clickHeart(data?.id)}
+                    onClick={() =>
+                      clickHeart(
+                        data?.id === undefined ? data?.itemId : data?.id,
+                      )
+                    }
                     className="itemBox-heart"
                     src={data?.inWishList ? on_heart : heart}
                     alt="heart"

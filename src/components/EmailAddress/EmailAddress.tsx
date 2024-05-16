@@ -5,36 +5,87 @@ import Image from 'next/image';
 import downArrow from '../../../public/downArrow.svg';
 import { MainEventButton } from '../Style/MainEventBtn/MainEventBtn';
 import { Mutation, useMutation, useQuery } from '@tanstack/react-query';
-import { showMailCertification } from '@/util/AxiosMember';
+import {
+  SuccessCertification,
+  showFindMailCertification,
+  showMailCertification,
+} from '@/util/AxiosMember';
+import { AxiosError } from 'axios';
+import { ICheckEmail, IEmail, IFindEmail } from '@/types/common';
 
-const EmailAddress = ({ data, setData, placeholder }) => {
+const EmailAddress = ({
+  data,
+  setData,
+  placeholder,
+  path,
+  name,
+  setCertification,
+  certification,
+}) => {
   const [showEmailModal, setShowEmailModal] = useState<boolean>(false);
   const [getEmail, setGetEmail] = useState<string>('');
   const [pushEmail, setPushEmail] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [certificationNumber, setCertificationNumber] = useState<number | ''>(
+  const [certificationNumber, setCertificationNumber] = useState<string | ''>(
     '',
   );
-
-  interface IEmail {
-    email: string;
-  }
+  const [warning, setWarning] = useState<string | boolean>('');
 
   const returnMail = (email: IEmail) => {
     return showMailCertification(email);
   };
 
+  const findReturnMail = (email: IFindEmail) => {
+    return showFindMailCertification(email);
+  };
+
+  const checkReturn = (email: ICheckEmail) => {
+    return SuccessCertification(email);
+  };
+
   const mailCertificationMutation = useMutation({
     mutationFn: (emailAddress: IEmail) => returnMail(emailAddress),
     onSuccess: (res) => {
-      console.log(res);
+      setWarning(false);
     },
-    onError: (error: any) => {},
+    onError: (error) => {
+      setWarning((error as any).response?.data.message);
+    },
   });
 
-  const certificationCheck = () => {
+  const checkCertificationMutation = useMutation({
+    mutationFn: (emailAddress: ICheckEmail) => checkReturn(emailAddress),
+    onSuccess: (res) => {
+      setCertification(res.status);
+    },
+  });
+
+  const findMailCertificationMutation = useMutation({
+    mutationFn: (emailAddress: IFindEmail) => findReturnMail(emailAddress),
+    onSuccess: (res) => {
+      console.log(res);
+    },
+    onError: (error) => {},
+  });
+
+  const sendCertification = () => {
     const emailToUse = `${email}@${getEmail === '직접' ? pushEmail : getEmail}`;
-    mailCertificationMutation.mutate({ email: emailToUse });
+    if (path === '/findId') {
+      findMailCertificationMutation.mutate({ name: name, email: emailToUse });
+    } else {
+      mailCertificationMutation.mutate({ email: emailToUse });
+    }
+  };
+
+  const checkCertification = () => {
+    const emailToUse = `${email}@${getEmail === '직접' ? pushEmail : getEmail}`;
+    if (path === '/findId') {
+    } else {
+      checkCertificationMutation.mutate({
+        email: emailToUse,
+        verificationCode: String(certificationNumber),
+      });
+    }
   };
 
   const checkEmail = () => {
@@ -74,7 +125,7 @@ const EmailAddress = ({ data, setData, placeholder }) => {
           alt="downArrow"
         />
         <MainEventButton
-          onClick={certificationCheck}
+          onClick={sendCertification}
           $width={48}
           $height={20.35}
           $color={checkEmail() === false ? '#D9D9D9' : '#FF6135'}
@@ -83,7 +134,7 @@ const EmailAddress = ({ data, setData, placeholder }) => {
           확인
         </MainEventButton>
       </div>
-
+      {warning ? <p className="success">{warning}</p> : null}
       <div className="certificationNumber_input">
         <p>인증번호</p>
         <input
@@ -92,13 +143,24 @@ const EmailAddress = ({ data, setData, placeholder }) => {
           value={certificationNumber}
           onChange={(e) => {
             const input = e.target.value;
-            setCertificationNumber(input === '' ? '' : parseInt(input, 10));
+            setCertificationNumber(input === '' ? '' : String(input));
           }}
         />
-        <MainEventButton $width={48} $height={20.35} $color={'#FF6135'}>
+        <MainEventButton
+          onClick={checkCertification}
+          $width={48}
+          $height={20.35}
+          $color={'#FF6135'}
+        >
           확인
         </MainEventButton>
       </div>
+      {certification === 200 ? (
+        <p className="success">인증이 완료되었습니다.</p>
+      ) : certification === 400 ? (
+        <p className="success">인증에 실패했습니다.</p>
+      ) : null}
+
       {showEmailModal === true ? (
         <div className="address_modal">
           <p

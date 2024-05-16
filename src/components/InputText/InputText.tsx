@@ -15,6 +15,10 @@ type Props = {
   onChange?: (InputEvent) => void;
   warning?: string;
   maxLength?: number;
+  path?: string;
+  name?: string;
+  setCertification?: React.Dispatch<React.SetStateAction<number>>;
+  certification?: number;
 };
 
 const InputText = ({
@@ -26,8 +30,11 @@ const InputText = ({
   onChange,
   warning,
   maxLength,
+  path,
+  name,
+  setCertification,
+  certification,
 }: Props): JSX.Element => {
-
   return (
     <>
       <span className="label">{title}</span>
@@ -42,6 +49,10 @@ const InputText = ({
           data={data || ''}
           setData={setData}
           placeholder={placeholder}
+          path={path}
+          name={name}
+          setCertification={setCertification}
+          certification={certification}
         />
       ) : type === 'password' ? (
         <>

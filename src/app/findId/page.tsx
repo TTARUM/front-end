@@ -10,8 +10,10 @@ import LogoTitle from '@/components/LogoTitle/LogoTitle';
 import { MainEventButton } from '@/components/Style/MainEventBtn/MainEventBtn';
 import { useState } from 'react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 const FindId = () => {
+  const path = usePathname();
   const [userName, setUserName] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -48,6 +50,8 @@ const FindId = () => {
             title={inputData.title}
             placeholder={inputData.placeholder}
             type={inputData.type}
+            path={path}
+            name={userName}
           />
         ))}
       </div>

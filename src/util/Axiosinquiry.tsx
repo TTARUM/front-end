@@ -2,10 +2,10 @@ import { IInquiry } from '@/types/common';
 import AxiosConfig from './AxiosConfig';
 
 // 문의글 작성하기
-const inquiries = (inquiry: IInquiry, images: string[], Token: string) => {
+const inquiries = (inquiryRequest: IInquiry, Token: string) => {
   return AxiosConfig.post(
     '/inquiries',
-    { inquiry, images },
+    { inquiryRequest },
     {
       headers: {
         'Content-Type': 'multipart/form-data',

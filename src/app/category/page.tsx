@@ -16,12 +16,12 @@ export default function Category() {
   const path = usePathname();
 
   const testBox: { img: string; name: string; id: number }[] = [
-    { img: category_all, name: '전체보기', id: 1 },
-    { img: category_redWine, name: '레드 와인', id: 2 },
-    { img: category_whiteWine, name: '화이트 와인', id: 3 },
-    { img: category_roseWine, name: '로제 와인', id: 4 },
-    { img: category_sparklingWine, name: '스파클링 와인', id: 5 },
-    { img: category_snack, name: '안주', id: 6 },
+    { img: category_all, name: '전체보기', id: 0 },
+    { img: category_redWine, name: '레드 와인', id: 1 },
+    { img: category_whiteWine, name: '화이트 와인', id: 2 },
+    { img: category_roseWine, name: '로제 와인', id: 3 },
+    { img: category_sparklingWine, name: '스파클링 와인', id: 4  },
+    { img: category_snack, name: '주정강화', id: 5 },
   ];
 
   return (
