@@ -3,19 +3,15 @@
 import './Write.scss';
 import React, { useRef, useState } from 'react';
 import Header from '../Header/Header';
-import Image from 'next/image';
 import useInput from '@/hooks/useInput';
-import usePreview from '@/hooks/usePreview';
 import Checkbox from '../Checkbox/Checkbox';
 
-import picture from '../../../public/productDetail-picture.svg';
 import { inquiries } from '@/util/Axiosinquiry';
 import { IInquiry } from '@/types/common';
 import userStore from '@/store/userInformation';
+import { useMutation } from '@tanstack/react-query';
 
 export default function Write({ params }) {
-  const { file, image, handleImage } = usePreview();
-  const fileRef = useRef<HTMLInputElement>(null);
   const [title, setTitle, titleChange] = useInput();
   const [content, setContent] = useState<string>('');
   const [sendAsk, setSendAsk] = useState<boolean>(false);
@@ -29,25 +25,19 @@ export default function Write({ params }) {
     setContent(e.target.value);
   };
 
-  const addImage = () => {
-    if (file.length >= 4) {
-      alert('사진은 4개까지만 올릴 수 있어요.');
-      return;
-    }
-    fileRef.current.click();
-  };
+  const sendInquiresMutation = useMutation({
+    mutationFn: (inquiryRequest: IInquiry) => inquiries(inquiryRequest, Token),
+  });
 
   const sendWriteAsk = (bool: boolean) => {
-    if (bool) {
-      const inquiry: IInquiry = {
-        title,
-        content,
-        itemId: params.params,
-        secret,
-      };
+    const inquiry: IInquiry = {
+      title,
+      content,
+      itemId: params.itemId,
+      secret,
+    };
 
-      inquiries(inquiry, image, Token);
-    }
+    sendInquiresMutation.mutate(inquiry);
     setSendAsk(bool);
   };
 
@@ -67,32 +57,6 @@ export default function Write({ params }) {
             placeholder={'여기에 문의 내용을 작성해주세요.'}
           />
           <p>{content.length}/1000</p>
-        </div>
-        <div>
-          <div className="ask-images">
-            <div onClick={addImage} className="add-image-button">
-              <Image src={picture} alt="picture" />
-              <p>{image.length}/4</p>
-              <input
-                ref={fileRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleImage}
-              />
-            </div>
-            {image?.map((pic, idx) => {
-              return (
-                <Image
-                  key={idx}
-                  width={63}
-                  height={63}
-                  src={pic}
-                  alt="picture"
-                />
-              );
-            })}
-          </div>
         </div>
         <div className="secret-writeBox">
           <Checkbox title="비밀글로 작성" data={secret} setData={setSecret} />

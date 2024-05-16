@@ -113,10 +113,10 @@ export default function Heart() {
           </div>
 
           <div className="item-container">
-            {testItem?.map((item, idx) => {
+            {data?.data.wishlist.map((item, idx) => {
               return (
                 <div key={item.id} className="item-box-margin">
-                  <ItemBox page={'heart'} />
+                  <ItemBox data={item} page={'heart'} />
                 </div>
               );
             })}

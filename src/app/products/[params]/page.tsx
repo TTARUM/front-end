@@ -86,7 +86,6 @@ export default function Products({ params }: Props) {
       break;
   }
 
-  console.log(data)
 
   return (
     <main className="products-container">

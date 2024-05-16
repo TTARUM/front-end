@@ -73,8 +73,6 @@ export default function ProductDetailAddInform({
     setOnHeart(!onHeart);
   };
 
-  console.log(popularCategory);
-
   return (
     <div className="productDetailAddInform">
       <div
