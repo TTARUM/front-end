@@ -56,16 +56,20 @@ const writeReview = (
   review: IRequestCreateReview,
   Token: string,
 ) => {
-  return AxiosConfig.post(
-    '/reviews',
-    { images, review },
-    {
-      headers: {
-        Authorization: `Bearer ${Token}`,
-        'Content-Type': 'multipart/form-data',
-      },
+  const formData = new FormData();
+
+  if (images.length > 0) {
+    formData.append(`images`, JSON.stringify(images));
+  }
+
+  formData.append('reviewCreationRequest', JSON.stringify(review));
+
+  return AxiosConfig.post('/reviews', formData, {
+    headers: {
+      Authorization: `Bearer ${Token}`,
+      'Content-Type': 'multipart/form-data',
     },
-  ).then((res) => res);
+  }).then((res) => res);
 };
 
 // 리뷰 업데이트를 위한 데이터 조회

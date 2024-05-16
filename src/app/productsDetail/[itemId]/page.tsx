@@ -119,7 +119,7 @@ export default function ProductsDetail({ params }: Props) {
           descriptionImageUrl={data?.data.descriptionImageUrl}
         />
       )}
-      {currentInform === '리뷰24' && <ProductDetailReview />}
+      {currentInform === '리뷰' && <ProductDetailReview />}
       {currentInform === '문의' && <ProductDetailAsk />}
       {currentInform === '교환/반품' && <ProductDetailChange />}
 

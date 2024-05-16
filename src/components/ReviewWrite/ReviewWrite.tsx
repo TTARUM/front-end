@@ -63,7 +63,7 @@ export default function ReviewWrite({ isEdit, params }) {
         itemId: Number(itemId),
         title,
         content,
-        rating: 4,
+        rating,
       };
 
       createReview.mutate(review);
