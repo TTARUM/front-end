@@ -79,3 +79,15 @@ export interface IOrder {
 export interface IPage {
   page: number;
 }
+
+export interface ICheckEmail{
+  email: string;
+  verificationCode: string;
+}
+export interface IEmail {
+  email: string;
+}
+export interface IFindEmail {
+  name: string;
+  email: string;
+}

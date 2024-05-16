@@ -65,7 +65,7 @@ export default function ItemBox({ data, page, number }: Props) {
 
   let category;
 
-  switch (data.name) {
+  switch (data?.name) {
     case '레드':
       category = '1';
       break;

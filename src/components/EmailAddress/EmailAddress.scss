@@ -1,3 +1,5 @@
+@import '../../app/globals.scss';
+
 .email_wrapper {
     position: relative;
 
@@ -52,6 +54,12 @@
             bottom: 9.65px;
             font-size: 10px;
         }
+    }
+
+    .success {
+        font-size: 10px;
+        color: $mainColor;
+        margin-top: 10px;
     }
 
 

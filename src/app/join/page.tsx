@@ -22,7 +22,7 @@ export default function Join() {
   const [checkPassword, setCheckPassword] = useState<string>('');
   const [userName, setUserName] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>('');
-  const [certificationNumber, setCertificationNumber] = useState('');
+  const [certification, setCertification] = useState<number>();
   const [userPhone, setUserPhone] = useState<string>('');
   const [success, setSuccess] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -85,7 +85,8 @@ export default function Join() {
       userPassword &&
       checkPassword &&
       userEmail &&
-      userPhone
+      userPhone &&
+      certification === 200
     ) {
       setSuccess(true);
     } else {
@@ -185,6 +186,8 @@ export default function Join() {
               type={inputData.type}
               onChange={inputData.onChange}
               warning={inputData.warning}
+              setCertification={setCertification}
+              certification={certification}
             />
           ))}
         </div>
