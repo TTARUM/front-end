@@ -8,6 +8,10 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { addCart } from '@/util/AxiosMember';
+import userStore from '@/store/userInformation';
+import { useMutation } from '@tanstack/react-query';
+import { MainEventButton } from '../Style/MainEventBtn/MainEventBtn';
 
 type Props = {
   title: string;
@@ -15,30 +19,48 @@ type Props = {
   showBuy: boolean;
   setShow: Function;
   img: string;
-  type: string;
   id: number;
   quantity: number;
 };
+interface ServerResponse {
+  status: number;
+}
 
 export default function ProductDetailBuyInform({
   title,
   price,
   img,
-  type,
   showBuy,
   setShow,
   id,
 }: Props) {
-  const router = useRouter();
   const [quantity, setQuantity] = useState<number>(1);
   const [getData, setGetData] = useState<Props[]>();
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const { user }: any = userStore();
+  const Token = user?.token;
+
+  const addCartList = useMutation<ServerResponse>({
+    mutationFn: (item): any => addCart(item, Token),
+    onSuccess: (res) => {
+      if (res.status === 200) {
+        setShowModal(true);
+      }
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const HandleAddCart = () => {
+    addCartList.mutate({ itemId: id, amount: quantity } as any, Token);
+  };
 
   useEffect(() => {
     const productData: Props = {
       title,
       price: quantity * price,
       img,
-      type,
       id,
       quantity: quantity,
       showBuy, // If needed
@@ -48,7 +70,6 @@ export default function ProductDetailBuyInform({
     setGetData([productData]);
   }, [quantity]);
 
-  console.log(getData);
   return (
     <main className="ProductDetailBuyBg">
       <div className="ProductDetailBuyBg-section">
@@ -92,7 +113,7 @@ export default function ProductDetailBuyInform({
           <p className="totalPrice">{(price * quantity).toLocaleString()}원</p>
         </div>
         <div className="btnArea">
-          <button>장비구니</button>
+          <button onClick={HandleAddCart}>장바구니</button>
           <Link
             href={{
               pathname: '/order',
@@ -103,6 +124,22 @@ export default function ProductDetailBuyInform({
           </Link>
         </div>
       </div>
+      {showModal ? (
+        <div className="modal">
+          <p>장바구니에 추가되었습니다.</p>
+          <MainEventButton
+            onClick={() => {
+              setShowModal(false);
+              setShow(false);
+            }}
+            $width={100}
+            $height={30}
+            $color="#FF6135"
+          >
+            확인
+          </MainEventButton>
+        </div>
+      ) : null}
     </main>
   );
 }

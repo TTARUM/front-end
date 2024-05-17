@@ -4,63 +4,18 @@ import noAsk from '../../../public/productDetail-noAsk.svg';
 import Image from 'next/image';
 import secret from '../../../public/productDetail-secret.svg';
 import search from '../../../public/productDetail-search.svg';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { getInquiriesList } from '@/util/Axiosinquiry';
 
 const ProductDetailAsk = () => {
-  const 더미데이터: {
-    id: number;
-    isComplete: boolean;
-    nickname: string;
-    content: string;
-    detailContent: string;
-    date: string;
-    secret: boolean;
-    open: boolean;
-  }[] = [
-    {
-      id: 1,
-      isComplete: true,
-      nickname: '오이인',
-      content: '언제 재입고 되나요?',
-      detailContent: '언제 재입고 되나요? 입고 일정을 알고싶습니다',
-      date: '2023.09.00',
-      secret: true,
-      open: false,
-    },
-    {
-      id: 2,
-      isComplete: false,
-      nickname: '오이인',
-      content: '언제 재입고 되나요?',
-      detailContent: '언제 재입고 되나요? 입고 일정을 알고싶습니다',
-      date: '2023.09.00',
-      secret: true,
-      open: false,
-    },
-    {
-      id: 3,
-      isComplete: true,
-      nickname: '오이인',
-      content: '언제 재입고 되나요?',
-      detailContent: '언제 재입고 되나요? 입고 일정을 알고싶습니다',
-      date: '2023.09.00',
-      secret: false,
-      open: false,
-    },
-    {
-      id: 4,
-      isComplete: true,
-      nickname: '오이인',
-      content: '언제 재입고 되나요?',
-      detailContent: '언제 재입고 되나요? 입고 일정을 알고싶습니다',
-      date: '2023.09.00',
-      secret: false,
-      open: false,
-    },
-  ];
+  const itemId = Number(useParams().itemId as string);
+  const { data, status } = useQuery({
+    queryKey: ['inquiriesList'],
+    queryFn: () => getInquiriesList(itemId, 1, 1),
+  });
   const router = useRouter();
-
-  const [askLists, setAskLists] = useState(더미데이터);
+  const [askLists, setAskLists] = useState(data);
 
   const contentDetailToggle = (askList) => {
     const newList = askLists.map((item) => {
@@ -77,19 +32,19 @@ const ProductDetailAsk = () => {
   return (
     <div className="ProductDetailAsk">
       <div className="ask-button">
-        <button onClick={() => router.push('./3/writeAsk')}>
+        <button onClick={() => router.push(`./${itemId}/writeAsk`)}>
           상품 문의하기
         </button>
       </div>
       <div className="ask-lists">
-        {askLists.length === 0 ? (
+        {askLists?.length === 0 ? (
           <div className="no-ask">
             <Image src={noAsk} alt="no-list" />
             <p>등록된 상품문의가 없습니다.</p>
           </div>
         ) : (
           <div className="ask-lists-box">
-            {askLists.map((askList) => {
+            {askLists?.map((askList) => {
               return (
                 <Fragment key={askList.id}>
                   <div className="ask-list">

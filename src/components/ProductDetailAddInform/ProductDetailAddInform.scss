@@ -4,18 +4,44 @@
   justify-content: center;
   padding-bottom: 100px;
 }
+
 .productDetailAddInform-list {
   height: 300px;
   overflow: hidden;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
-  & > div {
+  .detail {
+    width: 100%;
+    height: 100%;
+  }
+
+  .noImage {
+    border-radius: 50%;
+  }
+
+  >p {
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  &>div {
     min-width: 393px;
     height: 393px;
     position: relative;
   }
 }
+
 .productDetailAddInform-list-hide {
+  .detail {
+    width: 100%;
+    height: 100vh;
+  }
+
   &::before {
     content: '';
     background: linear-gradient(to top, white, transparent);
@@ -23,7 +49,7 @@
     bottom: 0;
     height: 30%;
     width: 100%;
-    z-index: 9;
+    z-index: 1;
   }
 }
 
@@ -45,7 +71,8 @@
 // 카테고리 인기 상품
 .ProductDetailHotProduct {
   margin-left: 24px;
-  & > p {
+
+  &>p {
     font-weight: 700;
     font-size: 14px;
     margin-bottom: 32px;
@@ -55,7 +82,8 @@
 .ProductDetailHotProduct-hotProducts {
   display: flex;
   overflow-x: scroll;
-  & > div > div > p {
+
+  &>div>div>p {
     font-weight: 500;
     font-size: 10px;
     width: 80px;
@@ -64,12 +92,13 @@
     white-space: nowrap;
     margin-top: 10px;
   }
-  & > div > div > span {
+
+  &>div>div>span {
     font-size: 10px;
     font-weight: 500;
     color: rgba(153, 153, 153, 1);
 
-    & > strong {
+    &>strong {
       font-size: 10px;
       color: rgba(0, 0, 0, 1);
       font-weight: 700;
@@ -80,10 +109,12 @@
     display: none;
   }
 }
+
 .ProductDetailHotProduct-hotProduct {
   display: flex;
   cursor: pointer;
-  & > div > h1 {
+
+  &>div>h1 {
     font-weight: 700;
     font-size: 14px;
     margin-right: 12px;
@@ -95,23 +126,41 @@
   height: 106px;
   position: relative;
   margin-right: 12px;
-  & > div {
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+
+  img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+  }
+
+  &>div {
     width: 16px;
     height: 12px;
     position: absolute;
     right: 8px;
     top: 8px;
+    z-index: 10;
   }
+
 }
 
 // 가격대가 비슷한 술
 .ProductDetailSimilarPrice {
   margin-left: 24px;
-  & > p {
+
+  &>p {
     font-weight: 700;
     font-size: 14px;
     margin: 24px 0;
   }
+
   margin-bottom: 24px;
 }
 
@@ -119,7 +168,7 @@
   display: flex;
   overflow-x: scroll;
 
-  & > div > div > p {
+  &>div>div>p {
     font-weight: 500;
     font-size: 10px;
     width: 80px;
@@ -128,12 +177,13 @@
     white-space: nowrap;
     margin-top: 10px;
   }
-  & > div > div > span {
+
+  &>div>div>span {
     font-size: 10px;
     font-weight: 500;
     color: rgba(153, 153, 153, 1);
 
-    & > strong {
+    &>strong {
       font-size: 10px;
       color: rgba(0, 0, 0, 1);
       font-weight: 700;
@@ -144,6 +194,7 @@
     display: none;
   }
 }
+
 .ProductDetailSimilarPrice-SimilarProduct {
   display: flex;
   cursor: pointer;
@@ -154,7 +205,22 @@
   height: 106px;
   position: relative;
   margin-right: 12px;
-  & > div {
+
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+
+  img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+  }
+
+  &>div {
     width: 16px;
     height: 12px;
     position: absolute;

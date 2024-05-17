@@ -1,0 +1,50 @@
+@import '../globals.scss';
+
+.findId_container {
+  @include flex_container(space-between);
+  flex-direction: column;
+  .findId_wrapper {
+    padding: $default_padding;
+    margin-bottom: 30px;
+  }
+  .success_modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 306px;
+    height: 264px;
+    border: 1px solid #d9d9d9;
+    border-radius: 20px;
+    padding-bottom: 21px;
+    @include flex_container(flex-start);
+    flex-direction: column;
+    .closeBtn_wrapper {
+      width: 100%;
+      padding: 11px;
+      text-align: end;
+      & > img {
+        cursor: pointer;
+      }
+    }
+
+    & > img {
+      margin-top: 10px;
+      margin-bottom: 25px;
+    }
+
+    & > p {
+      font-size: 14px;
+      & > span {
+        font-weight: 700;
+      }
+    }
+
+    .button_wrapper {
+      margin-top: 9px;
+      @include flex_container();
+      gap: 11px;
+    }
+  }
+}

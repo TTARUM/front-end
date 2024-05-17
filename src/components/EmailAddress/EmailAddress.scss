@@ -1,0 +1,96 @@
+@import '../../app/globals.scss';
+
+.email_wrapper {
+    position: relative;
+
+    >.email_input {
+        >input {
+            border: none;
+            border-bottom: 1px solid #D9D9D9;
+            padding: 0 0 9px 10px;
+
+            &:first-of-type {
+                width: 140px;
+                margin-right: 2px;
+            }
+
+            &:last-of-type {
+                width: 171px;
+                margin-left: 9px;
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        >img {
+            position: absolute;
+            right: 70px;
+            top: 7px;
+            cursor: pointer;
+        }
+
+        >button {
+            font-size: 10px;
+            position: absolute;
+            right: 0px;
+        }
+    }
+
+    .certificationNumber_input {
+        position: relative;
+
+        >p {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 10px;
+        }
+
+        >button {
+            position: absolute;
+            right: 0px;
+            bottom: 9.65px;
+            font-size: 10px;
+        }
+    }
+
+    .success {
+        font-size: 10px;
+        color: $mainColor;
+        margin-top: 10px;
+    }
+
+
+
+
+    .address_modal {
+        width: 95px;
+        padding: 12px 18px;
+        border-radius: 10px;
+        box-shadow: 0px 3px 8px 0px #D9D9D9;
+        line-height: 18px;
+        position: absolute;
+        right: 80px;
+        top: 30px;
+        background: #ffffff;
+        z-index: 1;
+
+        >p {
+            font-size: 12px;
+            font-weight: 400;
+            margin-bottom: 4px;
+            cursor: pointer;
+            color: #999999;
+
+            &:hover {
+                color: #151515;
+            }
+
+            &:last-of-type {
+                margin-bottom: 0px;
+            }
+        }
+    }
+}

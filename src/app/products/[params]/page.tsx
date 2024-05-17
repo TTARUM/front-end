@@ -6,7 +6,9 @@ import ItemBox from '@/components/Item/ItemBox';
 import Image from 'next/image';
 import downArrow from '../../../../public/downdark-triangle.svg';
 import upArrow from '../../../../public/updark-triangle.svg';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { getCategory, getPopularList } from '@/util/AxiosItem';
 
 type Props = {
   params: {
@@ -30,9 +32,64 @@ export default function Products({ params }: Props) {
     setSort(value);
     setShowSortAlert(false);
   };
+
+  const param = params?.params;
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = document.documentElement.clientHeight;
+
+      if (clientHeight >= scrollHeight - scrollTop) {
+        fetchNextPage();
+      }
+    });
+  }, []);
+
+  const { data, fetchNextPage } = useInfiniteQuery({
+    queryKey: ['getPlacesOfCategory'],
+    queryFn: ({ pageParam }) =>
+      getCategory({
+        category: param,
+        page: pageParam,
+        size: 20,
+      }),
+    initialPageParam: 0,
+
+    getNextPageParam: (lastPage, pages) => {
+      const currentPage = pages.length - 1 + 1;
+      return currentPage + 1;
+    },
+  });
+
+  let Title;
+
+  switch (param) {
+    case '1':
+      Title = '레드와인';
+      break;
+    case '2':
+      Title = '화이트와인';
+      break;
+    case '3':
+      Title = '로제와인';
+      break;
+    case '4':
+      Title = '스파클링 와인';
+      break;
+    case '5':
+      Title = '주정강화';
+      break;
+    case '0':
+      Title = '전체보기';
+      break;
+  }
+
+
   return (
     <main className="products-container">
-      <Header type='subMenu' title={params.params} />
+      <Header type="subMenu" title={Title} />
       <div className="products-wrap">
         <div className="products-sort">
           <p
@@ -40,7 +97,7 @@ export default function Products({ params }: Props) {
               setShowSortAlert(!showSortAlert);
             }}
           >
-            {sort}{' '}
+            {sort}
             <Image src={showSortAlert === false ? downArrow : upArrow} alt="" />
           </p>
           <div
@@ -69,13 +126,12 @@ export default function Products({ params }: Props) {
             })}
           </div>
         </div>
-
         <div className="products-item-area">
-          <ItemBox page="products" params={params.params} />
-          <ItemBox page="products" params={params.params} />
-          <ItemBox page="products" params={params.params} />
-          <ItemBox page="products" params={params.params} />
-
+          {data?.pages?.map((value) =>
+            value?.data?.itemSummaryResponseList.map((item) => (
+              <ItemBox key={item.id} page="products" data={item} />
+            )),
+          )}
         </div>
       </div>
     </main>

@@ -4,6 +4,12 @@ import './main.scss';
 import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Category from '@/components/CategoryItem/Category';
+import ItemBox from '@/components/Item/ItemBox';
+import { usePathname, useRouter } from 'next/navigation';
+import Navigation from '@/components/Navigation/Navigation';
+import { useEffect, useState } from 'react';
+
+// img
 import bannerCh from '../../../public/bannerCh.svg';
 import RED from '../../../public/RED.svg';
 import WHITE from '../../../public/WHITE.svg';
@@ -12,7 +18,6 @@ import SPARKLING from '../../../public/SPARKLING.svg';
 import SNACK from '../../../public/SNACK.svg';
 import all from '../../../public/all.svg';
 import bottom from '../../../public/bottom.svg';
-import ItemBox from '@/components/Item/ItemBox';
 import collection_1 from '../../../public/collection_1.svg';
 import collection_2 from '../../../public/collection_2.svg';
 import collection_3 from '../../../public/collection_3.svg';
@@ -20,16 +25,15 @@ import collection_4 from '../../../public/collection_4.svg';
 import CollectionBox from '@/components/CollectionBox/CollectionBox';
 import event_1 from '../../../public/event_1.svg';
 import event_2 from '../../../public/event_2.svg';
-import { usePathname, useRouter } from 'next/navigation';
-import Navigation from '@/components/Navigation/Navigation';
+import userStore from '@/store/userInformation';
 
 const testCategory: { img: string; name: string; id: number }[] = [
-  { img: RED, name: '레드 와인', id: 2 },
-  { img: WHITE, name: '화이트 와인', id: 3 },
-  { img: ROSE, name: '로제 와인', id: 4 },
-  { img: SPARKLING, name: '스파클링 와인', id: 5 },
-  { img: SNACK, name: '안주', id: 6 },
-  { img: all, name: '전체보기', id: 1 },
+  { img: RED, name: '레드 와인', id: 1 },
+  { img: WHITE, name: '화이트 와인', id: 2 },
+  { img: ROSE, name: '로제 와인', id: 3 },
+  { img: SPARKLING, name: '스파클링 와인', id: 4 },
+  { img: SNACK, name: '주정강화', id: 5 },
+  { img: all, name: '전체보기', id: 0 },
 ];
 
 const testCollection: { img: string; text: string }[] = [
@@ -48,6 +52,13 @@ const testCollection: { img: string; text: string }[] = [
 export default function Main() {
   const router = useRouter();
   const path = usePathname();
+
+  const { setUser } = userStore();
+
+  useEffect(() => {
+    const userInformation = JSON.parse(window.localStorage.getItem('token'));
+    setUser(userInformation);
+  }, []);
 
   return (
     <div className="main-container">

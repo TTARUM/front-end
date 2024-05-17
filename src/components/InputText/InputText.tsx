@@ -1,7 +1,10 @@
 'use client';
-import Image from 'next/image';
 import './InputText.scss';
-import search from '../../../public/search-mainColor.svg';
+
+import SearchAddress from '../SearchAddress/SearchAddress';
+import EmailAddress from '../EmailAddress/EmailAddress';
+import { MainEventButton } from '../Style/MainEventBtn/MainEventBtn';
+import { useEffect, useState } from 'react';
 
 type Props = {
   data: string;
@@ -9,6 +12,13 @@ type Props = {
   title: string;
   placeholder: string;
   type?: string;
+  onChange?: (InputEvent) => void;
+  warning?: string;
+  maxLength?: number;
+  path?: string;
+  name?: string;
+  setCertification?: React.Dispatch<React.SetStateAction<number>>;
+  certification?: number;
 };
 
 const InputText = ({
@@ -17,26 +27,51 @@ const InputText = ({
   title,
   placeholder,
   type,
+  onChange,
+  warning,
+  maxLength,
+  path,
+  name,
+  setCertification,
+  certification,
 }: Props): JSX.Element => {
   return (
     <>
       <span className="label">{title}</span>
       {type === 'search' ? (
-        <div className="search_wrapper">
+        <SearchAddress
+          data={data || ''}
+          setData={setData}
+          placeholder={placeholder}
+        />
+      ) : type === 'email' ? (
+        <EmailAddress
+          data={data || ''}
+          setData={setData}
+          placeholder={placeholder}
+          path={path}
+          name={name}
+          setCertification={setCertification}
+          certification={certification}
+        />
+      ) : type === 'password' ? (
+        <>
           <input
-            value={data}
+            value={data || ''}
+            type="password"
+            className="data_input"
             placeholder={placeholder}
-            onChange={(e) => setData(e.target.value)}
-            readOnly
+            onChange={(e) => (onChange ? onChange(e) : setData(e.target.value))}
           />
-          <Image src={search} alt="search" />
-        </div>
+          <p className="warning">{warning}</p>
+        </>
       ) : (
         <input
-          value={data}
+          value={data || ''}
           className="data_input"
           placeholder={placeholder}
-          onChange={(e) => setData(e.target.value)}
+          onChange={(e) => (onChange ? onChange(e) : setData(e.target.value))}
+          maxLength={maxLength}
         />
       )}
     </>

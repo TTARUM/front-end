@@ -1,0 +1,42 @@
+@import '../globals.scss';
+
+div.review_wrapper {
+  margin-top: 20px;
+  font-size: 10px;
+  line-height: 20px;
+  font-weight: 400;
+  border-bottom: 1px solid #e4e4e4;
+  padding-bottom: 25px;
+  .review_header {
+    padding: $default_padding;
+    @include flex_container(space-between, flex-start);
+    flex-direction: column;
+    gap: 5px;
+    .review_header_first_row {
+      width: 100%;
+      @include flex_container(space-between);
+      .button_wrapper {
+        @include flex_container();
+        gap: 10px;
+        .button {
+          color: $mainColor;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .review_content {
+    margin-top: 15px;
+    padding: $default_padding;
+    .review_text {
+      line-height: 22px;
+    }
+    .review_image {
+      margin-top: 9px;
+      border-radius: 10px;
+      width: 124px;
+      height: 123px;
+    }
+  }
+}
